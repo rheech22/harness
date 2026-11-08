@@ -111,6 +111,6 @@ advisory 수집과 직접 의존성의 패치 PR은 자동화 도구(예: Depend
 
 ## 관련 문서
 
-- 리뷰에서 보안 관점을 적용하는 절차: [코드 리뷰 워크플로우](https://github.com/rheech22/harness/blob/main/src/docs/common/code-review.md)
+- 리뷰에서 안전 축을 적용하는 절차: [코드 리뷰 워크플로우](https://github.com/rheech22/harness/blob/main/src/docs/common/code-review.md)
 - 분기·불변식과 외부 의존성 격리: [코딩 스타일](code-style.md)
 - 인증 흐름, 딥링크 계약, 브릿지 계약, 쿠키 계약: 프로젝트의 아키텍처·계약 문서
