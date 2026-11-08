@@ -29,4 +29,6 @@ related:
 
 ## 현재 상태
 
-`check`의 외부 스킬 미설치 경고가 사라졌다. 전역 연결(`link.mjs --apply`)은 이 기록 시점에 아직 적용하지 않았다.
+`check`의 외부 스킬 미설치 경고가 사라졌다. 같은 날 이 머신에 `link.mjs --profile common,writing --apply`를 적용해 Claude·Codex 전역 경로 37개가 하네스를 가리킨다. 적용 중 `dist/adapters`의 규칙을 프로필과 무관하게 전부 링크하는 결함을 발견해 선택한 프로필의 스킬이 선언한 것만 링크하도록 고쳤다.
+
+채팅 우선 흐름도 같은 날 확인했다. 임시 저장소에서 `claude -p "/review staged"`(sonnet)는 `code-review` 스킬만 로드해 확정 지적 3건과 결정 필요 사항 1건을 채팅에 요약하고 반영 여부와 리포트 여부를 물은 뒤 파일을 만들지 않았다. 같은 세션을 이어 리포트만 요청하자 `html-report`를 로드해 `.review/main-staged.html`을 만들었고, 쉘 marker 6개·severity·고정 ID 3개·외부 요청 0건을 확인했다. `/explain knowledge`는 채팅에 설명을 끝내고 아티클 여부를 물었으며 파일을 만들지 않았다. Codex는 `codex debug prompt-input`에서 전역 지침과 common·writing 스킬 이름을 노출하고 web 스킬은 노출하지 않았다.
