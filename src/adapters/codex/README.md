@@ -1,6 +1,6 @@
 # Codex 어댑터
 
-Codex CLI가 전역 수준에서 읽는 것과, 이 하네스가 그 자리에 무엇을 링크하는지 정리한다. 경로 선언은 [`adapter.json`](adapter.json)이 소유하고, 이 문서는 근거와 검증을 소유한다. (2026-11 공식 문서 기준)
+Codex CLI가 전역 수준에서 읽는 것과, 이 하네스가 그 자리에 무엇을 링크하는지 정리한다. 경로 선언은 [`adapter.json`](adapter.json)이 소유하고, 이 문서는 근거와 검증을 소유한다. 근거는 아래 공식 문서 링크이며, 확인한 시점은 history의 검증 기록이 가진다.
 
 ## 이 런타임이 읽는 것
 
@@ -14,7 +14,6 @@ Codex CLI가 전역 수준에서 읽는 것과, 이 하네스가 그 자리에 �
 | `~/.codex/config.toml` | **도구·dotfiles 소유** | 모델, marketplace, plugin, 프로젝트 trust, `hooks.state`를 앱이 쓴다. 하네스가 링크하지 않는다 |
 
 공식 문서: [AGENTS.md](https://learn.chatgpt.com/codex/agent-configuration/agents-md), [Skills](https://learn.chatgpt.com/docs/build-skills), [Rules](https://learn.chatgpt.com/codex/agent-configuration/rules), [Hooks](https://learn.chatgpt.com/docs/hooks), [Custom prompts (deprecated)](https://learn.chatgpt.com/docs/custom-prompts), [Config reference](https://learn.chatgpt.com/docs/config-file/config-reference).
-저장소 적용 기록: socra-tutor-fe `docs/guides/codex.md`.
 
 ## 프로젝트 뼈대 (`project/`)
 
@@ -23,14 +22,14 @@ Codex CLI가 전역 수준에서 읽는 것과, 이 하네스가 그 자리에 �
 
 ## 검증
 
-모델 호출 없이 모델 입력을 그대로 볼 수 있다.
+모델 호출 없이 모델 입력을 그대로 볼 수 있다. 전역 지침과 스킬 설명에 심은 고유 토큰이 출력에 있는지, 음성 대조군이 없는지, custom 스킬 이름이 모두 노출되는지 본다.
 
 ```bash
 HOME=/tmp/fake-home codex debug prompt-input "hello" > /tmp/prompt.json
 grep -o 'HARNESS-TOKEN-[A-Z]*-[0-9a-f]*' /tmp/prompt.json
 ```
 
-2026-11-08 확인: 전역 지침 토큰과 스킬 설명 토큰 도달, 스킬 3개 노출, 음성 대조군 0. `.rules` 파일이 있는 상태로 정상 실행(문법 통과). 권한 규칙 단독 검증은 `codex execpolicy check --pretty --rules ~/.codex/rules/harness.rules -- <명령>`.
+`.rules` 파일이 있는 상태로 위 명령이 정상 실행되면 문법은 통과한 것이다. 권한 규칙 단독 검증은 `codex execpolicy check --pretty --rules ~/.codex/rules/harness.rules -- <명령>`. 결과는 런타임 버전과 함께 `src/docs/harness/history/`의 검증 기록에 남긴다.
 
 ## 함정
 

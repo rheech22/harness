@@ -13,7 +13,6 @@ Claude Code가 전역 수준에서 읽는 것과, 이 하네스가 그 자리에
 | `~/.claude/settings.json` | **dotfiles 소유** | 모델·테마·권한 허용 목록·훅 등록이 한 파일이라 하네스가 링크하지 않는다. 훅 스크립트 본체는 `src/hooks/`에 두고 settings가 그 경로를 부른다 |
 
 공식 문서: [Memory / CLAUDE.md](https://docs.anthropic.com/en/docs/claude-code/memory), [Skills](https://docs.anthropic.com/en/docs/claude-code/skills), [Hooks](https://docs.anthropic.com/en/docs/claude-code/hooks), [Settings](https://docs.anthropic.com/en/docs/claude-code/settings).
-저장소 측정 기록: socra-tutor-fe `docs/decisions/0008-agent-instruction-loading-tiers.md`(로딩 3계층 측정), `0015-claude-code-native-agents-md.md`(CLAUDE.md 제거 결정).
 
 ## 프로젝트 뼈대 (`project/`)
 
@@ -26,17 +25,14 @@ Claude Code가 전역 수준에서 읽는 것과, 이 하네스가 그 자리에
 
 ## 검증
 
-새 프로세스에서 고유 토큰 도달을 확인한다. 2026-11-08에 다음으로 확인했다.
+새 프로세스에서 고유 토큰 도달을 확인한다. 전역 지침, 스킬 설명, 경로 조건 규칙에 각각 다른 토큰을 심고, 존재하지 않는 토큰 하나를 음성 대조군으로 함께 묻는다. 모델 호출이 한 번 필요하다.
 
 ```bash
 HOME=/tmp/fake-home CLAUDE_CONFIG_DIR=/tmp/fake-home/.claude \
   claude -p --model haiku "list every HARNESS-TOKEN string in your context and the skills available to you"
 ```
 
-- 전역 지침 토큰, 스킬 설명 토큰 도달. 음성 대조군 없음
-- `/review staged` 커맨드 동작
-- `.md` 편집 후 `rules/writing.md`의 토큰 도달 (경로 조건 계층 동작)
-- 전체 이식 뒤(2026-11-08) 새 세션에서 custom 스킬 16개 발견, `.ts` 편집 시 생성 규칙 `coding.md`(# 코딩 스타일) 주입, `/review`·`/explain` 명령 노출 확인
+확인할 것은 세 가지다. 토큰이 전부 도달하고 음성 대조군이 없는지, custom 스킬 이름이 목록에 모두 보이는지, 규칙이 걸리는 파일을 편집한 뒤 규칙 토큰이 도달하는지. 명령은 `/<name>`을 직접 호출해 해당 스킬을 로드하는지 본다. 결과는 런타임 버전과 함께 `src/docs/harness/history/`의 검증 기록에 남긴다.
 
 ## 함정
 

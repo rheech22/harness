@@ -84,7 +84,7 @@ related: []
 ## custom 과 external
 
 - **custom**: 원본이 이 레포에 있는 것. `src/skills/*.json`이 선언하는 번들 스킬과 `src/tools/`의 코드 패키지.
-- **external**: upstream에서 Skills CLI로 `dist/skills/`에 설치하고 `harness.json`의 `external`에 출처, `skills-lock.json`을 커밋. 레포 루트의 `.agents/skills → dist/skills` 링크가 설치 자리를 정하며, 설치는 `-a codex`로 한 번만 한다(다른 agent 대상은 레포 안에 런타임 디렉터리를 만든다). 이 절차는 스크립트로 감쌀 예정.
+- **external**: upstream에서 Skills CLI로 `dist/skills/`에 설치하고 `harness.json`의 `external`에 출처, `skills-lock.json`을 커밋. 레포 루트의 `.agents/skills → dist/skills` 링크가 설치 자리를 정하며, 설치는 `-a codex`로 한 번만 한다(다른 agent 대상은 레포 안에 런타임 디렉터리를 만든다). 이 절차는 스크립트가 감싼다.
 - `tools`로 선언한 CLI(스킬이 전제하는 실행 파일)는 요구사항만 적고 설치는 dotfiles가 한다.
 
 같은 이름을 두 종류로 선언하면 `check`가 막는다.
