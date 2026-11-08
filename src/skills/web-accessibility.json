@@ -1,0 +1,6 @@
+{
+  "name": "web-accessibility",
+  "description": "Use when building or reviewing web UI for accessibility: keyboard reachability, focus visibility and order, names/roles/states for assistive tech, overlays, and WCAG 2.2 AA criteria explained per rule.",
+  "reads": ["docs/web/accessibility.md", "docs/web/wcag-criteria.md"],
+  "profile": { "name": "accessibility", "default": "docs/web/profiles/accessibility.default.md", "projectPath": "docs/profiles/accessibility.md" }
+}

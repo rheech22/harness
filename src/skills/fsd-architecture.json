@@ -1,0 +1,6 @@
+{
+  "name": "fsd-architecture",
+  "description": "Use when placing, importing, or restructuring code in a Feature-Sliced Design (FSD) frontend: layer boundaries, public API rules, segment naming, cross-import strategy, and migration escapes.",
+  "reads": ["docs/web/fsd.md"],
+  "profile": { "name": "fsd", "default": "docs/web/profiles/fsd.default.md", "projectPath": "docs/profiles/fsd.md" }
+}

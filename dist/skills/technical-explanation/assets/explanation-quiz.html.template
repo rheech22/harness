@@ -1,0 +1,119 @@
+<!--
+  report-shell.html에 넣는 기술 설명 퀴즈 조각입니다.
+  각 조각을 이름이 같은 BODY_STYLE, BODY, BODY_SCRIPT 표시 주석 안에 복사합니다.
+  BODY 조각을 관련 전개 절마다 배치하고 QUESTION_ID를 quizData.id와 맞춥니다.
+  렌더러는 유지하고 quizData만 바꿉니다. 목차와 결말에는 퀴즈를 두지 않습니다.
+-->
+
+<!-- BODY_STYLE 조각 -->
+.explanation .quiz{margin:2rem 0;padding:1.25rem;background:color-mix(in srgb,var(--accent) 4%,var(--card));border-radius:4px}
+.quiz-label{margin:0 0 .65rem;color:var(--accent);font-size:12px;font-weight:500}
+.quiz-item{border:0;padding:0;margin:0;min-inline-size:0}
+.quiz-question{margin:0 0 .9rem;font-weight:600}
+.quiz-options{display:grid;gap:.5rem}
+.quiz-option{
+  width:100%;padding:.7rem .85rem;text-align:left;font:inherit;color:var(--ink);
+  background:var(--card);border:1px solid var(--hair);border-radius:2px;cursor:pointer;
+}
+.quiz-option:hover:not(:disabled){border-color:var(--diagram-primary)}
+.quiz-option:disabled{cursor:default;opacity:1}
+.quiz-option.ok-edge{border-color:var(--ok)}
+.quiz-option.bad-edge{border-color:var(--bad)}
+.quiz-feedback{margin:.9rem 0 0;color:var(--muted)}
+
+<!-- BODY 조각 -->
+<div class="quiz" id="quiz-{{QUESTION_ID}}" data-question="{{QUESTION_ID}}">
+  <noscript><p>JavaScript가 꺼져 있어 연습 문항을 표시하지 못했습니다. 다음 설명을 계속 읽어도 됩니다.</p></noscript>
+</div>
+
+<!-- BODY_SCRIPT 조각 -->
+<script>
+(function () {
+  /*
+    payload는 UTF-8 JSON { correct: boolean, feedback: string }을 base64로 인코딩한 값입니다.
+    정답 위치가 반복되지 않게 작성하고 선택지 길이 차이는 25자 이내로 맞춥니다.
+  */
+  var quizData = [
+    {
+      id: "{{QUESTION_ID}}",
+      prompt: "{{QUESTION_1}}",
+      options: [
+        { text: "{{OPTION_1_A}}", payload: "{{BASE64_RESULT_1_A}}" },
+        { text: "{{OPTION_1_B}}", payload: "{{BASE64_RESULT_1_B}}" },
+        { text: "{{OPTION_1_C}}", payload: "{{BASE64_RESULT_1_C}}" }
+      ]
+    }
+    /* 같은 구조로 3~5문항을 작성합니다. */
+  ];
+
+  var decode = function (value) {
+    var bytes = Uint8Array.from(atob(value), function (character) {
+      return character.charCodeAt(0);
+    });
+    return JSON.parse(new TextDecoder().decode(bytes));
+  };
+  var shuffle = function (items) {
+    var copy = items.slice();
+    for (var index = copy.length - 1; index > 0; index -= 1) {
+      var next = Math.floor(Math.random() * (index + 1));
+      var current = copy[index];
+      copy[index] = copy[next];
+      copy[next] = current;
+    }
+    return copy;
+  };
+
+  if (quizData.length < 3 || quizData.length > 5) {
+    throw new Error("explanation quiz requires three to five questions");
+  }
+
+  quizData.forEach(function (question) {
+    var mount = document.getElementById("quiz-" + question.id);
+    var label = document.createElement("p");
+    label.className = "quiz-label";
+    label.textContent = "적용해 보기";
+    mount.appendChild(label);
+    var fieldset = document.createElement("fieldset");
+    fieldset.className = "quiz-item";
+
+    var legend = document.createElement("legend");
+    legend.className = "quiz-question";
+    legend.textContent = question.prompt;
+    fieldset.appendChild(legend);
+
+    var options = document.createElement("div");
+    options.className = "quiz-options";
+    var feedback = document.createElement("p");
+    feedback.className = "quiz-feedback";
+    feedback.setAttribute("aria-live", "polite");
+
+    shuffle(question.options).forEach(function (option) {
+      var button = document.createElement("button");
+      button.className = "quiz-option";
+      button.type = "button";
+      button.setAttribute("aria-pressed", "false");
+      button.textContent = option.text;
+      button.addEventListener("click", function () {
+        var buttons = Array.prototype.slice.call(options.querySelectorAll("button"));
+        buttons.forEach(function (candidate) {
+          candidate.disabled = true;
+          var candidateResult = decode(candidate.dataset.payload);
+          if (candidateResult.correct) candidate.classList.add("ok-edge");
+        });
+
+        var result = decode(option.payload);
+        button.classList.add("picked", result.correct ? "ok-edge" : "bad-edge");
+        button.setAttribute("aria-pressed", "true");
+        feedback.classList.add(result.correct ? "ok" : "bad");
+        feedback.textContent = result.feedback;
+      });
+      button.dataset.payload = option.payload;
+      options.appendChild(button);
+    });
+
+    fieldset.appendChild(options);
+    fieldset.appendChild(feedback);
+    mount.appendChild(fieldset);
+  });
+})();
+</script>

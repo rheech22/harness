@@ -29,6 +29,15 @@
       "ast-grep-outline",
       "find-skills",
       "excalibridge"
+    ],
+    "writing": [
+      "technical-explanation"
+    ],
+    "web": [
+      "fsd-architecture",
+      "web-ui-conventions",
+      "storybook-conventions",
+      "web-accessibility"
     ]
   },
   "external": {
@@ -61,6 +70,21 @@
     },
     "git-worktrees": {
       "from": "dist/skills/git-worktrees"
+    },
+    "technical-explanation": {
+      "from": "dist/skills/technical-explanation"
+    },
+    "fsd-architecture": {
+      "from": "dist/skills/fsd-architecture"
+    },
+    "web-ui-conventions": {
+      "from": "dist/skills/web-ui-conventions"
+    },
+    "storybook-conventions": {
+      "from": "dist/skills/storybook-conventions"
+    },
+    "web-accessibility": {
+      "from": "dist/skills/web-accessibility"
     }
   },
   "tools": {
