@@ -1,7 +1,7 @@
 {
-  "name": "technical-explanation",
+  "name": "explain",
   "description": "Use ONLY when the user explicitly asks for a rich HTML technical article about a code change, a requested or current implementation, or a technical concept, or invokes /explain. Builds an evidence-backed narrative with diagrams and a quiz. Do not use for code review; use code-review.",
-  "reads": ["docs/writing/technical-explanation.md", "docs/common/report-design.md", "docs/writing/report-diagrams.md", "docs/common/prose-style.md"],
+  "reads": ["docs/writing/explain.md", "docs/common/report-design.md", "docs/writing/report-diagrams.md", "docs/common/prose-style.md"],
   "assets": [
     "assets/report/report-shell.html",
     "assets/report/explanation-quiz.html.template",
@@ -12,6 +12,6 @@
     "assets/report/report-prose-im-not-ai-license.txt"
   ],
   "scripts": ["assets/report/scripts/check-explanation-report.mjs", "assets/report/scripts/check-report-diagrams.mjs"],
-  "profile": { "name": "technical-explanation", "default": "docs/writing/profiles/technical-explanation.default.md", "projectPath": "docs/profiles/technical-explanation.md" },
+  "profile": { "name": "explain", "default": "docs/writing/profiles/explain.default.md", "projectPath": "docs/profiles/explain.md" },
   "commands": { "claude": { "name": "explain", "description": "Explain a change, implementation, or technical concept as a self-contained HTML article.", "argumentHint": "[change|implementation|knowledge] <subject>" } }
 }

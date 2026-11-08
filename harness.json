@@ -31,7 +31,7 @@
       "excalibridge"
     ],
     "writing": [
-      "technical-explanation"
+      "explain"
     ],
     "web": [
       "fsd-architecture",
@@ -71,8 +71,8 @@
     "git-worktrees": {
       "from": "dist/skills/git-worktrees"
     },
-    "technical-explanation": {
-      "from": "dist/skills/technical-explanation"
+    "explain": {
+      "from": "dist/skills/explain"
     },
     "fsd-architecture": {
       "from": "dist/skills/fsd-architecture"

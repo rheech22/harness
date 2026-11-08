@@ -4,7 +4,7 @@ domain: [writing]
 kind: workflow
 status: current
 related:
-  - profiles/technical-explanation.default.md
+  - profiles/explain.default.md
   - report-diagrams.md
   - ../common/report-design.md
   - ../common/prose-style.md
@@ -26,7 +26,7 @@ related:
 
 ## 사전 조건
 
-이 문서는 절차와 품질 기준을 정의하고 프로젝트마다 달라지는 값은 정하지 않습니다. 산출물 언어, 탐색 수단, `change` 대상 범위와 base ref, 표제 문구, 저장 경로, 아티클 이후 처리는 [프로젝트 프로필](profiles/technical-explanation.default.md)이 정합니다. 프로젝트 저장소에 `docs/profiles/technical-explanation.md`가 있으면 그 문서가 기본값을 대체합니다. 절차를 따르다 프로필을 가리키는 자리를 만나면 그 문서에서 값을 읽습니다. 프로젝트에 프로필이 없으면 기본값을 씁니다.
+이 문서는 절차와 품질 기준을 정의하고 프로젝트마다 달라지는 값은 정하지 않습니다. 산출물 언어, 탐색 수단, `change` 대상 범위와 base ref, 표제 문구, 저장 경로, 아티클 이후 처리는 [프로젝트 프로필](profiles/explain.default.md)이 정합니다. 프로젝트 저장소에 `docs/profiles/explain.md`가 있으면 그 문서가 기본값을 대체합니다. 절차를 따르다 프로필을 가리키는 자리를 만나면 그 문서에서 값을 읽습니다. 프로젝트에 프로필이 없으면 기본값을 씁니다.
 
 - `change` 유형은 Git 저장소 안에서 실행합니다. `implementation`에서 diff를 근거로 사용할 때도 Git 저장소가 필요합니다. Source나 공식 문서만 사용하는 다른 설명은 Git을 요구하지 않습니다.
 - `change` 유형의 기본 대상을 사용하려면 프로젝트 프로필의 base ref가 유효해야 합니다. 사용자가 commit id나 range를 지정하면 해당 ref가 있어야 합니다.
@@ -386,7 +386,7 @@ Checker는 header와 세 marker 구간 밖을 현재 shell과 대조합니다. �
 
 ## 관련 문서
 
-- 프로젝트마다 달라지는 값의 기본값: [기술 설명 아티클 프로젝트 프로필](profiles/technical-explanation.default.md)
+- 프로젝트마다 달라지는 값의 기본값: [기술 설명 아티클 프로젝트 프로필](profiles/explain.default.md)
 - 다이어그램 선택, 색상, SVG 문법: [리포트 SVG 다이어그램](report-diagrams.md)
 - 공유 쉘과 디자인 검증 기준: [리포트 HTML 디자인](../common/report-design.md)
 - 본문 문체와 용어: [산문 문체 기준](../common/prose-style.md)

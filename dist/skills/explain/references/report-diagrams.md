@@ -5,7 +5,7 @@ domain: [writing]
 kind: convention
 status: current
 related:
-  - technical-explanation.md
+  - explain.md
   - ../common/report-design.md
   - ../common/prose-style.md
   - ../common/document-writing.md
@@ -198,7 +198,7 @@ related:
 
 ### 자동 검사
 
-이 스킬 디렉터리의 [`scripts/check-report-diagrams.mjs`](../scripts/check-report-diagrams.mjs)가 저장한 HTML을 읽어 좌표와 글자 수로 다음을 확인합니다. [기술 설명 아티클](technical-explanation.md)의 checker가 이 검사를 함께 실행하므로 별도 명령을 더 실행하지 않아도 되고, 다이어그램 하나를 고치는 중에는 단독으로도 실행할 수 있습니다.
+이 스킬 디렉터리의 [`scripts/check-report-diagrams.mjs`](../scripts/check-report-diagrams.mjs)가 저장한 HTML을 읽어 좌표와 글자 수로 다음을 확인합니다. [기술 설명 아티클](explain.md)의 checker가 이 검사를 함께 실행하므로 별도 명령을 더 실행하지 않아도 되고, 다이어그램 하나를 고치는 중에는 단독으로도 실행할 수 있습니다.
 
 ```bash
 node <skill-dir>/scripts/check-report-diagrams.mjs <파일>
@@ -226,5 +226,5 @@ node <skill-dir>/scripts/check-report-diagrams.mjs <파일>
 
 - 리포트 전체의 팔레트, 타이포, 조판 단위: [리포트 HTML 디자인](report-design.md)
 - 본문 문체와 용어: [산문 문체 기준](prose-style.md)
-- 다이어그램을 넣는 산출물의 절차: [기술 설명 아티클](technical-explanation.md)
+- 다이어그램을 넣는 산출물의 절차: [기술 설명 아티클](explain.md)
 - 공유 쉘: [`report-shell.html`](../assets/report-shell.html)
