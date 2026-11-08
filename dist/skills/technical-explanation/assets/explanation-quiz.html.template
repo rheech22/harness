@@ -64,7 +64,7 @@
   };
 
   if (quizData.length < 3 || quizData.length > 5) {
-    throw new Error("socra-explanation quiz requires three to five questions");
+    throw new Error("explanation quiz requires three to five questions");
   }
 
   quizData.forEach(function (question) {
