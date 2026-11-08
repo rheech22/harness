@@ -1,0 +1,6 @@
+{
+  "name": "git-commit",
+  "description": "Use when writing a commit message or deciding how to split commits: type and scope format, subject rules, when a body is required, and what evidence a stated reason needs.",
+  "reads": ["docs/common/commit-messages.md"],
+  "profile": { "name": "commit-messages", "default": "docs/common/profiles/commit-messages.default.md", "projectPath": "docs/profiles/commit-messages.md" }
+}

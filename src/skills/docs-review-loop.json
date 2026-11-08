@@ -1,0 +1,6 @@
+{
+  "name": "docs-review-loop",
+  "description": "Use when processing a documentation review queue in batches or rolling over a review cycle: grading documents, recording review states, and closing a cycle. Not for one-off document edits; use docs-writing.",
+  "reads": ["docs/common/document-review-workflow.md", "docs/common/document-writing.md", "docs/common/prose-style.md"],
+  "profile": { "name": "document-review", "default": "docs/common/profiles/document-review.default.md", "projectPath": "docs/profiles/document-review.md" }
+}

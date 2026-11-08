@@ -1,0 +1,115 @@
+---
+title: "코드 보안 규칙"
+domain: [common]
+kind: convention
+status: current
+related:
+  - code-review.md
+  - code-style.md
+---
+
+# 코드 보안 규칙
+
+## 적용 범위
+
+애플리케이션 코드와 그 실행 환경에 적용합니다. 인증, redirect, deep link, 로그 redaction, client 노출 경계, 토큰 저장, 디버그·mock 게이트, 응답 헤더, 의존성 advisory를 다룹니다. 프로젝트 고유 경로·헬퍼·계약은 프로젝트의 아키텍처 문서와 계약 문서가 소유하고, 이 문서는 어느 프로젝트에서도 같은 판단을 내리게 하는 원칙을 정합니다.
+
+가장 넓은 보안 표면은 보통 목적지 문자열과 경계입니다. 같은 사용자 행동이 여러 플랫폼(web, native, server)에 구현되어 있으면 한쪽에서 이미 막은 것을 다른 쪽이 새로 구현하면서 다시 여는 형태로 사고가 납니다. 그래서 규칙마다 "검증은 기존 경로를 거친다"를 반복합니다.
+
+## 로그
+
+민감값을 로그에 남길지는 그 로그가 개발자 기기 밖으로 나가는지로 판단합니다. 개발자 기기 안에만 남는다고 보장된 로그만 원문을 허용합니다.
+
+- 로그는 프로젝트의 공용 logger를 거칩니다. logger meta의 key 기반 redaction과 오류 수집기(예: Sentry)의 event·breadcrumb sanitizer는 서로 다른 방어선입니다. 새 민감 key나 문자열 형식을 추가할 때 두 경로와 관련 test를 함께 확인합니다.
+- native는 프로젝트의 언어별 코딩 컨벤션이 정한 민감값과 로그 레벨 규칙을 따릅니다.
+- 어느 앱에서도 sanitizer를 우회해 외부로 나가는 경로를 만들지 않습니다.
+- 왜: 기준을 환경 이름이나 로그 레벨이 아니라 "밖으로 나가는가"에 두면 여러 앱이 같은 판단을 하고, 로컬 디버깅에서 값을 눈으로 보는 편의도 유지됩니다.
+
+## 이동 목적지와 딥링크
+
+외부에서 받은 문자열을 검증 없이 이동 목적지로 넘기지 않습니다. 검증은 기존 경로를 거치고 새 검증기를 만들지 않습니다.
+
+- web의 return URL은 프로젝트의 공용 라우팅 헬퍼를 거칩니다. 절대 URL, protocol-relative URL, backslash 차단은 헬퍼 한 곳에 둡니다.
+- native는 프로젝트의 딥링크 계약이 정한 경로 정규화와 신뢰 origin 대조를 거칩니다.
+- 새 딥링크 진입점은 검증된 https 링크로 추가합니다. Android는 App Links의 `autoVerify`, iOS는 associated domains를 유지합니다. custom scheme 진입점을 새로 늘리지 않습니다. 같은 scheme을 다른 앱이 등록해 가로챌 수 있습니다.
+- 신뢰 도메인에서 온 링크라도 파라미터는 검증합니다.
+- 왜: 검증기가 여러 개로 늘어나면 나중에 만든 쪽이 기존 방어를 그대로 재현하지 못합니다. custom scheme은 OS가 전달 대상을 보장하지 않아 콜백에 실린 값을 다른 앱이 대신 받을 수 있습니다.
+
+## WebView와 브릿지 경계
+
+WebView와 native 사이의 호출은 신뢰 origin에서만 받습니다.
+
+- 새 bridge 표면도 기존 origin guard 아래에 둡니다. guard를 우회하는 별도 수신 경로를 만들지 않습니다.
+- WebView와 주고받는 값은 프로젝트의 브릿지 계약이 정의한 payload로 제한합니다. 계약에 없는 값을 임시로 실어 보내지 않습니다.
+- 왜: bridge는 web이 native 기능을 호출하는 통로이고 origin guard가 그 통로의 유일한 신뢰 판정 지점입니다. 우회 경로가 하나 생기면 나머지 guard가 의미를 잃습니다.
+
+## Server와 Client 경계
+
+- server 전용 모듈은 빌드가 강제하는 표시(예: Next.js의 `import 'server-only'`)로 표시합니다. 파일명 규칙만으로 경계를 지키지 않습니다.
+- secret을 읽는 환경변수 접근은 server 전용 모듈 안에 둡니다. 같은 barrel에서 client 컴포넌트와 함께 내보내지 않습니다.
+- client에 노출되는 환경변수 접두사(예: `NEXT_PUBLIC_`)에는 공개되어도 되는 값만 넣습니다.
+- secret credential 파일과 signing material은 gitignore된 경로에 둡니다. 배포 환경변수와 client binary에 포함되는 tracked 설정을 같은 종류의 secret으로 취급하지 않고, 공개 가능 여부를 먼저 분류합니다.
+- 왜: 파일명 규칙은 사람이 지키고 빌드 표시는 빌드가 지킵니다. secret이 client 그래프로 넘어가면 배포 전까지 드러나지 않습니다.
+
+## 인가
+
+인가의 최종 권한은 backend API가 가집니다. edge middleware나 proxy 계층의 판정은 사용자 경험을 위한 라우팅이며 접근 제어의 마지막 방어선이 아닙니다.
+
+- middleware에서 client가 설정할 수 있는 값을 신뢰해야 한다면 적용 범위를 경로나 상태로 좁히고 이유를 코드에 남깁니다.
+- 보호된 backend resource를 읽거나 변경하는 server action이나 API handler는 페이지의 인증 검사를 물려받지 않습니다. 핸들러 안에서 다시 인가하고, 대상 리소스의 소유권을 확인하고, 인자를 검증하고, 반환값은 화면에 필요한 만큼만 돌려줍니다.
+- 사용자 입력이 닿는 sink는 신뢰 경계를 확인한 뒤 넘깁니다. `dangerouslySetInnerHTML` 같은 raw HTML 삽입은 사용자 입력이 섞이지 않는 값에만 사용합니다.
+- 사용자 대화나 모델 답변에서 온 HTML은 프로젝트의 공용 정제 정책 한 곳으로 정제합니다. raw HTML을 해석한 뒤 정제하고, 수식 렌더러는 신뢰 모드를 끈 채 실행합니다. 렌더러의 기본 이벤트 제한이나 "dangerous HTML 비허용" 옵션을 HTML 정제의 대체 수단으로 취급하지 않습니다.
+- client가 보낸 상태 hint만으로 server 쪽 확인을 생략하지 않습니다.
+- 왜: 인가를 backend가 소유하면 middleware 계층 하나를 우회당해도 접근 제어가 무너지지 않습니다. middleware로 판정을 옮겨 담을수록 이 성질이 약해집니다.
+
+## 인증 토큰 저장
+
+- access token은 프로젝트의 공용 인증 헬퍼를 통해서만 읽고 Bearer header를 만듭니다. refresh token은 JavaScript가 읽을 수 없는 HttpOnly 쿠키로 저장하고, 서버와 같은 origin의 세션 endpoint에서만 읽어 backend로 전송합니다.
+- 쿠키 저장 helper는 `SameSite=Lax` 이상, `Path=/`, HTTPS·운영의 `Secure`를 설정합니다. `Max-Age`는 초 단위이며 JWT 만료를 넘지 않습니다.
+- 갱신·삭제 요청의 Origin과 요청 scope를 검증합니다. 공개 pointer·metadata는 hint이며 backend 인가를 대신하지 않습니다.
+- native는 플랫폼의 보호된 저장소나 WebView cookie jar 등 프로젝트가 정한 저장소 하나만 사용하고, 기기 backup·transfer에서 그 저장소를 제외합니다. 실제 기기 저장·재시작 결과는 별도 검증합니다.
+- backend의 이전 refresh 폐기와 로그아웃 revocation은 별도 서버 계약입니다. 쿠키 삭제만으로 유출된 토큰을 무효화했다고 설명하지 않습니다.
+- JavaScript가 읽을 수 있는 토큰이 남아 있는 전환기에는 그 노출을 문서에 명시하고, 줄이는 계획을 backlog로 둡니다. XSS는 읽을 수 있는 access를 탈취하거나 같은 origin 요청을 실행할 수도 있습니다.
+- 왜: 토큰 저장 방식은 한 번 발급하면 구버전 client가 남아 있는 동안 바꾸기 어렵습니다. 처음부터 HttpOnly와 same-origin 경계를 지키면 이후 전환 비용이 사라집니다.
+
+## 디버그와 mock 표면
+
+인증이나 인가를 우회하도록 만든 코드는 환경 플래그로 막고, 비활성 상태에서 흔적을 남기지 않습니다.
+
+- mock 인증은 여러 조건이 모두 참일 때만 켭니다. 플래그 하나로 열리는 우회 경로를 만들지 않습니다.
+- 비활성 상태에서 남아 있는 mock 쿠키나 storage 값은 감지해 정리합니다.
+- devtools 전용 route는 비활성일 때 404를 돌려주고 기능이 있다는 사실도 드러내지 않습니다.
+- 왜: 이 코드는 우회를 목적으로 작성됩니다. 조건 하나가 잘못 켜지면 그대로 인증 우회가 됩니다.
+
+## 응답 헤더
+
+응답 보안 헤더는 프레임워크 설정의 한 곳(예: Next.js `next.config.ts`의 `headers()`)이 소유합니다. route마다 흩어 두지 않습니다.
+
+- 외부 script를 새로 추가할 때는 그 script가 실행되는 범위와 주입할 수 있는 것을 확인합니다.
+- CSP를 비롯한 보안 헤더의 도입 여부와 현재 상태는 프로젝트 문서에 명시합니다. 없는 헤더를 있는 것처럼 설명하지 않습니다.
+- 왜: 브라우저와 WebView가 같은 페이지를 로드하면 헤더 하나가 두 실행 환경에 함께 적용됩니다. 한 곳에서 소유해야 두 환경의 차이를 한 번에 판단할 수 있습니다.
+
+## 네이티브 권한과 저장소
+
+- 권한은 기능이 실제로 요구할 때만 선언하고 목적 문자열을 함께 둡니다.
+- 일반 key-value 저장소(예: `shared_preferences`, `localStorage`)에는 다시 만들 수 있는 상태만 담습니다. 토큰과 개인정보를 넣지 않습니다.
+- 왜: 권한은 한 번 늘리면 심사와 사용자 신뢰 양쪽에서 되돌리기 어렵습니다. 일반 key-value 저장소는 secret storage 경계가 아니므로 기기 저장소 접근에 대비해 토큰이나 개인정보를 보호하지 못합니다.
+
+## 의존성과 advisory
+
+1. 프레임워크와 런타임 의존성을 변경할 때 관련 보안 advisory를 확인하고, 우리가 쓰는 형태가 영향 범위에 드는지 판정합니다.
+2. 인가나 라우팅 경로에 관여하는 package를 먼저 봅니다.
+3. 영향이 없다고 판정해도 그 근거를 남깁니다.
+4. 왜: 이 유형은 코드 diff에 나타나지 않아 코드 리뷰만으로 잡히지 않습니다. middleware처럼 인가 경로에 관여하는 계층은 framework 취약점 하나로 통째로 우회될 수 있습니다.
+
+advisory 수집과 직접 의존성의 패치 PR은 자동화 도구(예: Dependabot)에 맡깁니다. lockfile에만 있는 전이 의존성은 자동 도구가 패치 PR을 만들지 못하는 경우가 많으므로 사람이 주기적으로 일괄 갱신합니다. 갱신 뒤 남은 경고는 1번 기준으로 노출 여부를 판정하고 근거를 남깁니다. 상위 package가 허용 범위를 올리지 않아 갱신되지 않는 package는 package manager의 override로 고정할 수 있으며, override를 바꾼 뒤에는 lockfile을 다시 해석합니다. 어느 영역의 triage를 누가 맡는지는 프로젝트가 정합니다.
+
+## 검증
+
+통합 security check는 보통 없습니다. return URL 검증, 로그 sanitizer, mock auth gate, devtools route gate처럼 경계마다 target test를 두고, lint가 잡을 수 있는 항목(예: `print` 금지)은 lint에 맡깁니다. 어느 경계에 direct test가 없는지는 프로젝트 문서에 적어 둡니다. 나머지 규칙과 advisory 판정은 [코드 리뷰 워크플로우](code-review.md)의 보안 관점에서 확인합니다.
+
+## 관련 문서
+
+- 리뷰에서 보안 관점을 적용하는 절차: [코드 리뷰 워크플로우](code-review.md)
+- 분기·불변식과 외부 의존성 격리: [코딩 스타일](code-style.md)
+- 인증 흐름, 딥링크 계약, 브릿지 계약, 쿠키 계약: 프로젝트의 아키텍처·계약 문서

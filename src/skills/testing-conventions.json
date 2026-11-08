@@ -1,0 +1,6 @@
+{
+  "name": "testing-conventions",
+  "description": "Use when writing or reviewing automated tests: assertions, branches, boundary values, what makes a test fail on a wrong implementation, and when a test is allowed to assert mere existence.",
+  "reads": ["docs/common/testing.md"],
+  "rules": { "claude": { "name": "testing", "paths": ["**/*.test.*", "**/*.spec.*", "**/*_test.dart", "**/__tests__/**", "**/*.stories.*"] } }
+}

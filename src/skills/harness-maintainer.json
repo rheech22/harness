@@ -1,0 +1,9 @@
+{
+  "name": "harness-maintainer",
+  "description": "Use when editing, extending, or reviewing this harness repository itself: adding docs, skills, adapters, runtimes, or changing build/export/link scripts. Not for using the skills it ships.",
+  "reads": [
+    "docs/harness/conventions/principles.md",
+    "docs/harness/conventions/structure.md",
+    "docs/harness/conventions/skills.md"
+  ]
+}
