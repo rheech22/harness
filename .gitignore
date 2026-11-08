@@ -1,0 +1,6 @@
+.DS_Store
+node_modules/
+# 런타임 디렉터리는 어댑터 밖에 생기면 안 된다 (Skills CLI 를 잘못된 agent 대상으로 돌렸을 때 생김)
+/.claude/
+/.codex/
+/.cursor/
