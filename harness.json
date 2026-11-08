@@ -17,6 +17,7 @@
   ],
   "profiles": {
     "common": [
+      "harness-maintainer",
       "ast-grep",
       "ast-grep-outline",
       "find-skills",
@@ -29,7 +30,11 @@
     "find-skills": "vercel-labs/skills",
     "excalibridge": "rheech22/excalibridge"
   },
-  "publish": {},
+  "publish": {
+    "harness-maintainer": {
+      "from": "dist/skills/harness-maintainer"
+    }
+  },
   "tools": {
     "excalibridge": {
       "requiredBy": [
