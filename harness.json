@@ -17,7 +17,14 @@
   ],
   "profiles": {
     "common": [
+      "code-review",
       "harness-maintainer",
+      "docs-writing",
+      "docs-review-loop",
+      "git-commit",
+      "coding-conventions",
+      "testing-conventions",
+      "git-worktrees",
       "ast-grep",
       "ast-grep-outline",
       "find-skills",
@@ -31,8 +38,29 @@
     "excalibridge": "rheech22/excalibridge"
   },
   "publish": {
+    "code-review": {
+      "from": "dist/skills/code-review"
+    },
     "harness-maintainer": {
       "from": "dist/skills/harness-maintainer"
+    },
+    "docs-writing": {
+      "from": "dist/skills/docs-writing"
+    },
+    "docs-review-loop": {
+      "from": "dist/skills/docs-review-loop"
+    },
+    "git-commit": {
+      "from": "dist/skills/git-commit"
+    },
+    "coding-conventions": {
+      "from": "dist/skills/coding-conventions"
+    },
+    "testing-conventions": {
+      "from": "dist/skills/testing-conventions"
+    },
+    "git-worktrees": {
+      "from": "dist/skills/git-worktrees"
     }
   },
   "tools": {

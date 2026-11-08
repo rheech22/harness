@@ -1,0 +1,6 @@
+{
+  "name": "coding-conventions",
+  "description": "Use when writing or changing application code and a judgment call comes up that linters do not settle: comments, naming, branching and state modeling, file splitting, premature abstraction, and secure handling of inputs and secrets.",
+  "reads": ["docs/common/code-style.md", "docs/common/security.md"],
+  "rules": { "claude": { "name": "coding", "paths": ["**/*.{ts,tsx,js,jsx,mjs,cjs,py,dart,go,rs,swift,kt,java}"], "reads": ["docs/common/code-style.md"] } }
+}

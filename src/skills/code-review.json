@@ -1,0 +1,28 @@
+{
+  "name": "code-review",
+  "description": "Use when asked to review code before opening or updating a PR: a branch diff against base, staged or unstaged changes, a commit, or a path. Read-only; reports findings with evidence and writes an HTML report. Do not use for documentation review.",
+  "reads": [
+    "docs/common/code-review.md",
+    "docs/common/report-design.md",
+    "docs/common/prose-style.md"
+  ],
+  "assets": [
+    "assets/report/report-shell.html",
+    "assets/report/code-review-report.html.template",
+    "assets/report/report-shell-lucide-license.txt",
+    "assets/report/report-prose-im-not-ai-license.txt"
+  ],
+  "scripts": [],
+  "profile": {
+    "name": "code-review",
+    "default": "docs/common/profiles/code-review.default.md",
+    "projectPath": "docs/profiles/code-review.md"
+  },
+  "commands": {
+    "claude": {
+      "name": "review",
+      "argumentHint": "[upstream|staged|commit <n>|file <path>]",
+      "description": "Code review (upstream|staged|commit <n>|file <path>). Read-only, evidence-backed, writes an HTML report."
+    }
+  }
+}
