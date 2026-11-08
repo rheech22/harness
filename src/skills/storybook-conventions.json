@@ -1,0 +1,7 @@
+{
+  "name": "storybook-conventions",
+  "description": "Use when writing or reviewing Storybook stories, play tests, and story-based accessibility checks: story structure, naming, tags, and what interaction tests must assert.",
+  "reads": ["docs/web/storybook.md"],
+  "profile": { "name": "storybook", "default": "docs/web/profiles/storybook.default.md", "projectPath": "docs/profiles/storybook.md" },
+  "rules": { "claude": { "name": "storybook", "paths": ["**/*.stories.*"] } }
+}

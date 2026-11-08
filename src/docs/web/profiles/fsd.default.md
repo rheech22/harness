@@ -1,0 +1,68 @@
+---
+title: "FSD 아키텍처 프로젝트 프로필 (기본값)"
+domain: [web]
+kind: profile
+status: current
+related:
+  - ../fsd.md
+---
+
+# FSD 아키텍처 프로젝트 프로필 (기본값)
+
+[FSD 아키텍처](../fsd.md)가 프로젝트마다 달라지는 값을 읽는 자리입니다. 프로젝트 저장소에 `docs/profiles/fsd.md`가 있으면 그 문서가 이 기본값을 대체합니다. 프로젝트 프로필은 아래 절 제목을 그대로 쓰고, 정하지 않은 절은 기본값을 따릅니다.
+
+## 디렉터리 구조
+
+아키텍처 문서의 기본 트리(`app/`, `src/app`, `src/_pages`, `src/widgets`, `src/features`, `src/entities`, `src/shared`)를 그대로 씁니다. `src/app/`과 `src/shared/`의 실제 하위 폴더(관심사 폴더, 라이브러리 목록)는 파일 트리가 소유하며 여기에 복제하지 않습니다. 모노레포에서 FSD를 적용하는 앱의 경로가 따로 있으면 여기 적습니다.
+
+## 레이어 alias
+
+`tsconfig.json`의 `paths`가 소유합니다. 기본값은 아키텍처 문서의 레이어 alias 7개만 둡니다. FSD 레이어 밖에서 허용한 root alias(정적 자산, framework entrypoint 등)가 있으면 여기 나열합니다.
+
+| alias | 대상 | 용도 |
+|---|---|---|
+| (없음) | | |
+
+## FSD 레이어 밖 framework entrypoint
+
+Next.js `app/**`에 더해 framework entrypoint로 취급하는 root 파일 목록입니다. 기본값은 `proxy.ts`, `instrumentation.ts`, `instrumentation-client.ts`입니다. 모니터링 SDK 설정 파일 같은 추가 entrypoint가 있으면 여기 적습니다.
+
+## 서버 API 클라이언트 산출물
+
+- 산출물 위치: `src/shared/api/` (기본값)
+- 런타임 helper 위치: `src/shared/api/runtime/` (기본값)
+- 생성 스크립트와 템플릿 소유자: (없음)
+- endpoint별 public entry 경로(import guard 허용 예외): (없음)
+- ambient namespace 예외와 generator가 참조하는 수작업 파일: (없음)
+
+생성기가 없으면 이 절은 비어 있어도 되며, `shared/api`는 손으로 쓴 API 클라이언트를 라이브러리 단위 public API로 노출합니다.
+
+## 린터 설정 파일과 custom rule
+
+- FSD 린터 설정 파일: `steiger.config.ts` (기본값)
+- `fsd/no-public-api-sidestep` wrapper rule 이름: (없음). wrapper를 두었다면 이름과 추가 exempt 경로를 적습니다.
+- 비활성화한 upstream rule: `fsd/typo-in-layer-name` (`_pages` prefix 때문. 기본값)
+
+## ESLint import guard 대상과 패턴
+
+`no-restricted-imports`에 등록한 대상 glob과 금지 정규식은 ESLint 설정 파일이 소유합니다. 기본값은 아키텍처 문서의 대상·패턴 목록과 같습니다. 추가로 내부 deep import를 금지한 `shared/lib` 라이브러리가 있으면 여기 나열합니다.
+
+## 외부 package 경계
+
+`shared/ui` wrapper를 거쳐야만 import할 수 있는 외부 package 목록입니다. 기본값은 없음입니다. 예: 접근성 primitive 라이브러리.
+
+## 검사 명령
+
+| 검사 | 명령 |
+|---|---|
+| FSD 레이어·public API | `pnpm exec steiger ./src` (기본값) |
+| ESLint import guard | `pnpm lint` (기본값) |
+
+## 등록된 예외
+
+린터 설정의 인라인 코멘트가 source of truth이며 여기에는 종류만 적습니다. 기본값은 모두 없음입니다.
+
+- 단일 사용 슬라이스 예외: (없음)
+- same-layer import 임시 예외(`TODO(fsd)`): (없음)
+- named/default 이중 노출 legacy surface: (없음)
+- colocated test의 자기 슬라이스 alias·deep import legacy pattern: (없음)
