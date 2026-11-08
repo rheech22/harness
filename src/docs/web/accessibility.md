@@ -156,4 +156,4 @@ WCAG 2.2 AA를 고른 이유는 두 가지입니다. 실제 조사에서 나오�
 - 프로젝트 고유 값과 예외: [접근성 프로젝트 프로필](profiles/accessibility.default.md)
 - 색과 token 사용 규칙: [Tailwind CSS 규칙](tailwind.md)
 - Story와 play test 작성: [Storybook 스토리 작성](storybook.md)
-- 코드 리뷰 관점: [코드 리뷰 워크플로우](../common/code-review.md)
+- 리뷰에서 프로젝트 추가 축으로 적용하는 절차: [코드 리뷰 워크플로우](../common/code-review.md)

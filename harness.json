@@ -18,6 +18,7 @@
   "profiles": {
     "common": [
       "code-review",
+      "html-report",
       "harness-maintainer",
       "docs-writing",
       "docs-review-loop",
@@ -31,7 +32,7 @@
       "excalibridge"
     ],
     "writing": [
-      "technical-explanation"
+      "explain"
     ],
     "web": [
       "fsd-architecture",
@@ -49,6 +50,9 @@
   "publish": {
     "code-review": {
       "from": "dist/skills/code-review"
+    },
+    "html-report": {
+      "from": "dist/skills/html-report"
     },
     "harness-maintainer": {
       "from": "dist/skills/harness-maintainer"
@@ -71,8 +75,8 @@
     "git-worktrees": {
       "from": "dist/skills/git-worktrees"
     },
-    "technical-explanation": {
-      "from": "dist/skills/technical-explanation"
+    "explain": {
+      "from": "dist/skills/explain"
     },
     "fsd-architecture": {
       "from": "dist/skills/fsd-architecture"

@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: "Use when asked to review code before opening or updating a PR: a branch diff against base, staged or unstaged changes, a commit, or a path. Read-only; reports findings with evidence and writes an HTML report. Do not use for documentation review."
+description: "Use when asked to review code: a branch diff against base, staged or unstaged changes, a commit, or a path. Reviews first and reports evidence-backed findings in chat, then asks whether to apply fixes or write an HTML report via html-report. Do not use for documentation review."
 metadata: { domain: [common], source: docs, generated: true }
 ---
 
@@ -11,22 +11,12 @@ metadata: { domain: [common], source: docs, generated: true }
 Read the bundled references below in full, in order, before acting. Follow them as the source of truth.
 
 - `references/code-review.md` — 코드 리뷰 워크플로우 (workflow)
-- `references/report-design.md` — 리포트 HTML 디자인 (convention)
 - `references/prose-style.md` — 산문 문체 기준 (convention)
 
 ## Project profile (do this first)
 
 1. Run `git rev-parse --show-toplevel` and read `<toplevel>/docs/profiles/code-review.md` with the Read tool. Do not guess from memory or directory listings.
 2. If the file exists, it overrides the matching sections of `references/profile.default.md`. If it does not exist, use the default for every section.
-3. In your final report state one line: `Profile: <path or "default">` followed by the base ref you used.
+3. In your final report state one line: `Profile: <path or "default">`, followed by the base ref you used when the profile defines one.
 
 Never edit the default; project values belong in the project file.
-
-## Assets
-
-- `assets/report-shell.html`
-- `assets/code-review-report.html.template`
-- `assets/report-shell-lucide-license.txt`
-- `assets/report-prose-im-not-ai-license.txt`
-
-Paths are relative to this skill's directory.

@@ -1,0 +1,22 @@
+{
+  "name": "explain",
+  "description": "Use when the user asks for a structured technical explanation of a code change, a requested or current implementation, or a technical concept, or invokes /explain. Explains in chat with evidence first, then offers an HTML article via html-report. Do not use for code review; use code-review.",
+  "reads": [
+    "docs/writing/explain.md",
+    "docs/common/prose-style.md"
+  ],
+  "assets": [],
+  "scripts": [],
+  "profile": {
+    "name": "explain",
+    "default": "docs/writing/profiles/explain.default.md",
+    "projectPath": "docs/profiles/explain.md"
+  },
+  "commands": {
+    "claude": {
+      "name": "explain",
+      "argumentHint": "[change|implementation|knowledge] <subject>",
+      "description": "Explain a change, implementation, or technical concept in chat, then offer an HTML article."
+    }
+  }
+}
