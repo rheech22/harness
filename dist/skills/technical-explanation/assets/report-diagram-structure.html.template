@@ -1,0 +1,130 @@
+<!--
+  report-shell.html에 넣는 structure 다이어그램 조각입니다.
+  모든 {{ID}}를 페이지 안에서 고유한 접두사로 바꿉니다. 그런 다음 소스 근거에 맞춰
+  경계, 노드, 연결선, 좌표, viewBox를 다시 작성합니다.
+-->
+<figure class="viz viz-breakout">
+  <figcaption class="path" id="{{ID}}-caption">{{CAPTION}}</figcaption>
+  <svg class="viz-desktop" viewBox="0 0 920 460" role="img"
+       aria-labelledby="{{ID}}-caption {{ID}}-title {{ID}}-desc">
+      <title id="{{ID}}-title">{{TITLE}}</title>
+      <desc id="{{ID}}-desc">{{DESCRIPTION}}</desc>
+      <defs>
+        <marker id="{{ID}}-arrow-focus" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="viz-arrowhead-focus" d="M 0 0 L 10 5 L 0 10 z" />
+        </marker>
+        <marker id="{{ID}}-arrow-primary" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="viz-arrowhead-primary" d="M 0 0 L 10 5 L 0 10 z" />
+        </marker>
+        <marker id="{{ID}}-arrow-secondary" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="viz-arrowhead-secondary" d="M 0 0 L 10 5 L 0 10 z" />
+        </marker>
+      </defs>
+
+      <!-- 경계, 연결선, 노드 순서로 그려 연결선이 노드 뒤로 지나가게 합니다. -->
+      <rect class="viz-boundary" x="35" y="45" width="255" height="350" rx="12" />
+      <text class="viz-boundary-label" x="55" y="72">{{BOUNDARY_A}}</text>
+      <rect class="viz-boundary" x="330" y="45" width="255" height="350" rx="12" />
+      <text class="viz-boundary-label" x="350" y="72">{{BOUNDARY_B}}</text>
+      <rect class="viz-boundary" x="625" y="45" width="260" height="350" rx="12" />
+      <text class="viz-boundary-label" x="645" y="72">{{BOUNDARY_C}}</text>
+
+      <path class="viz-edge viz-edge-focus" d="M 260 145 H 395"
+            marker-end="url(#{{ID}}-arrow-focus)" />
+      <text class="viz-edge-label" x="327.5" y="132" text-anchor="middle">{{COMMAND}}</text>
+      <path class="viz-edge viz-edge-primary" d="M 535 145 H 665"
+            marker-end="url(#{{ID}}-arrow-primary)" />
+      <text class="viz-edge-label" x="600" y="132" text-anchor="middle">{{DEPENDENCY}}</text>
+      <path class="viz-edge viz-edge-secondary viz-edge-return" d="M 665 305 H 535"
+            marker-end="url(#{{ID}}-arrow-secondary)" />
+      <text class="viz-edge-label" x="600" y="292" text-anchor="middle">{{STATE_RETURN}}</text>
+      <path class="viz-edge viz-edge-secondary" d="M 395 305 H 260"
+            marker-end="url(#{{ID}}-arrow-secondary)" />
+
+      <rect class="viz-node viz-node-primary" x="90" y="110" width="170" height="70" rx="8" />
+      <text class="viz-label" x="175" y="140" text-anchor="middle">{{OWNER_A}}</text>
+      <text class="viz-meta" x="175" y="160" text-anchor="middle">{{OWNER_A_DETAIL}}</text>
+
+      <rect class="viz-node viz-node-focus" x="395" y="110" width="140" height="70" rx="8" />
+      <text class="viz-label" x="465" y="140" text-anchor="middle">{{FOCUS_OWNER}}</text>
+      <text class="viz-meta" x="465" y="160" text-anchor="middle">{{FOCUS_DETAIL}}</text>
+
+      <rect class="viz-node viz-node-context" x="665" y="110" width="180" height="70" rx="8" />
+      <text class="viz-label" x="755" y="140" text-anchor="middle">{{EXTERNAL_OWNER}}</text>
+      <text class="viz-meta" x="755" y="160" text-anchor="middle">{{EXTERNAL_DETAIL}}</text>
+
+      <rect class="viz-node viz-node-context" x="90" y="270" width="170" height="70" rx="8" />
+      <text class="viz-label" x="175" y="300" text-anchor="middle">{{CONSUMER}}</text>
+      <text class="viz-meta" x="175" y="320" text-anchor="middle">{{CONSUMER_DETAIL}}</text>
+
+      <rect class="viz-node viz-node-primary" x="395" y="270" width="140" height="70" rx="8" />
+      <text class="viz-label" x="465" y="300" text-anchor="middle">{{STATE_OWNER}}</text>
+      <text class="viz-meta" x="465" y="320" text-anchor="middle">{{STATE_DETAIL}}</text>
+
+      <rect class="viz-node viz-node-unknown" x="665" y="270" width="180" height="70" rx="8" />
+      <text class="viz-label" x="755" y="300" text-anchor="middle">{{UNKNOWN_OWNER}}</text>
+      <text class="viz-meta" x="755" y="320" text-anchor="middle">unknown</text>
+  </svg>
+  <svg class="viz-mobile" viewBox="0 0 360 950" role="img"
+       aria-labelledby="{{ID}}-caption {{ID}}-mobile-title {{ID}}-mobile-desc">
+    <title id="{{ID}}-mobile-title">{{TITLE}}</title>
+    <desc id="{{ID}}-mobile-desc">{{DESCRIPTION}}</desc>
+    <defs>
+      <marker id="{{ID}}-mobile-arrow-focus" viewBox="0 0 10 10" refX="9" refY="5"
+              markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path class="viz-arrowhead-focus" d="M 0 0 L 10 5 L 0 10 z" />
+      </marker>
+      <marker id="{{ID}}-mobile-arrow-primary" viewBox="0 0 10 10" refX="9" refY="5"
+              markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path class="viz-arrowhead-primary" d="M 0 0 L 10 5 L 0 10 z" />
+      </marker>
+      <marker id="{{ID}}-mobile-arrow-secondary" viewBox="0 0 10 10" refX="9" refY="5"
+              markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path class="viz-arrowhead-secondary" d="M 0 0 L 10 5 L 0 10 z" />
+      </marker>
+    </defs>
+
+    <rect class="viz-boundary" x="20" y="20" width="320" height="260" rx="12" />
+    <text class="viz-boundary-label" x="40" y="48">{{BOUNDARY_A}}</text>
+    <rect class="viz-boundary viz-boundary-focus" x="20" y="335" width="320" height="260" rx="12" />
+    <text class="viz-boundary-label" x="40" y="363">{{BOUNDARY_B}}</text>
+    <rect class="viz-boundary" x="20" y="650" width="320" height="260" rx="12" />
+    <text class="viz-boundary-label" x="40" y="678">{{BOUNDARY_C}}</text>
+
+    <path class="viz-edge viz-edge-focus" d="M 315 110 H 330 V 425 H 315"
+          marker-end="url(#{{ID}}-mobile-arrow-focus)" />
+    <text class="viz-edge-label" x="318" y="310" text-anchor="end">{{COMMAND}}</text>
+    <path class="viz-edge viz-edge-primary" d="M 315 425 H 330 V 740 H 315"
+          marker-end="url(#{{ID}}-mobile-arrow-primary)" />
+    <text class="viz-edge-label" x="318" y="625" text-anchor="end">{{DEPENDENCY}}</text>
+    <path class="viz-edge viz-edge-secondary viz-edge-return" d="M 45 855 H 30 V 540 H 45"
+          marker-end="url(#{{ID}}-mobile-arrow-secondary)" />
+    <text class="viz-edge-label" x="42" y="630">{{STATE_RETURN}}</text>
+    <path class="viz-edge viz-edge-secondary" d="M 45 540 H 30 V 225 H 45"
+          marker-end="url(#{{ID}}-mobile-arrow-secondary)" />
+
+    <rect class="viz-node viz-node-primary" x="45" y="75" width="270" height="70" rx="8" />
+    <text class="viz-label" x="180" y="103" text-anchor="middle">{{OWNER_A}}</text>
+    <text class="viz-meta" x="180" y="123" text-anchor="middle">{{OWNER_A_DETAIL}}</text>
+    <rect class="viz-node viz-node-context" x="45" y="190" width="270" height="70" rx="8" />
+    <text class="viz-label" x="180" y="218" text-anchor="middle">{{CONSUMER}}</text>
+    <text class="viz-meta" x="180" y="238" text-anchor="middle">{{CONSUMER_DETAIL}}</text>
+
+    <rect class="viz-node viz-node-focus" x="45" y="390" width="270" height="70" rx="8" />
+    <text class="viz-label" x="180" y="418" text-anchor="middle">{{FOCUS_OWNER}}</text>
+    <text class="viz-meta" x="180" y="438" text-anchor="middle">{{FOCUS_DETAIL}}</text>
+    <rect class="viz-node viz-node-primary" x="45" y="505" width="270" height="70" rx="8" />
+    <text class="viz-label" x="180" y="533" text-anchor="middle">{{STATE_OWNER}}</text>
+    <text class="viz-meta" x="180" y="553" text-anchor="middle">{{STATE_DETAIL}}</text>
+
+    <rect class="viz-node viz-node-context" x="45" y="705" width="270" height="70" rx="8" />
+    <text class="viz-label" x="180" y="733" text-anchor="middle">{{EXTERNAL_OWNER}}</text>
+    <text class="viz-meta" x="180" y="753" text-anchor="middle">{{EXTERNAL_DETAIL}}</text>
+    <rect class="viz-node viz-node-unknown" x="45" y="820" width="270" height="70" rx="8" />
+    <text class="viz-label" x="180" y="848" text-anchor="middle">{{UNKNOWN_OWNER}}</text>
+    <text class="viz-meta" x="180" y="868" text-anchor="middle">unknown</text>
+  </svg>
+</figure>

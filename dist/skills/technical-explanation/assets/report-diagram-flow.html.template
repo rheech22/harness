@@ -1,0 +1,128 @@
+<!--
+  report-shell.html에 넣는 flow 다이어그램 조각입니다.
+  모든 {{ID}}를 페이지 안에서 고유한 접두사로 바꿉니다. 그런 다음 소스 근거에 맞춰
+  라벨, 노드, 연결선, 좌표, viewBox를 다시 작성합니다.
+-->
+<figure class="viz viz-breakout">
+  <figcaption class="path" id="{{ID}}-caption">{{CAPTION}}</figcaption>
+  <svg class="viz-desktop" viewBox="0 0 920 340" role="img"
+       aria-labelledby="{{ID}}-caption {{ID}}-title {{ID}}-desc">
+      <title id="{{ID}}-title">{{TITLE}}</title>
+      <desc id="{{ID}}-desc">{{DESCRIPTION}}</desc>
+      <defs>
+        <marker id="{{ID}}-arrow-focus" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="viz-arrowhead-focus" d="M 0 0 L 10 5 L 0 10 z" />
+        </marker>
+        <marker id="{{ID}}-arrow-primary" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="viz-arrowhead-primary" d="M 0 0 L 10 5 L 0 10 z" />
+        </marker>
+        <marker id="{{ID}}-arrow-secondary" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="viz-arrowhead-secondary" d="M 0 0 L 10 5 L 0 10 z" />
+        </marker>
+      </defs>
+
+      <!-- 연결선이 노드 뒤로 지나가도록 연결선을 노드보다 먼저 그립니다. -->
+      <path class="viz-edge viz-edge-primary" d="M 190 95 H 300"
+            marker-end="url(#{{ID}}-arrow-primary)" />
+      <path class="viz-edge viz-edge-focus" d="M 440 95 H 515"
+            marker-end="url(#{{ID}}-arrow-focus)" />
+      <path class="viz-edge viz-edge-primary" d="M 605 95 H 715"
+            marker-end="url(#{{ID}}-arrow-primary)" />
+      <text class="viz-edge-label" x="660" y="82">{{PRIMARY_CONDITION}}</text>
+      <path class="viz-edge viz-edge-secondary viz-edge-optional"
+            d="M 560 140 V 255 H 715" marker-end="url(#{{ID}}-arrow-secondary)" />
+      <text class="viz-edge-label" x="575" y="245">{{ALTERNATE_CONDITION}}</text>
+
+      <rect class="viz-node viz-node-context" x="50" y="60" width="140" height="70" rx="8" />
+      <text class="viz-label" x="120" y="90" text-anchor="middle">{{START}}</text>
+      <text class="viz-meta" x="120" y="110" text-anchor="middle">{{START_DETAIL}}</text>
+
+      <rect class="viz-node viz-node-primary" x="300" y="60" width="140" height="70" rx="8" />
+      <text class="viz-label" x="370" y="90" text-anchor="middle">{{ACTION}}</text>
+      <text class="viz-meta" x="370" y="110" text-anchor="middle">{{ACTION_DETAIL}}</text>
+
+      <path class="viz-node viz-node-focus" d="M 560 45 L 615 95 L 560 145 L 505 95 Z" />
+      <text class="viz-label" x="560" y="91" text-anchor="middle">{{DECISION}}</text>
+      <text class="viz-meta" x="560" y="109" text-anchor="middle">{{DECISION_DETAIL}}</text>
+
+      <rect class="viz-node viz-node-primary" x="715" y="60" width="155" height="70" rx="8" />
+      <text class="viz-label" x="792.5" y="90" text-anchor="middle">{{PRIMARY_OUTCOME}}</text>
+      <text class="viz-meta" x="792.5" y="110" text-anchor="middle">{{PRIMARY_DETAIL}}</text>
+
+      <rect class="viz-node viz-node-context" x="715" y="220" width="155" height="70" rx="8" />
+      <text class="viz-label" x="792.5" y="250" text-anchor="middle">{{ALTERNATE_OUTCOME}}</text>
+      <text class="viz-meta" x="792.5" y="270" text-anchor="middle">{{ALTERNATE_DETAIL}}</text>
+
+      <!-- 분기 후 합류 변형. 두 갈래가 같은 결과로 모이면 viewBox를 "0 0 1140 340"으로 바꾸고
+           아래를 살립니다. 두 연결선은 합류 노드의 같은 변에 서로 다른 높이로 들어가야
+           화살촉이 겹치지 않습니다.
+      <path class="viz-edge viz-edge-focus" d="M 870 95 H 910 V 135 H 950"
+            marker-end="url(#{{ID}}-arrow-focus)" />
+      <path class="viz-edge viz-edge-secondary" d="M 870 255 H 910 V 165 H 950"
+            marker-end="url(#{{ID}}-arrow-secondary)" />
+      <rect class="viz-node viz-node-focus" x="950" y="115" width="150" height="70" rx="8" />
+      <text class="viz-label" x="1025" y="145" text-anchor="middle">{{MERGE}}</text>
+      <text class="viz-meta" x="1025" y="165" text-anchor="middle">{{MERGE_DETAIL}}</text>
+      -->
+  </svg>
+  <svg class="viz-mobile" viewBox="0 0 360 620" role="img"
+       aria-labelledby="{{ID}}-caption {{ID}}-mobile-title {{ID}}-mobile-desc">
+    <title id="{{ID}}-mobile-title">{{TITLE}}</title>
+    <desc id="{{ID}}-mobile-desc">{{DESCRIPTION}}</desc>
+    <defs>
+      <marker id="{{ID}}-mobile-arrow-focus" viewBox="0 0 10 10" refX="9" refY="5"
+              markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path class="viz-arrowhead-focus" d="M 0 0 L 10 5 L 0 10 z" />
+      </marker>
+      <marker id="{{ID}}-mobile-arrow-primary" viewBox="0 0 10 10" refX="9" refY="5"
+              markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path class="viz-arrowhead-primary" d="M 0 0 L 10 5 L 0 10 z" />
+      </marker>
+      <marker id="{{ID}}-mobile-arrow-secondary" viewBox="0 0 10 10" refX="9" refY="5"
+              markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path class="viz-arrowhead-secondary" d="M 0 0 L 10 5 L 0 10 z" />
+      </marker>
+    </defs>
+
+    <path class="viz-edge viz-edge-primary" d="M 180 90 V 125"
+          marker-end="url(#{{ID}}-mobile-arrow-primary)" />
+    <path class="viz-edge viz-edge-focus" d="M 180 195 V 235"
+          marker-end="url(#{{ID}}-mobile-arrow-focus)" />
+    <path class="viz-edge viz-edge-primary" d="M 180 345 V 395"
+          marker-end="url(#{{ID}}-mobile-arrow-primary)" />
+    <text class="viz-edge-label" x="194" y="377">{{PRIMARY_CONDITION}}</text>
+    <path class="viz-edge viz-edge-secondary viz-edge-optional" d="M 235 290 H 325 V 525 H 285"
+          marker-end="url(#{{ID}}-mobile-arrow-secondary)" />
+    <text class="viz-edge-label" x="270" y="278">{{ALTERNATE_CONDITION}}</text>
+
+    <rect class="viz-node viz-node-context" x="55" y="20" width="250" height="70" rx="8" />
+    <text class="viz-label" x="180" y="48" text-anchor="middle">{{START}}</text>
+    <text class="viz-meta" x="180" y="68" text-anchor="middle">{{START_DETAIL}}</text>
+    <rect class="viz-node viz-node-primary" x="55" y="125" width="250" height="70" rx="8" />
+    <text class="viz-label" x="180" y="153" text-anchor="middle">{{ACTION}}</text>
+    <text class="viz-meta" x="180" y="173" text-anchor="middle">{{ACTION_DETAIL}}</text>
+    <path class="viz-node viz-node-focus" d="M 180 235 L 235 290 L 180 345 L 125 290 Z" />
+    <text class="viz-label" x="180" y="286" text-anchor="middle">{{DECISION}}</text>
+    <text class="viz-meta" x="180" y="304" text-anchor="middle">{{DECISION_DETAIL}}</text>
+    <rect class="viz-node viz-node-primary" x="55" y="395" width="250" height="70" rx="8" />
+    <text class="viz-label" x="180" y="423" text-anchor="middle">{{PRIMARY_OUTCOME}}</text>
+    <text class="viz-meta" x="180" y="443" text-anchor="middle">{{PRIMARY_DETAIL}}</text>
+    <rect class="viz-node viz-node-context" x="35" y="525" width="250" height="70" rx="8" />
+    <text class="viz-label" x="160" y="553" text-anchor="middle">{{ALTERNATE_OUTCOME}}</text>
+    <text class="viz-meta" x="160" y="573" text-anchor="middle">{{ALTERNATE_DETAIL}}</text>
+
+    <!-- 분기 후 합류 변형. viewBox를 "0 0 360 760"으로 바꾸고 아래를 살립니다. 세로 화면에서는
+         주 경로를 오른쪽으로 돌려 대체 결과 노드를 지나가게 합니다.
+    <path class="viz-edge viz-edge-focus" d="M 305 465 H 335 V 690 H 305"
+          marker-end="url(#{{ID}}-mobile-arrow-focus)" />
+    <path class="viz-edge viz-edge-secondary" d="M 160 595 V 655"
+          marker-end="url(#{{ID}}-mobile-arrow-secondary)" />
+    <rect class="viz-node viz-node-focus" x="55" y="655" width="250" height="70" rx="8" />
+    <text class="viz-label" x="180" y="683" text-anchor="middle">{{MERGE}}</text>
+    <text class="viz-meta" x="180" y="703" text-anchor="middle">{{MERGE_DETAIL}}</text>
+    -->
+  </svg>
+</figure>

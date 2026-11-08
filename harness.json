@@ -29,6 +29,9 @@
       "ast-grep-outline",
       "find-skills",
       "excalibridge"
+    ],
+    "writing": [
+      "technical-explanation"
     ]
   },
   "external": {
@@ -61,6 +64,9 @@
     },
     "git-worktrees": {
       "from": "dist/skills/git-worktrees"
+    },
+    "technical-explanation": {
+      "from": "dist/skills/technical-explanation"
     }
   },
   "tools": {

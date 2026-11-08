@@ -1,0 +1,91 @@
+<!--
+  report-shell.html에 넣는 compare 다이어그램 조각입니다.
+  모든 {{ID}}를 페이지 안에서 고유한 접두사로 바꿉니다. 그런 다음 소스 근거에 맞춰
+  양쪽 상태, 변경 관계, 좌표, viewBox를 다시 작성합니다.
+-->
+<figure class="viz viz-breakout">
+  <figcaption class="path" id="{{ID}}-caption">{{CAPTION}}</figcaption>
+  <svg class="viz-desktop" viewBox="0 0 920 380" role="img"
+       aria-labelledby="{{ID}}-caption {{ID}}-title {{ID}}-desc">
+      <title id="{{ID}}-title">{{TITLE}}</title>
+      <desc id="{{ID}}-desc">{{DESCRIPTION}}</desc>
+      <defs>
+        <marker id="{{ID}}-arrow-focus" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="viz-arrowhead-focus" d="M 0 0 L 10 5 L 0 10 z" />
+        </marker>
+        <marker id="{{ID}}-arrow-secondary" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="viz-arrowhead-secondary" d="M 0 0 L 10 5 L 0 10 z" />
+        </marker>
+      </defs>
+
+      <rect class="viz-boundary" x="35" y="40" width="385" height="300" rx="12" />
+      <text class="viz-boundary-label" x="55" y="70">{{BEFORE_LABEL}}</text>
+      <rect class="viz-boundary viz-boundary-focus" x="500" y="40" width="385" height="300" rx="12" />
+      <text class="viz-boundary-label" x="520" y="70">{{AFTER_LABEL}}</text>
+
+      <path class="viz-edge viz-edge-focus" d="M 420 190 H 500"
+            marker-end="url(#{{ID}}-arrow-focus)" />
+      <text class="viz-edge-label" x="460" y="174" text-anchor="middle">{{CHANGE}}</text>
+
+      <rect class="viz-node viz-node-context" x="95" y="105" width="265" height="70" rx="8" />
+      <text class="viz-label" x="227.5" y="135" text-anchor="middle">{{BEFORE_PRIMARY}}</text>
+      <text class="viz-meta" x="227.5" y="155" text-anchor="middle">{{BEFORE_PRIMARY_DETAIL}}</text>
+      <path class="viz-edge viz-edge-secondary" d="M 227.5 175 V 235"
+            marker-end="url(#{{ID}}-arrow-secondary)" />
+      <rect class="viz-node viz-node-context" x="95" y="235" width="265" height="65" rx="8" />
+      <text class="viz-label" x="227.5" y="264" text-anchor="middle">{{BEFORE_OUTCOME}}</text>
+      <text class="viz-meta" x="227.5" y="284" text-anchor="middle">{{BEFORE_OUTCOME_DETAIL}}</text>
+
+      <rect class="viz-node viz-node-focus" x="560" y="105" width="265" height="70" rx="8" />
+      <text class="viz-label" x="692.5" y="135" text-anchor="middle">{{AFTER_PRIMARY}}</text>
+      <text class="viz-meta" x="692.5" y="155" text-anchor="middle">{{AFTER_PRIMARY_DETAIL}}</text>
+      <path class="viz-edge viz-edge-focus" d="M 692.5 175 V 235"
+            marker-end="url(#{{ID}}-arrow-focus)" />
+      <rect class="viz-node viz-node-primary" x="560" y="235" width="265" height="65" rx="8" />
+      <text class="viz-label" x="692.5" y="264" text-anchor="middle">{{AFTER_OUTCOME}}</text>
+      <text class="viz-meta" x="692.5" y="284" text-anchor="middle">{{AFTER_OUTCOME_DETAIL}}</text>
+  </svg>
+  <svg class="viz-mobile" viewBox="0 0 360 680" role="img"
+       aria-labelledby="{{ID}}-caption {{ID}}-mobile-title {{ID}}-mobile-desc">
+    <title id="{{ID}}-mobile-title">{{TITLE}}</title>
+    <desc id="{{ID}}-mobile-desc">{{DESCRIPTION}}</desc>
+    <defs>
+      <marker id="{{ID}}-mobile-arrow-focus" viewBox="0 0 10 10" refX="9" refY="5"
+              markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path class="viz-arrowhead-focus" d="M 0 0 L 10 5 L 0 10 z" />
+      </marker>
+      <marker id="{{ID}}-mobile-arrow-secondary" viewBox="0 0 10 10" refX="9" refY="5"
+              markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path class="viz-arrowhead-secondary" d="M 0 0 L 10 5 L 0 10 z" />
+      </marker>
+    </defs>
+
+    <rect class="viz-boundary" x="20" y="20" width="320" height="260" rx="12" />
+    <text class="viz-boundary-label" x="40" y="48">{{BEFORE_LABEL}}</text>
+    <path class="viz-edge viz-edge-secondary" d="M 180 145 V 190"
+          marker-end="url(#{{ID}}-mobile-arrow-secondary)" />
+    <rect class="viz-node viz-node-context" x="45" y="75" width="270" height="70" rx="8" />
+    <text class="viz-label" x="180" y="103" text-anchor="middle">{{BEFORE_PRIMARY}}</text>
+    <text class="viz-meta" x="180" y="123" text-anchor="middle">{{BEFORE_PRIMARY_DETAIL}}</text>
+    <rect class="viz-node viz-node-context" x="45" y="190" width="270" height="65" rx="8" />
+    <text class="viz-label" x="180" y="217" text-anchor="middle">{{BEFORE_OUTCOME}}</text>
+    <text class="viz-meta" x="180" y="237" text-anchor="middle">{{BEFORE_OUTCOME_DETAIL}}</text>
+
+    <path class="viz-edge viz-edge-focus" d="M 180 280 V 365"
+          marker-end="url(#{{ID}}-mobile-arrow-focus)" />
+    <text class="viz-edge-label" x="194" y="328">{{CHANGE}}</text>
+
+    <rect class="viz-boundary viz-boundary-focus" x="20" y="365" width="320" height="280" rx="12" />
+    <text class="viz-boundary-label" x="40" y="393">{{AFTER_LABEL}}</text>
+    <path class="viz-edge viz-edge-focus" d="M 180 490 V 535"
+          marker-end="url(#{{ID}}-mobile-arrow-focus)" />
+    <rect class="viz-node viz-node-focus" x="45" y="420" width="270" height="70" rx="8" />
+    <text class="viz-label" x="180" y="448" text-anchor="middle">{{AFTER_PRIMARY}}</text>
+    <text class="viz-meta" x="180" y="468" text-anchor="middle">{{AFTER_PRIMARY_DETAIL}}</text>
+    <rect class="viz-node viz-node-primary" x="45" y="535" width="270" height="70" rx="8" />
+    <text class="viz-label" x="180" y="563" text-anchor="middle">{{AFTER_OUTCOME}}</text>
+    <text class="viz-meta" x="180" y="583" text-anchor="middle">{{AFTER_OUTCOME_DETAIL}}</text>
+  </svg>
+</figure>
