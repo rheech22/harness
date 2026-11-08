@@ -1,6 +1,6 @@
 # harness
 
-개인 에이전트 하네스. 정책은 `src/docs/`에 한 번만 쓰고, 각 런타임에는 그 런타임의 로딩 수단으로 전달한다. 런타임별 사정은 어댑터 문서가 소유한다: [Claude Code](src/adapters/claude/README.md), [Codex](src/adapters/codex/README.md). 이 레포 자체의 원칙·결정·절차는 [`src/docs/harness/`](src/docs/harness/conventions/principles.md)가 소유한다.
+개인 에이전트 하네스. 정책은 `src/docs/`에 한 번만 쓰고, 각 런타임에는 그 런타임의 로딩 수단으로 전달한다. 런타임별 사정은 각 어댑터의 `src/adapters/<runtime>/README.md`가 소유한다. 이 레포 자체의 원칙·결정·절차는 [`src/docs/harness/`](src/docs/harness/conventions/principles.md)가 소유한다.
 
 ## 폴더
 
@@ -11,17 +11,17 @@ harness/
   src/                 원본. 사람이 편집하는 곳 전부
     docs/<domain>/     기준·절차 문서 (frontmatter: title, domain, kind, status, related). profiles/ 에 프로젝트 프로필 기본값
       harness/         이 레포 자신: conventions(원칙·구조·스킬) guides(릴리스·검증·런타임 추가) decisions(ADR) history
-    skills/<name>.json 스킬 선언: description, reads(순서), assets, scripts, profile, commands, rules
-    assets/<group>/    번들에 실어 보낼 템플릿·라이선스·검사 스크립트
-    tools/<name>/      코드 패키지 (자기 SKILL.md 와 references). 지금은 비어 있고 excalibridge 가 첫 입주 예정
+    skills/<name>.json 스킬 선언
+    assets/<group>/    번들에 실어 보낼 파일
+    tools/<name>/      코드 패키지. 자기 SKILL.md 와 references 를 가짐
     hooks/             런타임이 공유하는 훅 스크립트 본체
     templates/project/ 프로젝트 뼈대 중 런타임 중립 부분
-    templates/docs/    문서 타입별 템플릿 8종 (convention · guide · decision · history · backlog · architecture · contract · troubleshooting)
-    adapters/<runtime>/ 런타임 전용은 전부 여기. adapter.json(경로·링크) + README(근거·검증) + 배선 조각
-  dist/                산출물. 편집 금지. 커밋은 한다. 쓰는 주체는 도구뿐 (build, export, Skills CLI)
-    skills/<name>/     build  → 내 머신 배포 (~/.agents/skills 로 링크). external 도 여기 설치
-    adapters/<rt>/     build  → 생성된 명령과 경로 조건 규칙
-    packages/<name>/   export → 외부 배포 스냅샷
+    templates/docs/    문서 타입별 템플릿
+    adapters/<runtime>/ 런타임 전용. adapter.json 과 README
+  dist/                산출물. 커밋은 하되 편집하지 않는다
+    skills/<name>/     내 머신 배포. custom 은 build 가, external 은 Skills CLI 가 쓴다
+    adapters/<rt>/     생성된 명령과 규칙
+    packages/<name>/   외부 배포 스냅샷
   scripts/             build · check · export · link · init-project
 ```
 
@@ -58,7 +58,7 @@ AGENTS.md, rules, commands, hooks ──link──▶ 런타임별 자리   각 
 
 ## 분류는 메타데이터로
 
-`src/docs/`는 도메인 폴더로 나누고 `dist/skills/`는 평평하다. 문서 frontmatter의 `domain`이 스킬에 전파되고, `harness.json`의 `profiles`가 링크 대상을 고른다. 로딩 판단에는 쓰지 않는다. 현재 도메인은 `common`(코드·문서·커밋·리뷰·worktree), `writing`(기술 설명 아티클·다이어그램), `web`(FSD, Tailwind, Storybook, 접근성), `harness`(이 레포)다.
+`src/docs/`는 도메인 폴더로 나누고 `dist/skills/`는 평평하다. 문서 frontmatter의 `domain`이 스킬에 전파되고, `harness.json`의 `profiles`가 링크 대상을 고른다. 로딩 판단에는 쓰지 않는다.
 
 ```yaml
 # src/docs/<domain>/<doc>.md 의 frontmatter — 문서는 자기 분류만 밝힌다
