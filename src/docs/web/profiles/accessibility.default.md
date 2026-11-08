@@ -1,0 +1,78 @@
+---
+title: "웹 접근성 프로젝트 프로필 (기본값)"
+domain: [web]
+kind: profile
+status: current
+related:
+  - ../accessibility.md
+---
+
+# 웹 접근성 프로젝트 프로필 (기본값)
+
+[웹 접근성 기준](../accessibility.md)이 프로젝트마다 달라지는 값을 읽는 자리입니다. 프로젝트 저장소에 `docs/profiles/accessibility.md`가 있으면 그 문서가 이 기본값을 대체합니다. 프로젝트 프로필은 아래 절 제목을 그대로 쓰고, 정하지 않은 절은 기본값을 따릅니다.
+
+## 적용 범위 예외 경로
+
+접근성 검증을 요구하지 않는 실험 경로와 prototype 디렉터리입니다. 기본값은 없음입니다. 예: `/lab/*`, `/dev/*`, `prototypes/**`.
+
+## 핵심 흐름과 적용 순서
+
+접근성 기준을 먼저 적용하는 핵심 사용자 흐름의 순서입니다. 기본값은 "가입·로그인 → 주요 과업 → 계정"입니다. 남은 확인 작업을 기록하는 backlog 문서가 있으면 경로를 적습니다.
+
+## 확인 locale
+
+필수 확인 환경에서 함께 확인할 locale 목록입니다. 기본값은 제품의 기본 locale 하나입니다. locale 전용 화면이 있으면 그 사실을 적습니다.
+
+## 공용 overlay·알림 컴포넌트
+
+접근성 기준의 Overlay·상태 알림 절이 역할 이름으로 부르는 구현의 실제 이름입니다. 기본값은 역할 이름 그대로이며, 프로젝트가 구현한 이름으로 바꿉니다.
+
+| 역할 | 이름 |
+|---|---|
+| dialog 진입 함수 | (없음). 예: `showDialog` |
+| drawer 진입 함수 | (없음). 예: `showDrawer` |
+| 대상을 지정해 닫는 함수 | (없음). 예: `closeAndFocus` |
+| 일시적 overlay 컨테이너 | (없음). 예: `DialogContainer`, `DrawerContainer` |
+| 공용 modal layer hook·모듈 | (없음). 예: `useModalLayer`, `holdModalLayer` |
+| gesture hook | (없음). 예: `useSnapGesture` |
+| Tab 가둠 helper | (없음). 예: `trapTabWithin` |
+| Android 뒤로가기 handler | (없음). 예: `useBackButtonHandler` |
+| inert에서 제외하는 영구 영역 속성 | (없음). 예: `A11Y_PERSISTENT_ATTR` |
+| 공용 announcer | (없음) |
+| Escape 처리 표시 helper | (없음). 예: `hideOnEscapeAndMarkHandled` |
+
+별도 알림 정책(예: 스트리밍 응답의 알림 시점)을 정한 ADR이 있으면 여기 연결합니다.
+
+## 폼 제출 helper
+
+Enter 제출 규칙을 구현한 helper의 이름입니다. 기본값은 없음입니다. 예: 공용 입력 컴포넌트의 `onEnterSubmit` prop, 범위 단위 `useEnterSubmitWithin` hook, 판정 함수 `isEnterSubmit`.
+
+## 접근성 primitive 라이브러리 경계
+
+`shared/ui` wrapper에서만 import할 수 있는 접근성 primitive 라이브러리와 그 경계를 정한 ADR입니다. 기본값은 없음입니다.
+
+## 프로젝트 예외 결정
+
+의도적으로 지키지 않는 WCAG 기준입니다. 기준 번호, 범위, 근거 ADR을 적습니다. 기본값은 없음입니다.
+
+| 기준 | 범위 | 근거 |
+|---|---|---|
+| (없음) | | |
+
+## 정적 검사 설정
+
+`jsx-a11y` recommended에서 조정한 규칙과 이유, 검사에서 제외한 경로입니다. 기본값은 조정 없음, 제외 없음입니다.
+
+## 테스트 tag와 명령
+
+| 항목 | 값 |
+|---|---|
+| 접근성 브라우저 검증 story tag | (없음). 예: `a11y-ci` |
+| Storybook test 명령 | `pnpm test:storybook` (기본값) |
+| CI에서 interaction test 실행 여부 | 실행하지 않음 (기본값) |
+
+Storybook 프로필의 테스트 tag와 일치시킵니다.
+
+## axe 제외 규칙
+
+Storybook axe 검사에서 제외한 규칙과 이유, 대신 추적하는 위치입니다. 기본값은 `color-contrast`를 제외하고 디자인 token 결정으로 추적합니다.

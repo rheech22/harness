@@ -1,0 +1,6 @@
+{
+  "name": "web-ui-conventions",
+  "description": "Use when writing or reviewing Tailwind CSS v4 class composition, design tokens via @theme, component abstraction of repeated UI, conditional classes, and animation lifecycle cleanup in React.",
+  "reads": ["docs/web/tailwind.md", "docs/web/animation-lifecycle.md"],
+  "profile": { "name": "tailwind", "default": "docs/web/profiles/tailwind.default.md", "projectPath": "docs/profiles/tailwind.md" }
+}
