@@ -30,4 +30,4 @@ related:
 
 ## 현재 상태
 
-`html-report`는 `common` 프로필에 속하고 `explain`은 `writing` 프로필에 남았다. 새 흐름의 실제 호출 검증(채팅 요약 뒤 `html-report` 로드까지)은 이 기록 시점에 수행하지 않았다.
+`html-report`는 `common` 프로필에 속하고 `explain`은 `writing` 프로필에 남았다. 새 흐름의 실제 호출 검증은 같은 날 [외부 스킬 설치 경로 기록](2026-11-09-external-skills.md)의 현재 상태에 있다.

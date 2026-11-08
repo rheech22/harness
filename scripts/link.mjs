@@ -31,6 +31,15 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const sharedSkills = expand(m.targets.shared.skills);
   const selected = new Set(profiles.flatMap((p) => { if (!m.profiles[p]) throw new Error(`unknown profile ${p}`); return m.profiles[p]; }));
   const distributed = [...selected].filter((n) => fs.existsSync(path.join(root, "dist/skills", n)));
+  // 생성된 명령·규칙은 스킬 선언이 소유한다. 선택한 프로필의 스킬이 선언한 것만 링크한다.
+  const skillsDir = path.join(root, "src/skills");
+  const ownedEntries = new Set();
+  for (const f of fs.existsSync(skillsDir) ? fs.readdirSync(skillsDir).filter((n) => n.endsWith(".json")) : []) {
+    const sm = JSON.parse(fs.readFileSync(path.join(skillsDir, f), "utf8"));
+    if (!selected.has(sm.name)) continue;
+    for (const [rt, c] of Object.entries(sm.commands ?? {})) ownedEntries.add(`dist/adapters/${rt}/commands/${c.name}.md`);
+    for (const [rt, r] of Object.entries(sm.rules ?? {})) ownedEntries.add(`dist/adapters/${rt}/rules/${r.name}.md`);
+  }
 
   const plan = [];
   const addPlan = (link, to, note = "") => plan.push({ link, to, note });
@@ -47,7 +56,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
       if (rule.src === "@shared.skills/*") { for (const name of distributed) for (const t of rule.to) addPlan(path.join(target(t), name), path.join(sharedSkills, name), `${a.name} via shared`); continue; }
       const srcBase = rule.src.startsWith("@root/") ? path.join(root, rule.src.slice(6).replace(/\/\*$/, "")) : rule.src.startsWith("@dist/") ? path.join(root, "dist", rule.src.slice(6).replace(/\/\*$/, "")) : path.join(a.dir, rule.src.replace(/\/\*$/, ""));
       if (rule.mode !== "per-entry") { for (const t of rule.to) addPlan(target(t), srcBase, a.name); continue; }
-      const entries = fs.existsSync(srcBase) ? fs.readdirSync(srcBase).filter((n) => !n.startsWith(".")) : [];
+      let entries = fs.existsSync(srcBase) ? fs.readdirSync(srcBase).filter((n) => !n.startsWith(".")) : [];
+      if (rule.src.startsWith("@dist/")) entries = entries.filter((n) => ownedEntries.has(path.relative(root, path.join(srcBase, n))));
       for (const name of entries) for (const t of rule.to) addPlan(path.join(target(t), name), path.join(srcBase, name), a.name);
     }
   }

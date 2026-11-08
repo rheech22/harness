@@ -84,7 +84,7 @@ related: []
 ## custom 과 external
 
 - **custom**: 원본이 이 레포에 있는 것. `src/skills/*.json`이 선언하는 번들 스킬과 `src/tools/`의 코드 패키지.
-- **external**: upstream에서 Skills CLI로 `dist/skills/`에 설치하고 `harness.json`의 `external`에 출처, `skills-lock.json`을 커밋. 레포 루트의 `.agents/skills → dist/skills` 링크가 설치 자리를 정하며, 설치는 `-a codex`로 한 번만 한다(다른 agent 대상은 레포 안에 런타임 디렉터리를 만든다). 이 절차는 스크립트가 감싼다.
+- **external**: upstream에서 Skills CLI로 `dist/skills/`에 설치하고 `harness.json`의 `external`에 출처, `skills-lock.json`을 커밋. 레포 루트의 `.agents/skills → dist/skills` 링크가 설치 자리를 정하며, 설치는 `-a codex`로 한 번만 한다(다른 agent 대상은 레포 안에 런타임 디렉터리를 만든다). `node scripts/add-external.mjs <name>`이 이 절차를 감싸고, `check`가 lock과 선언의 정합을 본다.
 - `tools`로 선언한 CLI(스킬이 전제하는 실행 파일)는 요구사항만 적고 설치는 dotfiles가 한다.
 
 같은 이름을 두 종류로 선언하면 `check`가 막는다.
@@ -94,6 +94,7 @@ related: []
 ```bash
 node scripts/build.mjs                                       # src → dist/skills
 node scripts/check.mjs                                       # drift, 분류, external, export 상태
+node scripts/add-external.mjs <name> | --all                 # external 스킬 설치 (dist/skills + skills-lock.json)
 node scripts/export.mjs <name> --version <ver>               # dist/packages 스냅샷
 node scripts/link.mjs --profile common,writing               # 계획만. --runtime claude 로 한 런타임만
 node scripts/link.mjs --profile common,writing --apply       # 적용 (기존 경로는 덮어쓰지 않음)
