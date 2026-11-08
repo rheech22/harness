@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "targets": {
+    "shared": {
+      "skills": "~/.agents/skills"
+    }
+  },
+  "links": [
+    {
+      "src": "dist/skills/*",
+      "to": [
+        "shared.skills"
+      ],
+      "mode": "per-entry",
+      "profiles": true
+    }
+  ],
+  "profiles": {
+    "common": [
+      "ast-grep",
+      "ast-grep-outline",
+      "find-skills",
+      "excalibridge"
+    ]
+  },
+  "external": {
+    "ast-grep": "ast-grep/agent-skill",
+    "ast-grep-outline": "ast-grep/agent-skill",
+    "find-skills": "vercel-labs/skills",
+    "excalibridge": "rheech22/excalibridge"
+  },
+  "publish": {},
+  "tools": {
+    "excalibridge": {
+      "requiredBy": [
+        "excalibridge"
+      ],
+      "install": "uv tool install 'excalibridge @ git+https://github.com/rheech22/excalibridge@v0.7.0'",
+      "check": "excalibridge --version"
+    },
+    "ast-grep": {
+      "requiredBy": [
+        "ast-grep",
+        "ast-grep-outline"
+      ],
+      "install": "brew install ast-grep",
+      "check": "ast-grep --version"
+    },
+    "rg": {
+      "requiredBy": [
+        "*"
+      ],
+      "install": "brew install ripgrep",
+      "check": "rg --version"
+    },
+    "jq": {
+      "requiredBy": [
+        "*"
+      ],
+      "install": "brew install jq",
+      "check": "jq --version"
+    }
+  },
+  "adapters": "src/adapters",
+  "templates": "src/templates/project"
+}

@@ -1,0 +1,8 @@
+# Codex permission prefix rules (user scope). 하네스 검증 명령은 묻지 않고 허용한다.
+prefix_rule(pattern=["node", "scripts/build.mjs"], decision="allow")
+prefix_rule(pattern=["node", "scripts/check.mjs"], decision="allow")
+prefix_rule(pattern=["node", "scripts/link.mjs"], decision="allow")
+prefix_rule(pattern=["rg"], decision="allow")
+prefix_rule(pattern=["git", "status"], decision="allow")
+prefix_rule(pattern=["git", "diff"], decision="allow")
+prefix_rule(pattern=["git", "log"], decision="allow")

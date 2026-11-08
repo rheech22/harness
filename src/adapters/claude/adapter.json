@@ -1,0 +1,39 @@
+{
+  "runtime": "claude",
+  "targets": {
+    "instructions": "~/.claude/CLAUDE.md",
+    "skills": "~/.claude/skills",
+    "rules": "~/.claude/rules",
+    "commands": "~/.claude/commands"
+  },
+  "links": [
+    {
+      "src": "@root/AGENTS.md",
+      "to": [
+        "instructions"
+      ]
+    },
+    {
+      "src": "@shared.skills/*",
+      "to": [
+        "skills"
+      ],
+      "mode": "per-entry"
+    },
+    {
+      "src": "@dist/adapters/claude/commands/*",
+      "to": [
+        "commands"
+      ],
+      "mode": "per-entry"
+    },
+    {
+      "src": "@dist/adapters/claude/rules/*",
+      "to": [
+        "rules"
+      ],
+      "mode": "per-entry"
+    }
+  ],
+  "project": "project"
+}

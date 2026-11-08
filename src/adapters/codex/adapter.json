@@ -1,0 +1,30 @@
+{
+  "runtime": "codex",
+  "targets": {
+    "instructions": "~/.codex/AGENTS.md",
+    "rules": "~/.codex/rules",
+    "hooks": "~/.codex/hooks.json"
+  },
+  "links": [
+    {
+      "src": "@root/AGENTS.md",
+      "to": [
+        "instructions"
+      ]
+    },
+    {
+      "src": "rules/*",
+      "to": [
+        "rules"
+      ],
+      "mode": "per-entry"
+    },
+    {
+      "src": "hooks.json",
+      "to": [
+        "hooks"
+      ]
+    }
+  ],
+  "project": "project"
+}
