@@ -107,7 +107,7 @@ function renderSkill(m, docs) {
   if (m.profile) lines.push("", `## Project profile (do this first)`, "",
     `1. Run \`git rev-parse --show-toplevel\` and read \`<toplevel>/${m.profile.projectPath}\` with the Read tool. Do not guess from memory or directory listings.`,
     `2. If the file exists, it overrides the matching sections of \`references/profile.default.md\`. If it does not exist, use the default for every section.`,
-    `3. In your final report state one line: \`Profile: <path or "default">\` followed by the base ref you used.`,
+    `3. In your final report state one line: \`Profile: <path or "default">\`, followed by the base ref you used when the profile defines one.`,
     "", `Never edit the default; project values belong in the project file.`);
   if (m.assets?.length) lines.push("", `## Assets`, "", ...m.assets.map((a) => `- \`assets/${path.basename(a)}\``), "", "Paths are relative to this skill's directory.");
   if (m.scripts?.length) lines.push("", `## Scripts`, "", ...m.scripts.map((s) => `- \`scripts/${path.basename(s)}\` — run with \`node <skill-dir>/scripts/${path.basename(s)}\``));
@@ -213,6 +213,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   // 번들 디렉터리 안의 남은 파일(이전 빌드 산출)도 정리
   for (const rel of [...keep].map((k) => k.split("/").slice(0, 3).join("/")).filter((v, i, a) => v.startsWith("dist/skills/") && a.indexOf(v) === i)) {
     for (const f of walk(path.join(root, rel), () => true)) { const r = path.relative(root, f); if (!keep.has(r)) { fs.rmSync(f); console.log(`removed stale ${r}`); } }
+    for (const sub of ["references", "assets", "scripts"]) { const d = path.join(root, rel, sub); if (fs.existsSync(d) && fs.readdirSync(d).length === 0) fs.rmdirSync(d); }
   }
   let wrote = 0;
   for (const [rel, content] of files) {

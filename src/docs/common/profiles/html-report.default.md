@@ -1,0 +1,38 @@
+---
+title: "HTML 리포트 프로젝트 프로필 (기본값)"
+domain: [common]
+kind: profile
+status: current
+related:
+  - ../html-report.md
+---
+
+# HTML 리포트 프로젝트 프로필 (기본값)
+
+[HTML 리포트 생성](../html-report.md)이 프로젝트마다 달라지는 값을 읽는 자리입니다. 프로젝트 저장소에 `docs/profiles/html-report.md`가 있으면 그 문서가 이 기본값을 대체합니다. 프로젝트 프로필은 아래 절 제목을 그대로 쓰고, 정하지 않은 절은 기본값을 따릅니다.
+
+## 저장 경로
+
+저장소 루트의 gitignore된 디렉터리에 종류별로 저장합니다. worktree와 함께 사라지지 않게 하려면 저장소 밖 경로(예: `~/reports/`)로 바꿉니다.
+
+| 종류 | 경로 |
+| --- | --- |
+| `review` | `.review/<branch>[-<scope>].html` |
+| `explanation` | `.explain/YYYY-MM-DD-<slug>.html` |
+
+## 표제 문구
+
+`KICKER` 값입니다. 설명 아티클의 값은 checker의 `--kicker`에도 같은 문구를 넘깁니다.
+
+| 종류 | 문구 |
+| --- | --- |
+| `review` | `Code Review` |
+| `explanation` | `explanation` |
+
+## 리포트 이후 처리
+
+리포트는 일회용 이해 보조물이며 source of truth가 아닙니다. 설명한 내용을 저장소에 남길 가치가 있으면 프로젝트의 문서 작성 기준에 맞는 타입과 위치를 고릅니다. 당시 snapshot은 history, 의사결정과 trade-off는 decision처럼 내용의 책임에 맞춰 옮깁니다. 문서 작성을 맡는 별도 스킬이 있으면 그 이름을 여기 적습니다.
+
+## 관련 문서
+
+- 조판·검증·저장 절차: [HTML 리포트 생성](../html-report.md)

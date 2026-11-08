@@ -14,7 +14,7 @@ related:
 
 이 문서는 읽는 사람에게 내보내는 글의 본문 서술, 문체, 용어를 정의합니다. 저장소 문서와 저장소가 생성하는 HTML 리포트에 같은 내용으로 적용합니다. 산출물 형식은 달라도 읽는 사람이 같기 때문입니다.
 
-문서 제목, frontmatter, code anchor, 링크 책임처럼 저장소 문서에만 해당하는 규칙은 문서 작성 기준이 소유합니다. 리포트 전용 차이는 [리포트 HTML 디자인의 문체](report-design.md#문체)가 정의합니다.
+문서 제목, frontmatter, code anchor, 링크 책임처럼 저장소 문서에만 해당하는 규칙은 문서 작성 기준이 소유합니다. 리포트 전용 차이는 [리포트 HTML 디자인의 문체](https://github.com/rheech22/harness/blob/main/src/docs/common/report-design.md#문체)가 정의합니다.
 
 agent가 사용자에게 보내는 응답의 문체는 이 문서가 아니라 [`AGENTS.md`](https://github.com/rheech22/harness/blob/main/src/../AGENTS.md)의 응답 문체 절이 소유합니다. 두 기준은 목적이 다르므로 서로 충돌하는 항목이 있어도 각자의 대상에 그대로 적용합니다.
 
@@ -98,5 +98,5 @@ AI가 작성한 한글 초안에는 반복해서 나타나는 문장 패턴이 �
 ## 관련 문서
 
 - 문서 제목·구조·anchor·링크 책임: 문서 작성 기준
-- 리포트 산출물의 조판과 검증: [리포트 HTML 디자인](report-design.md)
+- 리포트 산출물의 조판과 검증: [리포트 HTML 디자인](https://github.com/rheech22/harness/blob/main/src/docs/common/report-design.md)
 - 검수 절차와 반복 queue: 문서 검수 워크플로우

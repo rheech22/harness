@@ -1,5 +1,5 @@
 ---
-description: Explain a change, implementation, or technical concept as a self-contained HTML article.
+description: Explain a change, implementation, or technical concept in chat, then offer an HTML article.
 argument-hint: "[change|implementation|knowledge] <subject>"
 ---
 

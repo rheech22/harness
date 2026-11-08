@@ -1,0 +1,29 @@
+{
+  "name": "html-report",
+  "description": "Use after a code review or a technical explanation when the user confirms they want the result as a self-contained HTML file, or asks to turn such a result into a report. Do not use to produce the review or explanation itself; run code-review or explain first.",
+  "reads": [
+    "docs/common/html-report.md",
+    "docs/common/report-design.md",
+    "docs/common/report-diagrams.md",
+    "docs/common/prose-style.md"
+  ],
+  "assets": [
+    "assets/report/report-shell.html",
+    "assets/report/code-review-report.html.template",
+    "assets/report/explanation-quiz.html.template",
+    "assets/report/report-diagram-flow.html.template",
+    "assets/report/report-diagram-structure.html.template",
+    "assets/report/report-diagram-compare.html.template",
+    "assets/report/report-shell-lucide-license.txt",
+    "assets/report/report-prose-im-not-ai-license.txt"
+  ],
+  "scripts": [
+    "assets/report/scripts/check-explanation-report.mjs",
+    "assets/report/scripts/check-report-diagrams.mjs"
+  ],
+  "profile": {
+    "name": "html-report",
+    "default": "docs/common/profiles/html-report.default.md",
+    "projectPath": "docs/profiles/html-report.md"
+  }
+}

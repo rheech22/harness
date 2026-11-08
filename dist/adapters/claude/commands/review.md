@@ -1,5 +1,5 @@
 ---
-description: Code review (upstream|staged|commit <n>|file <path>). Read-only, evidence-backed, writes an HTML report.
+description: Code review (upstream|staged|commit <n>|file <path>). Findings in chat first; fixes or an HTML report only on request.
 argument-hint: "[upstream|staged|commit <n>|file <path>]"
 ---
 

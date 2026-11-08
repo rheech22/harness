@@ -1,6 +1,6 @@
 ---
 name: explain
-description: "Use ONLY when the user explicitly asks for a rich HTML technical article about a code change, a requested or current implementation, or a technical concept, or invokes /explain. Builds an evidence-backed narrative with diagrams and a quiz. Do not use for code review; use code-review."
+description: "Use when the user asks for a structured technical explanation of a code change, a requested or current implementation, or a technical concept, or invokes /explain. Explains in chat with evidence first, then offers an HTML article via html-report. Do not use for code review; use code-review."
 metadata: { domain: [writing, common], source: docs, generated: true }
 ---
 
@@ -10,32 +10,13 @@ metadata: { domain: [writing, common], source: docs, generated: true }
 
 Read the bundled references below in full, in order, before acting. Follow them as the source of truth.
 
-- `references/explain.md` — 기술 설명 아티클 (workflow)
-- `references/report-design.md` — 리포트 HTML 디자인 (convention)
-- `references/report-diagrams.md` — 리포트 SVG 다이어그램 (convention)
+- `references/explain.md` — 기술 설명 (workflow)
 - `references/prose-style.md` — 산문 문체 기준 (convention)
 
 ## Project profile (do this first)
 
 1. Run `git rev-parse --show-toplevel` and read `<toplevel>/docs/profiles/explain.md` with the Read tool. Do not guess from memory or directory listings.
 2. If the file exists, it overrides the matching sections of `references/profile.default.md`. If it does not exist, use the default for every section.
-3. In your final report state one line: `Profile: <path or "default">` followed by the base ref you used.
+3. In your final report state one line: `Profile: <path or "default">`, followed by the base ref you used when the profile defines one.
 
 Never edit the default; project values belong in the project file.
-
-## Assets
-
-- `assets/report-shell.html`
-- `assets/explanation-quiz.html.template`
-- `assets/report-diagram-flow.html.template`
-- `assets/report-diagram-structure.html.template`
-- `assets/report-diagram-compare.html.template`
-- `assets/report-shell-lucide-license.txt`
-- `assets/report-prose-im-not-ai-license.txt`
-
-Paths are relative to this skill's directory.
-
-## Scripts
-
-- `scripts/check-explanation-report.mjs` — run with `node <skill-dir>/scripts/check-explanation-report.mjs`
-- `scripts/check-report-diagrams.mjs` — run with `node <skill-dir>/scripts/check-report-diagrams.mjs`

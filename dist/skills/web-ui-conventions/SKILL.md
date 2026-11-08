@@ -17,6 +17,6 @@ Read the bundled references below in full, in order, before acting. Follow them 
 
 1. Run `git rev-parse --show-toplevel` and read `<toplevel>/docs/profiles/tailwind.md` with the Read tool. Do not guess from memory or directory listings.
 2. If the file exists, it overrides the matching sections of `references/profile.default.md`. If it does not exist, use the default for every section.
-3. In your final report state one line: `Profile: <path or "default">` followed by the base ref you used.
+3. In your final report state one line: `Profile: <path or "default">`, followed by the base ref you used when the profile defines one.
 
 Never edit the default; project values belong in the project file.

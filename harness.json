@@ -18,6 +18,7 @@
   "profiles": {
     "common": [
       "code-review",
+      "html-report",
       "harness-maintainer",
       "docs-writing",
       "docs-review-loop",
@@ -49,6 +50,9 @@
   "publish": {
     "code-review": {
       "from": "dist/skills/code-review"
+    },
+    "html-report": {
+      "from": "dist/skills/html-report"
     },
     "harness-maintainer": {
       "from": "dist/skills/harness-maintainer"

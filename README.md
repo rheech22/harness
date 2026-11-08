@@ -74,8 +74,8 @@ related: []
 ```json
 // src/skills/<name>.json — 스킬 선언. 어떤 문서를 어떤 순서로 묶고, 무엇을 싣고, 어디에 명령·규칙을 낼지
 { "name": "code-review", "description": "Use when …",
-  "reads": ["docs/common/code-review.md", "docs/common/report-design.md"],
-  "assets": ["assets/report/report-shell.html"],
+  "reads": ["docs/common/code-review.md", "docs/common/prose-style.md"],
+  "assets": [],
   "profile": { "name": "code-review", "default": "docs/common/profiles/code-review.default.md", "projectPath": "docs/profiles/code-review.md" },
   "commands": { "claude": { "name": "review" } },
   "rules": { "claude": { "name": "coding", "paths": ["**/*.ts"] } } }

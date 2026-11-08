@@ -1,17 +1,22 @@
 {
   "name": "explain",
-  "description": "Use ONLY when the user explicitly asks for a rich HTML technical article about a code change, a requested or current implementation, or a technical concept, or invokes /explain. Builds an evidence-backed narrative with diagrams and a quiz. Do not use for code review; use code-review.",
-  "reads": ["docs/writing/explain.md", "docs/common/report-design.md", "docs/writing/report-diagrams.md", "docs/common/prose-style.md"],
-  "assets": [
-    "assets/report/report-shell.html",
-    "assets/report/explanation-quiz.html.template",
-    "assets/report/report-diagram-flow.html.template",
-    "assets/report/report-diagram-structure.html.template",
-    "assets/report/report-diagram-compare.html.template",
-    "assets/report/report-shell-lucide-license.txt",
-    "assets/report/report-prose-im-not-ai-license.txt"
+  "description": "Use when the user asks for a structured technical explanation of a code change, a requested or current implementation, or a technical concept, or invokes /explain. Explains in chat with evidence first, then offers an HTML article via html-report. Do not use for code review; use code-review.",
+  "reads": [
+    "docs/writing/explain.md",
+    "docs/common/prose-style.md"
   ],
-  "scripts": ["assets/report/scripts/check-explanation-report.mjs", "assets/report/scripts/check-report-diagrams.mjs"],
-  "profile": { "name": "explain", "default": "docs/writing/profiles/explain.default.md", "projectPath": "docs/profiles/explain.md" },
-  "commands": { "claude": { "name": "explain", "description": "Explain a change, implementation, or technical concept as a self-contained HTML article.", "argumentHint": "[change|implementation|knowledge] <subject>" } }
+  "assets": [],
+  "scripts": [],
+  "profile": {
+    "name": "explain",
+    "default": "docs/writing/profiles/explain.default.md",
+    "projectPath": "docs/profiles/explain.md"
+  },
+  "commands": {
+    "claude": {
+      "name": "explain",
+      "argumentHint": "[change|implementation|knowledge] <subject>",
+      "description": "Explain a change, implementation, or technical concept in chat, then offer an HTML article."
+    }
+  }
 }
