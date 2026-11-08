@@ -1,0 +1,3 @@
+# 프로젝트 MCP 등록만 둔다. 모델·credential·개인 절대 경로는 사용자 설정(~/.codex/config.toml)에.
+# [mcp_servers.<name>]
+# url = "https://..."
