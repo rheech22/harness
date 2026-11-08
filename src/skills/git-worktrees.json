@@ -1,0 +1,5 @@
+{
+  "name": "git-worktrees",
+  "description": "Use when creating, switching, or cleaning up git worktrees for parallel agent sessions, or when machine-local files need to be carried into a new worktree.",
+  "reads": ["docs/common/worktrees.md"]
+}

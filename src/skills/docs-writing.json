@@ -1,0 +1,6 @@
+{
+  "name": "docs-writing",
+  "description": "Use when writing, restructuring, or reviewing repository documentation: titles and structure, frontmatter, document types and lifecycle, prose style and terminology. Not for queue-driven review batches; use docs-review-loop.",
+  "reads": ["docs/common/documentation.md", "docs/common/document-writing.md", "docs/common/prose-style.md"],
+  "rules": { "claude": { "name": "writing", "paths": ["**/*.md"], "reads": ["docs/common/document-writing.md", "docs/common/prose-style.md"] } }
+}
