@@ -13,12 +13,6 @@
       "skillPath": "ast-grep/skills/outline/SKILL.md",
       "computedHash": "01260e3e36c2559e4a254446a2a991b94d656697ccb7e2f31811df85a29da099"
     },
-    "excalibridge": {
-      "source": "rheech22/excalibridge",
-      "sourceType": "github",
-      "skillPath": "SKILL.md",
-      "computedHash": "709ab28e553305127c1f930c2981d6ecfe1923ae4a209d6c07280e0fbe0a40b2"
-    },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",

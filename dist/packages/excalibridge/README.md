@@ -12,14 +12,13 @@ custom command; without one, the send event lands in `~/.excalibridge/inbox.ndjs
 ## Install
 
 ```bash
-uv tool install 'excalibridge @ git+https://github.com/rheech22/excalibridge@v0.7.0'
+uv tool install 'excalibridge @ git+https://github.com/rheech22/harness@excalibridge-v0.7.1#subdirectory=dist/packages/excalibridge'
 ```
 
-Release wheels and source packages are also available on [GitHub Releases](https://github.com/rheech22/excalibridge/releases).
-The package is not currently published on PyPI.
+The package is distributed from a versioned snapshot in the harness repository.
 
-Give your agent the skill: symlink this repository (or the installed `SKILL.md`) into the
-skills directory your agent reads, e.g. `~/.claude/skills/excalibridge` or `~/.codex/skills/excalibridge`.
+Give your agent the skill with `npx skills add rheech22/harness --skill excalibridge`.
+Within the harness, `build` and `link` distribute the same skill.
 
 ## Use
 
@@ -78,6 +77,7 @@ python -m unittest discover -s tests
 node --test tests/test_embeddable.mjs    # optional Node.js check for viewer URL policy
 ```
 
-Versioned with [SemVer](https://semver.org); see [CHANGELOG.md](CHANGELOG.md). Tags `v*` build a GitHub release.
+Versioned with [SemVer](https://semver.org); see [CHANGELOG.md](CHANGELOG.md). Releases use harness tags `excalibridge-v<version>`; the package version is owned by
+`excalibridge/__init__.py`. See the [harness release guide](https://github.com/rheech22/harness/blob/main/src/docs/harness/guides/release.md).
 
 MIT

@@ -22,8 +22,8 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/rheech22/excalibridge"
-Changelog = "https://github.com/rheech22/excalibridge/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/rheech22/harness"
+Changelog = "https://github.com/rheech22/harness/blob/main/src/tools/excalibridge/CHANGELOG.md"
 
 [project.scripts]
 excalibridge = "excalibridge.cli:main"

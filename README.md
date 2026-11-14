@@ -99,11 +99,13 @@ related: []
 node scripts/build.mjs                                       # src → dist/skills
 node scripts/check.mjs                                       # drift, 분류, external, export 상태
 node scripts/add-external.mjs <name> | --all                 # external 스킬 설치 (dist/skills + skills-lock.json)
-node scripts/export.mjs <name> --version <ver>               # dist/packages 스냅샷
+node scripts/export.mjs <name> --version <ver>               # dist/packages 스냅샷 (코드 패키지 버전 일치 검사)
 node scripts/link.mjs --profile common,writing               # 계획만. --runtime claude 로 한 런타임만
 node scripts/link.mjs --profile common,writing --apply       # 적용 (기존 경로는 덮어쓰지 않음)
 node scripts/init-project.mjs <dir> [--runtime claude,codex] # 프로젝트 뼈대 심기
 ```
+
+패키지별 버전과 태그, 코드 패키지 테스트 절차는 [릴리스와 외부 배포](src/docs/harness/guides/release.md)를 따른다.
 
 ## dotfiles와의 경계
 

@@ -44,8 +44,7 @@
   "external": {
     "ast-grep": "ast-grep/agent-skill",
     "ast-grep-outline": "ast-grep/agent-skill",
-    "find-skills": "vercel-labs/skills",
-    "excalibridge": "rheech22/excalibridge"
+    "find-skills": "vercel-labs/skills"
   },
   "publish": {
     "code-review": {
@@ -89,6 +88,20 @@
     },
     "web-accessibility": {
       "from": "dist/skills/web-accessibility"
+    },
+    "excalibridge": {
+      "from": "src/tools/excalibridge",
+      "versionFile": "excalibridge/__init__.py",
+      "strip": [
+        ".gitignore",
+        "tests/**",
+        "**/__pycache__/**",
+        "**/*.pyc",
+        ".venv/**",
+        "dist/**",
+        "build/**",
+        "*.egg-info/**"
+      ]
     }
   },
   "tools": {
@@ -96,7 +109,7 @@
       "requiredBy": [
         "excalibridge"
       ],
-      "install": "uv tool install 'excalibridge @ git+https://github.com/rheech22/excalibridge@v0.7.0'",
+      "install": "uv tool install 'excalibridge @ git+https://github.com/rheech22/harness@excalibridge-v0.7.1#subdirectory=dist/packages/excalibridge'",
       "check": "excalibridge --version"
     },
     "ast-grep": {

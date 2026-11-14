@@ -5,7 +5,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { root, expected, generatedDirs } from "./build.mjs";
-import { sourceState, packageState } from "./export.mjs";
+import { sourceState, packageState, readPackageVersion } from "./export.mjs";
 
 const { files, warnings: buildWarnings, errors: buildErrors } = expected();
 const errors = [...buildErrors], warnings = [...buildWarnings], notes = [];
@@ -54,6 +54,11 @@ for (const name of Object.keys(manifest.publish ?? {})) {
   const pkg = packageState(name);
   if (!pkg) { notes.push(`publish ${name}: never exported (node scripts/export.mjs ${name} --version <ver>)`); continue; }
   if (!pkg.manifest) { errors.push(`dist/packages/${name}: missing .export.json (not produced by export.mjs)`); continue; }
+  if (src.spec.versionFile) {
+    try {
+      if (readPackageVersion(pkg.dir, src.spec.versionFile) !== pkg.manifest.version) errors.push(`dist/packages/${name}: package version differs from .export.json`);
+    } catch (error) { errors.push(`dist/packages/${name}: ${error.message}`); }
+  }
   if (pkg.hash !== pkg.manifest.packageHash) errors.push(`dist/packages/${name}: edited by hand since export v${pkg.manifest.version} (re-run export instead)`);
   else if (src.hash !== pkg.manifest.sourceHash) warnings.push(`export pending: ${name} v${pkg.manifest.version} is behind ${src.spec.from} (fine until the next release)`);
   else notes.push(`publish ${name}: v${pkg.manifest.version} is current`);

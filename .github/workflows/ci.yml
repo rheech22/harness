@@ -4,11 +4,14 @@ on:
     branches: [main]
   pull_request:
 jobs:
-  test:
+  excalibridge:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python: ["3.11", "3.12", "3.13"]
+    defaults:
+      run:
+        working-directory: src/tools/excalibridge
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -19,3 +22,11 @@ jobs:
         with:
           node-version: "22"
       - run: node --test tests/test_embeddable.mjs
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: node --test scripts/tests/export.test.mjs

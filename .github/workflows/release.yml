@@ -1,0 +1,40 @@
+name: release excalibridge
+on:
+  push:
+    tags: ["excalibridge-v*"]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: python -m unittest discover -s tests
+        working-directory: src/tools/excalibridge
+      - run: node --test src/tools/excalibridge/tests/test_embeddable.mjs scripts/tests/export.test.mjs
+      - run: node scripts/check.mjs
+      - name: Verify release version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python - <<'PY'
+          import json, os, runpy
+          from pathlib import Path
+          root = Path('dist/packages/excalibridge')
+          exported = json.loads((root / '.export.json').read_text())
+          version = runpy.run_path(str(root / 'excalibridge/__init__.py'))['__version__']
+          if os.environ['RELEASE_TAG'] != f'excalibridge-v{version}' or exported['version'] != version:
+              raise SystemExit('release tag, export manifest, and package version must match')
+          PY
+      - run: python -m pip install build
+      - run: python -m build --outdir release-artifacts dist/packages/excalibridge
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: release-artifacts/*
+          generate_release_notes: true
