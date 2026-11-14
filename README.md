@@ -35,21 +35,53 @@ harness/
 
 ## 흐름
 
-```
-src/skills/<name>/skill.json ──build──▶ dist/skills/<name>/    닫힌 번들: SKILL.md + references/ + assets/ + scripts/ (링크 재작성)
-                       ──build──▶ dist/adapters/<rt>/commands/   선언의 commands 에서 생성 (slash command)
-                       ──build──▶ dist/adapters/<rt>/rules/      선언의 rules 에서 생성 (paths + 문서 본문 인라인)
-src/packages/<name>/      ──build──▶ dist/skills/<name>/    패키지가 가진 SKILL.md 의 사본
-        └──────────────export──▶ dist/packages/<name>/   릴리스 스냅샷. strip 적용, 태그 <name>-v<ver>
+### build — 원본에서 에이전트용 파일 생성
 
-dist/skills/*  ──link──▶ ~/.agents/skills/*              harness.json 소유 (공용 배포)
-AGENTS.md, rules, commands, hooks ──link──▶ 런타임별 자리   각 adapter.json 소유
+```mermaid
+flowchart TD
+  accTitle: build로 에이전트용 파일 생성
+  accDescr: 스킬 선언에서 번들과 런타임 명령 및 규칙을 생성하고 standalone 패키지에서 스킬을 복사한다.
+  manifest["src/skills/&lt;name&gt;/skill.json"] -->|build| skills["dist/skills/&lt;name&gt;/"]
+  manifest -->|build · commands / rules 선언| adapters["dist/adapters/&lt;runtime&gt;/<br/>commands/ · rules/"]
+  package["src/packages/&lt;name&gt;/"] -->|build| skills
 ```
 
-- `build`는 매번 돌고 `dist/skills/`를 원본과 일치시킨다. 어긋나면 오류. 번들 안 링크는 번들 기준으로 다시 쓰고, 밖을 가리키면 저장소 URL + 경고, 없는 대상은 오류.
-- 프로젝트마다 다른 값은 프로필로 뺀다. 번들은 기본값을 품고, 생성된 SKILL.md 가 프로젝트의 `docs/profiles/<name>.md` 를 먼저 읽게 한다.
-- `export`는 릴리스 행위다. 원본이 앞서 있어도 `check`는 **export 대기**로만 알린다. `dist/`를 손으로 고치면 오류.
-- 외부 소비자는 `dist/packages/`의 태그를 고정한다. 문서 스킬은 `skills add rheech22/harness --skill <name>`, 코드는 `uv tool install '<name> @ git+…@<name>-v<ver>#subdirectory=dist/packages/<name>'`.
+- manifest에 선언된 내용에 따라 문서·assets·scripts를 번들로 묶는다.
+- 명령과 규칙은 선언한 경우에만 생성한다.
+- standalone 패키지는 자체 `SKILL.md`와 `references/`를 복사한다.
+- 번들 내 문서 링크는 배포 위치에 맞게 고친다.
+- 번들 외 파일은 저장소 URL로 바꾸고 경고하며, 없는 파일을 가리키면 오류로 처리한다.
+- 프로젝트별 값은 프로필로 분리한다. 스킬은 프로젝트의 `docs/profiles/<name>.md`를 먼저 읽고, 없으면 번들에 포함된 기본값을 쓴다.
+
+### link — 코딩 에이전트가 읽는 위치에 연결
+
+```mermaid
+flowchart TD
+  accTitle: link로 코딩 에이전트에 연결
+  accDescr: 공용 스킬은 agents 디렉터리로 연결하고 지침과 명령 규칙 훅은 런타임별 설정 위치로 연결한다.
+  skills["dist/skills/&lt;name&gt;/"] -->|link · harness.json| shared["~/.agents/skills/&lt;name&gt;/"]
+  files["전역 지침 · 명령 · 규칙 · 훅"] -->|link · adapter.json| runtime["코딩 에이전트별 설정 위치"]
+```
+
+- 공용 스킬 연결은 `harness.json`이, 런타임별 연결은 각 `adapter.json`이 정한다.
+- `link`는 파일을 복사하지 않고 symlink를 만든다.
+
+### export — 외부 배포용 스냅샷 생성
+
+```mermaid
+flowchart TD
+  accTitle: export로 외부 배포 스냅샷 생성
+  accDescr: publish에 선언된 standalone 패키지 원본 또는 생성된 문서 스킬을 복사하여 릴리스 스냅샷을 만든다.
+  package["src/packages/&lt;name&gt;/"] --> export["export · publish 선언 + strip"]
+  skill["dist/skills/&lt;name&gt;/"] --> export
+  export --> snapshot["dist/packages/&lt;name&gt;/"]
+```
+
+- `publish.<name>.from`이 배포 원본을 정하고 `strip`이 제외 파일을 정한다.
+- 릴리스 태그는 `<name>-v<version>` 형식으로 별도 발행한다. 원본이 바뀌어도 발행한 스냅샷은 다음 릴리스까지 유지한다.
+- `check`는 스킬 생성물이 원본과 다르면 오류, 릴리스 스냅샷이 원본보다 뒤처지면 export 대기, 스냅샷을 직접 수정한 경우에는 오류로 처리한다.
+
+설치 명령과 버전별 배포 절차는 [릴리스와 외부 배포](src/docs/harness/guides/release.md)를 따른다.
 
 ## 세 가지 로딩 계층
 
@@ -58,6 +90,7 @@ AGENTS.md, rules, commands, hooks ──link──▶ 런타임별 자리   각 
 | 항상 로드 | `AGENTS.md` 하나. 모든 작업에 걸치는 것만 | 각 어댑터의 `instructions` 자리로 링크 |
 | 경로 조건 | 파일 종류로 걸리는 규칙 | 지원하는 런타임의 어댑터 `rules/` |
 | 요청 시 | 도메인별 워크플로우와 기준 | 스킬. `description`으로 런타임이 라우팅 |
+
 
 ## 분류는 메타데이터로
 
