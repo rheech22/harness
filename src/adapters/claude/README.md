@@ -18,7 +18,7 @@ Claude Code가 전역 수준에서 읽는 것과, 이 하네스가 그 자리에
 
 `init-project`가 저장소 루트에 겹쳐 복사한다.
 
-- `.claude/settings.json`: 읽기 전용 명령 허용 목록과 `dist/` 수정 감지 훅
+- `.claude/settings.json`: 읽기 전용 명령 허용 목록과 생성물 직접 수정 안내 훅. `~/harness/src/hooks/skill-distribution-guard.mjs`를 호출한다
 - `.claude/rules/always.md`: 저장소 code-style을 항상 로드하는 stub (`@import`)
 
 저장소에 `CLAUDE.md`, `CLAUDE.local.md`, `.claude/CLAUDE.md`를 두지 않는다. 하나라도 있으면 Claude가 그 저장소의 `AGENTS.md`를 읽지 않는다.

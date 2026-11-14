@@ -22,11 +22,11 @@ jobs:
         with:
           node-version: "22"
       - run: node --test tests/test_embeddable.mjs
-  export:
+  harness:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - run: node --test scripts/tests/export.test.mjs
+      - run: node --test scripts/tests/*.test.mjs

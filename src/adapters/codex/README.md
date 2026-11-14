@@ -18,7 +18,7 @@ Codex CLI가 전역 수준에서 읽는 것과, 이 하네스가 그 자리에 �
 ## 프로젝트 뼈대 (`project/`)
 
 - `.codex/config.toml`: 프로젝트 MCP 등록만. 모델·credential·개인 절대 경로는 사용자 설정에
-- `.codex/hooks.json`: `apply_patch`(Edit/Write도 매치)로 `dist/`를 건드리면 안내하는 훅. 프로젝트 trust 뒤에만 로드
+- `.codex/hooks.json`: `apply_patch`로 `dist/`나 스킬 설치 경로를 직접 수정하면 안내하는 공통 훅을 호출합니다. 스크립트는 `~/harness/src/hooks/`에 있으며 프로젝트 trust 뒤에만 로드됩니다.
 
 ## 검증
 

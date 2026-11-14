@@ -3,7 +3,7 @@
   "hooks": {
     "PostToolUse": [{
       "matcher": "Write|Edit|MultiEdit",
-      "hooks": [{ "type": "command", "command": "FP=$(jq -r '.tool_input.file_path // empty' 2>/dev/null); case \"$FP\" in *.skills/*|*.agents/skills/*|*.claude/skills/*) echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"하네스: 생성된 skill 배포를 직접 수정했습니다. docs를 고치고 build를 다시 실행하세요.\"}}' ;; esac" }]
+      "hooks": [{ "type": "command", "command": "node \"$HOME/harness/src/hooks/skill-distribution-guard.mjs\"" }]
     }]
   }
 }
