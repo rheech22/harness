@@ -9,7 +9,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadManifests } from "./build.mjs";
+import { loadManifests, isMain } from "./build.mjs";
 
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const m = JSON.parse(fs.readFileSync(path.join(root, "harness.json"), "utf8"));
@@ -20,7 +20,7 @@ export function loadAdapters() {
     .map((n) => ({ name: n, dir: path.join(dir, n), ...JSON.parse(fs.readFileSync(path.join(dir, n, "adapter.json"), "utf8")) }));
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isMain(import.meta.url)) {
   const args = process.argv.slice(2);
   const opt = (k, d) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : d; };
   const HOME = path.resolve(opt("--home", process.env.HOME));

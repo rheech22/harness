@@ -6,9 +6,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
-import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
-import { root, walk } from "./build.mjs";
+import { root, walk, isMain } from "./build.mjs";
 
 export function globToRe(glob) {
   const pattern = glob.split(/(\*\*\/|\*\*|\*)/).map((part) => {
@@ -73,7 +72,7 @@ export function packageState(name) {
   return { dir, manifest, rels, hash: hashFiles(dir, rels) };
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isMain(import.meta.url)) {
   const [name] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
   const vi = process.argv.indexOf("--version");
   const version = vi >= 0 ? process.argv[vi + 1] : null;
