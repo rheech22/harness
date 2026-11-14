@@ -1,8 +1,6 @@
 # harness
 
-개인 에이전트 하네스.
-
-원칙·결정·절차는 [`principles`](src/docs/harness/conventions/principles.md)가 소유한다.
+개인 에이전트 하네스
 
 ## 폴더
 
@@ -19,20 +17,21 @@ harness/
       assets/          번들에 실어 보낼 에셋
       scripts/         스킬 실행, 검증 코드
     packages/<name>/   이 레포에서 개발하는 standalone 패키지
-    hooks/             런타임이 공유하는 훅 스크립트 본체
+    hooks/             훅 스크립트 원본
     bootstrap/         프로젝트 초기화용 공통 파일
-    adapters/<runtime>/ 런타임 전용. adapter.json 과 README
-  dist/                산출물. 커밋은 하되 편집하지 않는다
-    skills/<name>/     내 머신 배포. custom 은 build 가, external 은 Skills CLI 가 쓴다
+    adapters/<runtime>/ 런타임 어댑터
+  dist/                산출물, 커밋은 하되 직접 편집하지 않음
+    skills/<name>/     생성된 스킬
     adapters/<rt>/     생성된 명령과 규칙
     packages/<name>/   외부 배포 스냅샷
   scripts/             build · check · export · link · init-project
 ```
 
-## 경계 두 개
+## 규칙
 
-- **`dist/` 아래는 손대지 않는다.** 원본은 `src/`, 산출물은 `dist/`. `dist/`를 쓰는 주체는 도구(build, export, Skills CLI)뿐이다. 훅과 `check`가 같은 경계를 본다.
-- **런타임 이름은 `src/adapters/<runtime>/` 밖에 두지 않는다.** 런타임을 추가하면 폴더 하나를 만들고, 빼면 지운다.
+- 원칙·결정·절차는 [`principles`](src/docs/harness/conventions/principles.md)가 소유한다.
+- `dist/`는 스크립트의 산출물이 담기는 곳으로 직접 편집하지 않는다.
+- 코딩 에이전트 런타임에 관한 내용은 `src/adapters/<runtime>/` 밖에 두지 않는다.
 
 ## 흐름
 
