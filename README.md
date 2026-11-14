@@ -41,9 +41,9 @@ harness/
 flowchart TD
   accTitle: build로 에이전트용 파일 생성
   accDescr: 스킬 선언에서 번들과 런타임 명령 및 규칙을 생성하고 standalone 패키지에서 스킬을 복사한다.
-  manifest["src/skills/&lt;name&gt;/skill.json"] -->|build| skills["dist/skills/&lt;name&gt;/"]
-  manifest -->|build · commands / rules 선언| adapters["dist/adapters/&lt;runtime&gt;/<br/>commands/ · rules/"]
-  package["src/packages/&lt;name&gt;/"] -->|build| skills
+  manifest["src/skills/{name}/skill.json"] -->|build| skills["dist/skills/{name}/"]
+  manifest -->|build · commands / rules 선언| adapters["dist/adapters/{runtime}/<br/>commands/ · rules/"]
+  package["src/packages/{name}/"] -->|build| skills
 ```
 
 - manifest에 선언된 내용에 따라 문서·assets·scripts를 번들로 묶는다.
@@ -59,7 +59,7 @@ flowchart TD
 flowchart TD
   accTitle: link로 코딩 에이전트에 연결
   accDescr: 공용 스킬은 agents 디렉터리로 연결하고 지침과 명령 규칙 훅은 런타임별 설정 위치로 연결한다.
-  skills["dist/skills/&lt;name&gt;/"] -->|link · harness.json| shared["~/.agents/skills/&lt;name&gt;/"]
+  skills["dist/skills/{name}/"] -->|link · harness.json| shared["~/.agents/skills/{name}/"]
   files["전역 지침 · 명령 · 규칙 · 훅"] -->|link · adapter.json| runtime["코딩 에이전트별 설정 위치"]
 ```
 
@@ -72,9 +72,9 @@ flowchart TD
 flowchart TD
   accTitle: export로 외부 배포 스냅샷 생성
   accDescr: publish에 선언된 standalone 패키지 원본 또는 생성된 문서 스킬을 복사하여 릴리스 스냅샷을 만든다.
-  package["src/packages/&lt;name&gt;/"] --> export["export · publish 선언 + strip"]
-  skill["dist/skills/&lt;name&gt;/"] --> export
-  export --> snapshot["dist/packages/&lt;name&gt;/"]
+  package["src/packages/{name}/"] --> export["export · publish 선언 + strip"]
+  skill["dist/skills/{name}/"] --> export
+  export --> snapshot["dist/packages/{name}/"]
 ```
 
 - `publish.<name>.from`이 배포 원본을 정하고 `strip`이 제외 파일을 정한다.
