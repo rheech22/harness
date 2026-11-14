@@ -4,7 +4,8 @@
     "instructions": "~/.claude/CLAUDE.md",
     "skills": "~/.claude/skills",
     "rules": "~/.claude/rules",
-    "commands": "~/.claude/commands"
+    "commands": "~/.claude/commands",
+    "settings": "~/.claude/settings.json"
   },
   "links": [
     {
@@ -35,5 +36,10 @@
       "mode": "per-entry"
     }
   ],
-  "project": "project"
+  "project": "project",
+  "configure": {
+    "source": "settings.json",
+    "target": "settings",
+    "state": "~/.local/state/harness/claude-settings.json"
+  }
 }

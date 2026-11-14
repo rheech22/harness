@@ -1,8 +1,0 @@
-{
-  "hooks": {
-    "PostToolUse": [{
-      "matcher": "^apply_patch$",
-      "hooks": [{ "type": "command", "command": "node \"$HOME/harness/src/hooks/skill-distribution-guard.mjs\"", "timeout": 5 }]
-    }]
-  }
-}

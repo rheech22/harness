@@ -10,7 +10,7 @@ Claude Code가 전역 수준에서 읽는 것과, 이 하네스가 그 자리에
 | `~/.claude/skills/<name>/SKILL.md` | `~/.agents/skills/<name>` (2차 symlink) | 스킬은 `description`으로 자동 라우팅. 커맨드도 같은 목록에 노출된다 |
 | `~/.claude/rules/*.md` | `dist/adapters/claude/rules/*.md` (생성물) | `paths` frontmatter가 있으면 해당 파일을 다룰 때만 로드되는 **경로 조건 계층**. 이 런타임에만 있다. 스킬 선언의 `rules`에서 `build`가 생성하며 문서 본문을 인라인한다 |
 | `~/.claude/commands/*.md` | `dist/adapters/claude/commands/*.md` (생성물) | `/<name>`으로 호출되는 slash command. 스킬 선언의 `commands`에서 `build`가 생성하며 본문은 "어떤 스킬을 로드하라"뿐이다 |
-| `~/.claude/settings.json` | **dotfiles 소유** | 모델·테마·권한 허용 목록·훅 등록이 한 파일이라 하네스가 링크하지 않는다. 훅 스크립트 본체는 `src/hooks/`에 두고 settings가 그 경로를 부른다 |
+| `~/.claude/settings.json` | `settings.json` (`configure`로 적용) | 원본에 선언한 설정만 관리하고 앱·플러그인의 다른 항목은 보존한다. 전체 파일을 원본에 링크하지 않는다 |
 
 공식 문서: [Memory / CLAUDE.md](https://docs.anthropic.com/en/docs/claude-code/memory), [Skills](https://docs.anthropic.com/en/docs/claude-code/skills), [Hooks](https://docs.anthropic.com/en/docs/claude-code/hooks), [Settings](https://docs.anthropic.com/en/docs/claude-code/settings).
 
@@ -18,10 +18,14 @@ Claude Code가 전역 수준에서 읽는 것과, 이 하네스가 그 자리에
 
 `init-project`가 저장소 루트에 겹쳐 복사한다.
 
-- `.claude/settings.json`: 읽기 전용 명령 허용 목록과 생성물 직접 수정 안내 훅. `~/harness/src/hooks/skill-distribution-guard.mjs`를 호출한다
+- `.claude/settings.json`: 프로젝트의 읽기 전용 명령 허용 목록. 공통 훅은 사용자 설정에만 등록한다
 - `.claude/rules/always.md`: 저장소 code-style을 항상 로드하는 stub (`@import`)
 
 저장소에 `CLAUDE.md`, `CLAUDE.local.md`, `.claude/CLAUDE.md`를 두지 않는다. 하나라도 있으면 Claude가 그 저장소의 `AGENTS.md`를 읽지 않는다.
+
+## 설정 적용
+
+`node scripts/configure.mjs --runtime claude`로 계획을 확인하고 `--apply`로 적용한다. 훅 경로는 실제 체크아웃 위치로 변환하며 dotfiles를 요구하지 않는다. 기존 settings 링크 이관과 로컬 관리 기록은 [설치와 로컬 설정](../../docs/harness/guides/setup.md)을 따른다.
 
 ## 검증
 

@@ -7,6 +7,7 @@ related:
   - principles.md
   - ../decisions/0003-src-dist-split.md
   - ../decisions/0004-adapters-own-runtime-paths.md
+  - ../decisions/0007-harness-owns-agent-settings.md
 ---
 
 # 구조 규칙
@@ -24,6 +25,8 @@ related:
 - `src/docs/`의 문서는 `src/docs/templates/`의 타입별 템플릿과 frontmatter를 따릅니다.
 - 루트 `README.md`, `AGENTS.md`, 어댑터 README, `conventions/` 같은 **기반 문서에는 시점에 따라 낡는 현재 상태를 적지 않습니다.** 무엇이 비어 있는지, 무엇이 들어올 예정인지, 지금 몇 개인지, 현재 도메인이 무엇인지 같은 서술이 여기 해당합니다. 상태는 `history/`·`backlogs/`와 `check` 출력이 소유합니다. 기반 문서는 구조와 규칙만 말합니다.
 - 같은 내용을 두 절에 쓰지 않습니다. 폴더 트리의 주석은 이름과 역할 한 구절로 끝내고, 설명은 그 주제를 소유한 절 하나에만 둡니다.
+
+- 사용자 설정 원본은 각 어댑터에서 소유합니다. `configure`는 선언한 값과 훅 항목을 로컬 파일에 적용하며 앱·플러그인의 다른 항목은 보존합니다. 인증·세션·캐시와 적용 기록은 로컬에 둡니다. dotfiles를 요구하지 않습니다. 설정 적용과 이관 절차는 [설치와 로컬 설정](../guides/setup.md)을 따릅니다.
 
 ## 이유
 

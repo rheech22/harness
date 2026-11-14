@@ -2,6 +2,8 @@
 
 개인 에이전트 하네스
 
+코딩 에이전트에게 도입을 맡기려면 [에이전트를 통한 하네스 도입](src/docs/harness/guides/agent-onboarding.md)을 따라 현재 머신에 설치·적용해 달라고 요청한다.
+
 ## 폴더
 
 ```
@@ -24,7 +26,7 @@ harness/
     skills/<name>/     생성된 스킬
     adapters/<rt>/     생성된 명령과 규칙
     packages/<name>/   외부 배포 스냅샷
-  scripts/             build · check · export · link · init-project
+  scripts/             build · check · export · link · configure · init-project
 ```
 
 ## 규칙
@@ -60,11 +62,12 @@ flowchart TD
   accTitle: link로 코딩 에이전트에 연결
   accDescr: 공용 스킬은 agents 디렉터리로 연결하고 지침과 명령 규칙 훅은 런타임별 설정 위치로 연결한다.
   skills["dist/skills/{name}/"] -->|link · harness.json| shared["~/.agents/skills/{name}/"]
-  files["전역 지침 · 명령 · 규칙 · 훅"] -->|link · adapter.json| runtime["코딩 에이전트별 설정 위치"]
+  files["전역 지침 · 명령 · 규칙"] -->|link · adapter.json| runtime["코딩 에이전트별 설정 위치"]
 ```
 
 - 공용 스킬 연결은 `harness.json`이, 런타임별 연결은 각 `adapter.json`이 정한다.
 - `link`는 파일을 복사하지 않고 symlink를 만든다.
+- 앱도 수정하는 JSON 설정과 훅 등록은 `configure`로 관리 항목만 적용한다. 전체 파일을 symlink하지 않는다.
 
 ### export — 외부 배포용 스냅샷 생성
 
@@ -179,7 +182,7 @@ node scripts/add-external.mjs <name>
 
 ## 스킬이 사용하는 CLI
 
-스킬 설치와 CLI 실행 파일 설치는 별개다. `harness.json`의 `tools`에는 스킬이 전제하는 CLI의 요구사항과 설치·확인 명령을 기록한다. CLI 설치는 dotfiles가 담당한다.
+스킬 설치와 CLI 실행 파일 설치는 별개다. `harness.json`의 `tools`에는 스킬이 전제하는 CLI의 요구사항과 설치·확인 명령을 기록한다. 필요한 CLI는 해당 명령으로 직접 설치한다.
 
 ## 명령
 
@@ -190,11 +193,17 @@ node scripts/add-external.mjs <name> | --all                 # external 스킬 �
 node scripts/export.mjs <name> --version <ver>               # dist/packages 스냅샷 (코드 패키지 버전 일치 검사)
 node scripts/link.mjs --profile common,writing               # 계획만. --runtime claude 로 한 런타임만
 node scripts/link.mjs --profile common,writing --apply       # 적용 (기존 경로는 덮어쓰지 않음)
+node scripts/configure.mjs --runtime claude,codex            # 로컬 설정 적용 계획
+node scripts/configure.mjs --runtime claude,codex --apply    # 관리 항목 적용 (백업 포함)
 node scripts/init-project.mjs <dir> [--runtime claude,codex] # 프로젝트 뼈대 심기
 ```
 
 패키지별 버전과 태그, 코드 패키지 테스트 절차는 [릴리스와 외부 배포](src/docs/harness/guides/release.md)를 따른다.
 
-## dotfiles와의 경계
+## 설치와 설정 관리
 
-머신 값(모델, 권한 허용 목록, 로컬 포트 MCP, 테마, 외부 도구가 덮어쓰는 훅)은 dotfiles가 소유한다. dotfiles는 이 레포를 `~/harness`에 두고 `link.mjs`를 호출하는 프로필 하나만 가진다.
+필요한 도구를 준비하고 스킬을 생성한 뒤, 지침·스킬·규칙은 `link`로 연결하고 설정은 `configure`로 적용한다. 설치 위치는 자유롭게 정할 수 있다.
+
+Claude 설정 원본은 `src/adapters/claude/settings.json`에서 관리한다. `configure`는 원본에 선언한 값과 훅 항목만 로컬 설정에 적용하고, 앱·플러그인의 다른 설정은 보존한다. Codex는 훅 등록만 적용하며 `config.toml`은 변경하지 않는다.
+
+인증 정보·세션·캐시는 런타임의 로컬 저장소에 둔다. 프로젝트 전용 지침·프로필·MCP는 해당 프로젝트가 소유한다. 기존 설정 링크 이관, 백업, 독립 설치 절차는 [설치와 로컬 설정](src/docs/harness/guides/setup.md)을 따른다.

@@ -5,6 +5,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
+import { renderConfig } from "../configure.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const hook = path.join(root, "src/hooks/skill-distribution-guard.mjs");
@@ -45,12 +46,12 @@ for (const payload of ["invalid json", "null", "{}", '{"tool_name":"apply_patch"
   test(`ignores malformed or irrelevant input: ${payload}`, () => assert.equal(run(payload), ""));
 }
 
-test("all hook registrations execute the shared script from an isolated HOME", (t) => {
+test("both adapters execute the shared script from an isolated HOME", (t) => {
   const home = fs.mkdtempSync(path.join(os.tmpdir(), "harness-hook-home-"));
   t.after(() => fs.rmSync(home, { recursive: true, force: true }));
   fs.symlinkSync(root, path.join(home, "harness"));
-  for (const file of ["src/adapters/codex/hooks.json", "src/adapters/codex/project/.codex/hooks.json", "src/adapters/claude/project/.claude/settings.json"]) {
-    const config = JSON.parse(fs.readFileSync(path.join(root, file), "utf8"));
+  for (const file of ["src/adapters/codex/hooks.json", "src/adapters/claude/settings.json"]) {
+    const config = renderConfig(fs.readFileSync(path.join(root, file), "utf8"));
     const command = config.hooks.PostToolUse[0].hooks[0].command;
     const result = spawnSync("/bin/sh", ["-c", command], { env: { ...process.env, HOME: home }, input: edit("dist/a.md"), encoding: "utf8", cwd: home });
     assert.equal(result.status, 0, `${file}: ${result.stderr}`);

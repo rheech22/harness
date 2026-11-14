@@ -9,16 +9,16 @@ Codex CLI가 전역 수준에서 읽는 것과, 이 하네스가 그 자리에 �
 | `~/.codex/AGENTS.md` | `AGENTS.md` (symlink) | Codex home(`CODEX_HOME`, 기본 `~/.codex`)에서 `AGENTS.override.md` → `AGENTS.md` 순으로 첫 파일을 읽는다. 프로젝트는 git root부터 cwd까지 `AGENTS.md`를 이어 붙인다 (`project_doc_max_bytes` 32KiB) |
 | `~/.agents/skills/<name>/SKILL.md` | 공용 배포 그대로 | 사용자 범위 스킬 경로는 `$HOME/.agents/skills`. **`~/.codex/skills`는 문서에 없다.** symlink 폴더를 따라간다. 같은 이름이 둘이면 병합하지 않고 둘 다 노출된다 |
 | `~/.codex/rules/*.rules` | `rules/*.rules` | Starlark `prefix_rule(pattern, decision, justification, match, not_match)`. decision 기본 `allow`, 충돌 시 더 엄격한 쪽. experimental |
-| `~/.codex/hooks.json` | `hooks.json` | 사용자 훅. 프로젝트 `.codex/hooks.json`과 **함께** 로드된다. 비관리 훅은 새 세션의 `/hooks`에서 신뢰해야 실행된다 |
+| `~/.codex/hooks.json` | `hooks.json` (`configure`로 적용) | 사용자 훅. 프로젝트 `.codex/hooks.json`과 **함께** 로드된다. 비관리 훅은 새 세션의 `/hooks`에서 신뢰해야 실행된다 |
 | `~/.codex/prompts/` | 두지 않음 | custom prompt는 **deprecated**. 명시 호출은 스킬을 `$name`으로 한다 |
-| `~/.codex/config.toml` | **도구·dotfiles 소유** | 모델, marketplace, plugin, 프로젝트 trust, `hooks.state`를 앱이 쓴다. 하네스가 링크하지 않는다 |
+| `~/.codex/config.toml` | **런타임의 로컬 설정** | 모델, marketplace, plugin, 프로젝트 trust, `hooks.state`를 앱이 쓴다. 하네스가 링크하지 않는다 |
 
 공식 문서: [AGENTS.md](https://learn.chatgpt.com/codex/agent-configuration/agents-md), [Skills](https://learn.chatgpt.com/docs/build-skills), [Rules](https://learn.chatgpt.com/codex/agent-configuration/rules), [Hooks](https://learn.chatgpt.com/docs/hooks), [Custom prompts (deprecated)](https://learn.chatgpt.com/docs/custom-prompts), [Config reference](https://learn.chatgpt.com/docs/config-file/config-reference).
 
 ## 프로젝트 뼈대 (`project/`)
 
 - `.codex/config.toml`: 프로젝트 MCP 등록만. 모델·credential·개인 절대 경로는 사용자 설정에
-- `.codex/hooks.json`: `apply_patch`로 `dist/`나 스킬 설치 경로를 직접 수정하면 안내하는 공통 훅을 호출합니다. 스크립트는 `~/harness/src/hooks/`에 있으며 프로젝트 trust 뒤에만 로드됩니다.
+공통 훅은 프로젝트에 복사하지 않고 `node scripts/configure.mjs --runtime codex --apply`로 사용자 훅 설정에 적용한다. 실행 경로는 실제 하네스 체크아웃 위치로 변환한다. 다른 훅 항목을 보존하며 `config.toml`은 변경하지 않는다. 이관과 백업은 [설치와 로컬 설정](../../docs/harness/guides/setup.md)을 따른다.
 
 ## 검증
 

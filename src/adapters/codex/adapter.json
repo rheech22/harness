@@ -18,13 +18,12 @@
         "rules"
       ],
       "mode": "per-entry"
-    },
-    {
-      "src": "hooks.json",
-      "to": [
-        "hooks"
-      ]
     }
   ],
-  "project": "project"
+  "project": "project",
+  "configure": {
+    "source": "hooks.json",
+    "target": "hooks",
+    "state": "~/.local/state/harness/codex-settings.json"
+  }
 }
