@@ -12,11 +12,11 @@ function fixture(t) {
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   fs.mkdirSync(path.join(root, "scripts"));
   for (const file of ["build.mjs", "export.mjs"]) fs.copyFileSync(path.join(scripts, file), path.join(root, "scripts", file));
-  const source = path.join(root, "src/tools/demo");
+  const source = path.join(root, "src/packages/demo");
   fs.mkdirSync(source, { recursive: true });
   fs.writeFileSync(path.join(source, "__init__.py"), '__version__ = "1.2.3"\n');
   fs.writeFileSync(path.join(source, "payload.txt"), "original");
-  fs.writeFileSync(path.join(root, "harness.json"), JSON.stringify({ publish: { demo: { from: "src/tools/demo", versionFile: "__init__.py" } } }));
+  fs.writeFileSync(path.join(root, "harness.json"), JSON.stringify({ publish: { demo: { from: "src/packages/demo", versionFile: "__init__.py" } } }));
   execFileSync("git", ["init", "--quiet", root]);
   const run = (version = "1.2.3") => spawnSync(process.execPath, ["scripts/export.mjs", "demo", "--version", version], { cwd: root, encoding: "utf8" });
   return { root, source, run, dest: path.join(root, "dist/packages/demo") };

@@ -3,7 +3,7 @@
 //     → dist/skills/<name>/SKILL.md, references/, assets/, scripts/     (자급자족 번들)
 //     → dist/adapters/<runtime>/commands/<cmd>.md                        (명령 어댑터)
 //     → dist/adapters/<runtime>/rules/<name>.md                           (경로 조건 규칙: paths + 문서 본문 인라인)
-//   src/tools/<name>/SKILL.md (+ references/)
+//   src/packages/<name>/SKILL.md (+ references/)
 //     → dist/skills/<name>/                                              (코드 패키지가 가진 스킬의 사본)
 // 번들 안의 문서 링크는 다시 쓴다: 같은 번들 → references/·assets/·scripts/ 상대 경로,
 // 번들 밖의 하네스 파일 → 저장소 URL (경고), 존재하지 않는 대상 → 오류.
@@ -52,8 +52,8 @@ export function loadManifests() {
   });
 }
 
-export function toolSkillNames() {
-  const dir = path.join(SRC, "tools");
+export function packageSkillNames() {
+  const dir = path.join(SRC, "packages");
   if (!fs.existsSync(dir)) return [];
   return fs.readdirSync(dir).filter((n) => fs.existsSync(path.join(dir, n, "SKILL.md")));
 }
@@ -179,9 +179,9 @@ export function expected() {
     for (const [runtime, rule] of Object.entries(m.rules ?? {})) out.set(`dist/adapters/${runtime}/rules/${rule.name ?? m.name}.md`, renderRule(m, rule, runtime, diag));
   }
 
-  for (const name of toolSkillNames()) {
-    if (seen.has(name)) diag.errors.push(`skill name collision: "${name}" is both a docs skill and a tools/ package`); seen.add(name);
-    const base = path.join(SRC, "tools", name);
+  for (const name of packageSkillNames()) {
+    if (seen.has(name)) diag.errors.push(`skill name collision: "${name}" is both a docs skill and a packages/ package`); seen.add(name);
+    const base = path.join(SRC, "packages", name);
     const skill = fs.readFileSync(path.join(base, "SKILL.md"), "utf8");
     out.set(`dist/skills/${name}/SKILL.md`, skill.replace(/^(---\r?\n[\s\S]*?\r?\n---\r?\n)/, `$1\n${MARK}\n`));
     for (const f of walk(path.join(base, "references"), () => true)) out.set(`dist/skills/${name}/references/${path.relative(path.join(base, "references"), f)}`, fs.readFileSync(f, "utf8"));

@@ -1,5 +1,5 @@
 // 1) dist/ drift: src/ 로부터 다시 만든 결과와 같은가 (어긋나면 오류). 번들 닫힘(끊어진 링크)은 오류, 번들 밖 링크는 경고
-// 2) 매니페스트 정합: profiles 의 이름이 custom(src/skills, src/tools) 또는 external 로 설명되는가
+// 2) 매니페스트 정합: profiles 의 이름이 custom(src/skills, src/packages) 또는 external 로 설명되는가
 // 3) 외부 스킬 설치 여부 (경고)
 // 4) dist/packages 상태: 손편집은 오류, 소스가 앞서 있으면 "export 대기" 경고 (정상 상태)
 import fs from "node:fs";
@@ -29,7 +29,7 @@ for (const [profile, names] of Object.entries(manifest.profiles)) {
   for (const n of names) {
     const isCustom = customNames.has(n), isExternal = external.has(n);
     if (isCustom && isExternal) errors.push(`profile ${profile}: "${n}" is declared both custom and external`);
-    if (!isCustom && !isExternal) errors.push(`profile ${profile}: "${n}" is neither custom (src/skills, src/tools) nor listed in external`);
+    if (!isCustom && !isExternal) errors.push(`profile ${profile}: "${n}" is neither custom (src/skills, src/packages) nor listed in external`);
     if (isExternal && !fs.existsSync(path.join(root, "dist/skills", n, "SKILL.md"))) warnings.push(`external skill not installed: dist/skills/${n} (node scripts/add-external.mjs ${n})`);
   }
 }

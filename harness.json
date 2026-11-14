@@ -90,7 +90,7 @@
       "from": "dist/skills/web-accessibility"
     },
     "excalibridge": {
-      "from": "src/tools/excalibridge",
+      "from": "src/packages/excalibridge",
       "versionFile": "excalibridge/__init__.py",
       "strip": [
         ".gitignore",

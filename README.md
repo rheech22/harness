@@ -17,7 +17,7 @@ harness/
       skill.json       스킬 manifest
       assets/          번들에 실어 보낼 에셋
       scripts/         스킬 실행, 검증 코드
-    tools/<name>/      코드 패키지. 자기 SKILL.md 와 references 를 가짐
+    packages/<name>/   이 레포에서 개발하는 standalone 패키지
     hooks/             런타임이 공유하는 훅 스크립트 본체
     templates/project/ 프로젝트 뼈대 중 런타임 중립 부분
     templates/docs/    문서 타입별 템플릿
@@ -40,7 +40,7 @@ harness/
 src/skills/<name>/skill.json ──build──▶ dist/skills/<name>/    닫힌 번들: SKILL.md + references/ + assets/ + scripts/ (링크 재작성)
                        ──build──▶ dist/adapters/<rt>/commands/   선언의 commands 에서 생성 (slash command)
                        ──build──▶ dist/adapters/<rt>/rules/      선언의 rules 에서 생성 (paths + 문서 본문 인라인)
-src/tools/<name>/      ──build──▶ dist/skills/<name>/    패키지가 가진 SKILL.md 의 사본
+src/packages/<name>/      ──build──▶ dist/skills/<name>/    패키지가 가진 SKILL.md 의 사본
         └──────────────export──▶ dist/packages/<name>/   릴리스 스냅샷. strip 적용, 태그 <name>-v<ver>
 
 dist/skills/*  ──link──▶ ~/.agents/skills/*              harness.json 소유 (공용 배포)
@@ -87,7 +87,7 @@ related: []
 
 ## custom 과 external
 
-- **custom**: 원본이 이 레포에 있는 것. `src/skills/*/skill.json`이 선언하는 번들 스킬과 `src/tools/`의 코드 패키지.
+- **custom**: 원본이 이 레포에 있는 것. `src/skills/*/skill.json`이 선언하는 번들 스킬과 `src/packages/`의 코드 패키지.
 - **external**: upstream에서 Skills CLI로 `dist/skills/`에 설치하고 `harness.json`의 `external`에 출처, `skills-lock.json`을 커밋. 레포 루트의 `.agents/skills → dist/skills` 링크가 설치 자리를 정하며, 설치는 `-a codex`로 한 번만 한다(다른 agent 대상은 레포 안에 런타임 디렉터리를 만든다). `node scripts/add-external.mjs <name>`이 이 절차를 감싸고, `check`가 lock과 선언의 정합을 본다.
 - `tools`로 선언한 CLI(스킬이 전제하는 실행 파일)는 요구사항만 적고 설치는 dotfiles가 한다.
 

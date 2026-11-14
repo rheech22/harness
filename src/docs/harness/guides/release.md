@@ -29,14 +29,14 @@ related:
 
 - `check`에 `export pending`이 남아 있으면 의도된 것인지 확인합니다. 릴리스하지 않기로 한 변경이면 그대로 둡니다.
 - `dist/packages/`를 손으로 고친 흔적(`edited by hand`)은 오류입니다. 되돌리고 export를 다시 실행합니다.
-- 코드 패키지는 export 전에 `src/tools/<name>/`에서 테스트를 통과시킵니다. `dist/packages/`에는 테스트가 들어가지 않습니다.
+- 코드 패키지는 export 전에 `src/packages/<name>/`에서 테스트를 통과시킵니다. `dist/packages/`에는 테스트가 들어가지 않습니다.
 
 ## excalibridge 릴리스
 
-버전 원본은 `src/tools/excalibridge/excalibridge/__init__.py`입니다. `pyproject.toml`은 이 값을 읽습니다. CLI 버전과 export 버전은 같은 값을 사용해야 합니다.
+버전 원본은 `src/packages/excalibridge/excalibridge/__init__.py`입니다. `pyproject.toml`은 이 값을 읽습니다. CLI 버전과 export 버전은 같은 값을 사용해야 합니다.
 
 ```bash
-cd src/tools/excalibridge
+cd src/packages/excalibridge
 python -m unittest discover -s tests
 node --test tests/test_embeddable.mjs
 cd ../../..

@@ -16,8 +16,8 @@ jobs:
         with:
           node-version: "22"
       - run: python -m unittest discover -s tests
-        working-directory: src/tools/excalibridge
-      - run: node --test src/tools/excalibridge/tests/test_embeddable.mjs scripts/tests/export.test.mjs
+        working-directory: src/packages/excalibridge
+      - run: node --test src/packages/excalibridge/tests/test_embeddable.mjs scripts/tests/export.test.mjs
       - run: node scripts/check.mjs
       - name: Verify release version
         env:
