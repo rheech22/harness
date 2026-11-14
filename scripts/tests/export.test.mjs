@@ -97,3 +97,18 @@ test("rejects a version file without a literal package version", (t) => {
   assert.equal(result.status, 1);
   assert.match(result.stderr, /expected a literal __version__ assignment/);
 });
+
+test("strips nested Python caches while keeping package code", (t) => {
+  const { root, source, run, dest } = fixture(t);
+  fs.mkdirSync(path.join(source, "adapters/__pycache__"), { recursive: true });
+  fs.writeFileSync(path.join(source, "adapters/__pycache__/inbox.pyc"), "cache");
+  fs.writeFileSync(path.join(source, "adapters/inbox.py"), "code");
+  const manifestPath = path.join(root, "harness.json");
+  const manifest = JSON.parse(fs.readFileSync(manifestPath));
+  manifest.publish.demo.strip = ["**/__pycache__/**", "**/*.pyc"];
+  fs.writeFileSync(manifestPath, JSON.stringify(manifest));
+  const result = run();
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(fs.existsSync(path.join(dest, "adapters/__pycache__/inbox.pyc")), false);
+  assert.equal(fs.readFileSync(path.join(dest, "adapters/inbox.py"), "utf8"), "code");
+});

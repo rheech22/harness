@@ -11,7 +11,13 @@ import { spawnSync } from "node:child_process";
 import { root, walk } from "./build.mjs";
 
 export function globToRe(glob) {
-  return new RegExp("^" + glob.replace(/[.+^${}()|[\]\\]/g, "\\$&").replace(/\*\*\//g, "(?:.*/)?").replace(/\*\*/g, ".*").replace(/\*/g, "[^/]*") + "$");
+  const pattern = glob.split(/(\*\*\/|\*\*|\*)/).map((part) => {
+    if (part === "**/") return "(?:.*/)?";
+    if (part === "**") return ".*";
+    if (part === "*") return "[^/]*";
+    return part.replace(/[.+?^${}()|[\]\\]/g, "\\$&");
+  }).join("");
+  return new RegExp(`^${pattern}$`);
 }
 export function listFiles(fromAbs, strip = []) {
   const res = strip.map(globToRe);
