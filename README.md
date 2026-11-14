@@ -95,30 +95,66 @@ flowchart TD
 
 공통 지침은 짧게 유지하고, 파일별 규칙과 작업별 절차는 필요한 시점에 읽도록 나눈다.
 
-## 분류는 메타데이터로
+## 문서 분류와 스킬 선택
 
-`src/docs/`는 도메인 폴더로 나누고 `dist/skills/`는 평평하다. 문서 frontmatter의 `domain`이 스킬에 전파되고, `harness.json`의 `profiles`가 링크 대상을 고른다. 로딩 판단에는 쓰지 않는다.
+### 문서 분류 — domain
+
+원본 문서는 `src/docs/common/`, `src/docs/web/`처럼 관심사별 도메인 폴더에 나눠 둔다. 배포된 스킬은 `dist/skills/code-review/`처럼 도메인 구분 없이 스킬 이름으로 배치한다.
+
+build는 스킬에 포함된 문서들의 `domain`을 모아 생성된 `SKILL.md`의 metadata에 기록한다.
+
+문서 frontmatter 예시:
 
 ```yaml
-# src/docs/<domain>/<doc>.md 의 frontmatter — 문서는 자기 분류만 밝힌다
 ---
 title: "코드 리뷰 워크플로우"
 domain: [common]
-kind: workflow          # convention | workflow | guide | architecture | profile | decision | history
+kind: workflow
 status: current
 related: []
 ---
 ```
 
+### 연결할 스킬 — profiles
+
+`harness.json`의 `profiles`는 로컬 에이전트에게 연결할 스킬 묶음을 정한다.
+
+`harness.json`의 `writing` 프로필 발췌:
+
 ```json
-// src/skills/<name>/skill.json — 스킬 선언. 어떤 문서를 어떤 순서로 묶고, 무엇을 싣고, 어디에 명령·규칙을 낼지
-{ "name": "code-review", "description": "Use when …",
-  "reads": ["docs/common/code-review.md", "docs/common/prose-style.md"],
-  "assets": [],
-  "profile": { "name": "code-review", "default": "docs/common/profiles/code-review.default.md", "projectPath": "docs/profiles/code-review.md" },
-  "commands": { "claude": { "name": "review" } },
-  "rules": { "claude": { "name": "coding", "paths": ["**/*.ts"] } } }
+{
+  "profiles": {
+    "writing": [
+      "explain"
+    ]
+  }
+}
 ```
+
+다음 명령은 `writing` 프로필에 등록된 스킬을 연결한다.
+
+```bash
+node scripts/link.mjs --profile writing --apply
+```
+
+### 작업에 사용할 스킬 — description
+
+연결된 스킬 중 현재 작업에 사용할 것은 각 스킬의 `description`에 적힌 사용 조건으로 판단한다.
+
+`src/skills/code-review/skill.json`의 축약 예시:
+
+```json
+{
+  "name": "code-review",
+  "description": "Use when asked to review code. Do not use for documentation review.",
+  "reads": [
+    "docs/common/code-review.md",
+    "docs/common/prose-style.md"
+  ]
+}
+```
+
+`profile`, `commands`, `rules`를 포함한 전체 선언 필드는 [스킬 규칙](src/docs/harness/conventions/skills.md)을 따른다.
 
 ## custom 과 external
 
