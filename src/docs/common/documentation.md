@@ -7,11 +7,11 @@ related:
   - document-writing.md
   - prose-style.md
   - document-review-workflow.md
-  - ../../templates/docs/convention.md
-  - ../../templates/docs/guide.md
-  - ../../templates/docs/decision.md
-  - ../../templates/docs/history.md
-  - ../../templates/docs/backlog.md
+  - ../templates/convention.md
+  - ../templates/guide.md
+  - ../templates/decision.md
+  - ../templates/history.md
+  - ../templates/backlog.md
 ---
 
 # 문서 컨벤션
@@ -72,13 +72,13 @@ type-driven하게 폴더를 구성합니다. 즉 폴더는 문서의 타입과 1
 
 ## 템플릿
 
-새 문서는 하네스의 `src/templates/docs/`에 있는 타입별 템플릿을 사용합니다.
+새 문서는 하네스의 `src/docs/templates/`에 있는 타입별 템플릿을 사용합니다.
 
-- `convention`: [`convention.md`](../../templates/docs/convention.md)
-- `guide`: [`guide.md`](../../templates/docs/guide.md)
-- `decision`: [`decision.md`](../../templates/docs/decision.md)
-- `history`: [`history.md`](../../templates/docs/history.md)
-- `backlog`: [`backlog.md`](../../templates/docs/backlog.md)
+- `convention`: [`convention.md`](../templates/convention.md)
+- `guide`: [`guide.md`](../templates/guide.md)
+- `decision`: [`decision.md`](../templates/decision.md)
+- `history`: [`history.md`](../templates/history.md)
+- `backlog`: [`backlog.md`](../templates/backlog.md)
 
 템플릿이 없는 타입(`contract`, `architecture`, `workflow`, `profile`, `troubleshooting`)은 가장 가까운 템플릿의 frontmatter를 쓰고 `kind`만 바꿉니다. `workflow`는 이미 포팅된 워크플로우 문서를, `profile`은 같은 도메인의 `profiles/*.default.md`를 본보기로 삼습니다.
 

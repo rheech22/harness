@@ -24,7 +24,7 @@ related:
 | --- | --- |
 | `AGENTS.md`, `CLAUDE.md` | `adapter` |
 | `README.md` | `current` |
-| 문서 템플릿 디렉터리(기본값 `src/templates/docs/**` 또는 프로젝트의 `docs/templates/**`) | `template` |
+| 문서 템플릿 디렉터리(기본값 `src/docs/templates/**` 또는 프로젝트의 `docs/templates/**`) | `template` |
 | `kind: decision` | `decision` |
 | `kind: backlog` | `backlog` |
 | `kind: history` | `history` |

@@ -13,14 +13,14 @@ harness/
   src/                 원본 모음
     docs/<domain>/     관심사별 원본 문서 모음
       harness/         단, 이곳은 이 레포에 대한 문서 모음
+    docs/templates/    문서 타입별 템플릿
     skills/<name>/     스킬별 원본
       skill.json       스킬 manifest
       assets/          번들에 실어 보낼 에셋
       scripts/         스킬 실행, 검증 코드
     packages/<name>/   이 레포에서 개발하는 standalone 패키지
     hooks/             런타임이 공유하는 훅 스크립트 본체
-    templates/project/ 프로젝트 뼈대 중 런타임 중립 부분
-    templates/docs/    문서 타입별 템플릿
+    bootstrap/         프로젝트 초기화용 공통 파일
     adapters/<runtime>/ 런타임 전용. adapter.json 과 README
   dist/                산출물. 커밋은 하되 편집하지 않는다
     skills/<name>/     내 머신 배포. custom 은 build 가, external 은 Skills CLI 가 쓴다

@@ -76,7 +76,7 @@ Anchor는 다음 순서를 우선합니다.
 - 문서 타입·배치·metadata: [문서 컨벤션](https://github.com/rheech22/harness/blob/main/src/docs/common/documentation.md)
 - 검수 절차와 반복 queue: [문서 검수 워크플로우](https://github.com/rheech22/harness/blob/main/src/docs/common/document-review-workflow.md)
 - HTML 리포트의 구조와 조립: [리포트 디자인](https://github.com/rheech22/harness/blob/main/src/docs/common/report-design.md)
-- 새 문서 scaffold: `src/templates/docs/`의 타입별 템플릿
+- 새 문서 scaffold: `src/docs/templates/`의 타입별 템플릿
 <!-- from docs/common/prose-style.md -->
 # 산문 문체 기준
 
