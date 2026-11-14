@@ -1,5 +1,5 @@
 // 소스(src/) → 생성물(dist/).
-//   src/skills/<name>.json   스킬 선언 (reads, assets, scripts, profile, commands)
+//   src/skills/<name>/skill.json   스킬 선언 (reads, assets, scripts, profile, commands)
 //     → dist/skills/<name>/SKILL.md, references/, assets/, scripts/     (자급자족 번들)
 //     → dist/adapters/<runtime>/commands/<cmd>.md                        (명령 어댑터)
 //     → dist/adapters/<runtime>/rules/<name>.md                           (경로 조건 규칙: paths + 문서 본문 인라인)
@@ -42,11 +42,12 @@ export function walk(dir, filter = (p) => p.endsWith(".md")) {
 export function loadManifests() {
   const dir = path.join(SRC, "skills");
   if (!fs.existsSync(dir)) return [];
-  return fs.readdirSync(dir).filter((n) => n.endsWith(".json")).map((n) => {
-    const m = JSON.parse(fs.readFileSync(path.join(dir, n), "utf8"));
-    if (m.name !== path.basename(n, ".json")) throw new Error(`src/skills/${n}: name "${m.name}" must match the file name`);
-    if (!m.description) throw new Error(`src/skills/${n}: description is required`);
-    if (!m.reads?.length) throw new Error(`src/skills/${n}: reads must list at least one doc`);
+  return fs.readdirSync(dir, { withFileTypes: true }).filter((e) => e.isDirectory()).map(({ name }) => {
+    const rel = `skills/${name}/skill.json`;
+    const m = JSON.parse(fs.readFileSync(path.join(SRC, rel), "utf8"));
+    if (m.name !== name) throw new Error(`src/${rel}: name "${m.name}" must match the directory name`);
+    if (!m.description) throw new Error(`src/${rel}: description is required`);
+    if (!m.reads?.length) throw new Error(`src/${rel}: reads must list at least one doc`);
     return m;
   });
 }

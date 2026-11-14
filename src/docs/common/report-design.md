@@ -7,7 +7,7 @@ related:
   - prose-style.md
   - html-report.md
   - report-diagrams.md
-  - ../../assets/report/report-shell.html
+  - ../../skills/html-report/assets/report-shell.html
 ---
 
 # 리포트 HTML 디자인
@@ -28,7 +28,7 @@ HTML 리포트를 요청하면 에이전트마다 각기 다른 양식으로 결
 
 ## 조립
 
-리포트는 [`report-shell.html`](../../assets/report/report-shell.html)을 복사해 만듭니다. 이 쉘은 팔레트, 타이포, 카드 레이아웃, 표제 블록, 테마 토글, 맨 위로 버튼, 인쇄 규칙과 아래 조판 단위를 담습니다.
+리포트는 [`report-shell.html`](../../skills/html-report/assets/report-shell.html)을 복사해 만듭니다. 이 쉘은 팔레트, 타이포, 카드 레이아웃, 표제 블록, 테마 토글, 맨 위로 버튼, 인쇄 규칙과 아래 조판 단위를 담습니다.
 
 본문과 리포트 고유 스타일·스크립트는 세 표시 주석 구간의 내용만 통째로 바꿉니다. 표시 주석 자체는 남깁니다. 표시 주석을 보존하면 구간 구조를 검사할 수 있지만, 공유 쉘과 수정하지 않은 부분이 같은지는 별도로 확인해야 합니다.
 
@@ -95,7 +95,7 @@ HTML 리포트를 요청하면 에이전트마다 각기 다른 양식으로 결
 
 쉘 파일 자체가 명세서입니다. 브라우저로 열면 본문 자리에 조판 단위가 하나씩 예시로 들어 있어, 새 리포트를 만들기 전에 무엇이 이미 있는지 눈으로 확인할 수 있습니다.
 
-구조가 반복되는 리포트는 본문 조각을 템플릿 파일로 둡니다. [코드 리뷰 리포트 본문](../../assets/report/code-review-report.html.template)이 그 예입니다. 매번 구조가 달라지는 리포트는 템플릿 대신 해당 가이드가 절 구성을 정합니다.
+구조가 반복되는 리포트는 본문 조각을 템플릿 파일로 둡니다. [코드 리뷰 리포트 본문](../../skills/html-report/assets/code-review-report.html.template)이 그 예입니다. 매번 구조가 달라지는 리포트는 템플릿 대신 해당 가이드가 절 구성을 정합니다.
 
 ### 기술 설명의 읽기 조판
 
@@ -119,7 +119,7 @@ HTML 리포트를 요청하면 에이전트마다 각기 다른 양식으로 결
 
 ### 코드 리뷰의 읽기 조판
 
-코드 리뷰는 본문 전체를 `.code-review`로 감싸 읽기 조판을 선택합니다. 본문은 16px/1.85이고 인라인 코드와 경로는 각각 13px와 12px입니다. 결과·검증 기록 탭은 읽기 쉬운 본문 크기로 표시합니다. 중요도는 각 지적에 항상 표시합니다. 지적과 꼬리 절의 제목은 18px, 문제·제안 구획은 실제 `h3`와 16px를 사용합니다. 지적의 읽는 폭과 간격은 [코드 리뷰 본문 템플릿](../../assets/report/code-review-report.html.template)이 소유합니다.
+코드 리뷰는 본문 전체를 `.code-review`로 감싸 읽기 조판을 선택합니다. 본문은 16px/1.85이고 인라인 코드와 경로는 각각 13px와 12px입니다. 결과·검증 기록 탭은 읽기 쉬운 본문 크기로 표시합니다. 중요도는 각 지적에 항상 표시합니다. 지적과 꼬리 절의 제목은 18px, 문제·제안 구획은 실제 `h3`와 16px를 사용합니다. 지적의 읽는 폭과 간격은 [코드 리뷰 본문 템플릿](../../skills/html-report/assets/code-review-report.html.template)이 소유합니다.
 
 표, 접힌 설명, `narrative-list`와 모바일 버튼은 기술 설명의 읽기 조판과 같은 공유 스타일을 사용합니다. 검증 기록의 접힌 설명만 배경을 비우고 얇은 테두리를 둘러 반복 항목의 클릭 영역을 구분합니다. 코드 리뷰의 본문에 `.explanation`을 붙이거나 설명용 목차·퀴즈·코드 강조 규칙을 가져오지 않습니다. 경로와 줄 번호는 근거를 확인하는 데 필요하므로 그대로 표시합니다.
 
@@ -228,11 +228,11 @@ perl -0777 -ne 'print $1 if m{/\* BODY_STYLE:start \*/(.*?)/\* BODY_STYLE:end \*
 
 본문을 다 쓴 뒤에는 위 문체 절의 항목으로 한 번 훑습니다. 이중 피동, 결산 상투구, 과장 어휘, 대명사 남용이 가장 자주 남습니다.
 
-쉘 자체를 고쳤다면 [`report-shell.html`](../../assets/report/report-shell.html)을 브라우저로 열어 조판 단위가 모두 보이는지, 테마 토글이 양쪽으로 동작하는지 확인합니다.
+쉘 자체를 고쳤다면 [`report-shell.html`](../../skills/html-report/assets/report-shell.html)을 브라우저로 열어 조판 단위가 모두 보이는지, 테마 토글이 양쪽으로 동작하는지 확인합니다.
 
 ## 관련 문서
 
-- 공유 쉘과 조판 단위: [`report-shell.html`](../../assets/report/report-shell.html)
+- 공유 쉘과 조판 단위: [`report-shell.html`](../../skills/html-report/assets/report-shell.html)
 - 리포트 조립·검증·저장 절차와 두 종류의 계약: [HTML 리포트 생성](html-report.md)
 - 다이어그램 선택과 SVG 문법: [리포트 SVG 다이어그램](report-diagrams.md)
 - 본문 문체와 용어: [산문 문체 기준](prose-style.md)

@@ -8,18 +8,18 @@
     "docs/common/prose-style.md"
   ],
   "assets": [
-    "assets/report/report-shell.html",
-    "assets/report/code-review-report.html.template",
-    "assets/report/explanation-quiz.html.template",
-    "assets/report/report-diagram-flow.html.template",
-    "assets/report/report-diagram-structure.html.template",
-    "assets/report/report-diagram-compare.html.template",
-    "assets/report/report-shell-lucide-license.txt",
-    "assets/report/report-prose-im-not-ai-license.txt"
+    "skills/html-report/assets/report-shell.html",
+    "skills/html-report/assets/code-review-report.html.template",
+    "skills/html-report/assets/explanation-quiz.html.template",
+    "skills/html-report/assets/report-diagram-flow.html.template",
+    "skills/html-report/assets/report-diagram-structure.html.template",
+    "skills/html-report/assets/report-diagram-compare.html.template",
+    "skills/html-report/assets/report-shell-lucide-license.txt",
+    "skills/html-report/assets/report-prose-im-not-ai-license.txt"
   ],
   "scripts": [
-    "assets/report/scripts/check-explanation-report.mjs",
-    "assets/report/scripts/check-report-diagrams.mjs"
+    "skills/html-report/scripts/check-explanation-report.mjs",
+    "skills/html-report/scripts/check-report-diagrams.mjs"
   ],
   "profile": {
     "name": "html-report",

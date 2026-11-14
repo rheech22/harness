@@ -9,11 +9,11 @@ related:
   - report-design.md
   - prose-style.md
   - document-writing.md
-  - ../../assets/report/report-shell.html
-  - ../../assets/report/report-diagram-flow.html.template
-  - ../../assets/report/report-diagram-structure.html.template
-  - ../../assets/report/report-diagram-compare.html.template
-  - ../../assets/report/scripts/check-report-diagrams.mjs
+  - ../../skills/html-report/assets/report-shell.html
+  - ../../skills/html-report/assets/report-diagram-flow.html.template
+  - ../../skills/html-report/assets/report-diagram-structure.html.template
+  - ../../skills/html-report/assets/report-diagram-compare.html.template
+  - ../../skills/html-report/scripts/check-report-diagrams.mjs
 ---
 
 # 리포트 SVG 다이어그램

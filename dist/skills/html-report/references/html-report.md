@@ -11,11 +11,11 @@ related:
   - profiles/html-report.default.md
   - code-review.md
   - ../writing/explain.md
-  - ../../assets/report/report-shell.html
-  - ../../assets/report/code-review-report.html.template
-  - ../../assets/report/explanation-quiz.html.template
-  - ../../assets/report/scripts/check-explanation-report.mjs
-  - ../../assets/report/scripts/check-report-diagrams.mjs
+  - ../../skills/html-report/assets/report-shell.html
+  - ../../skills/html-report/assets/code-review-report.html.template
+  - ../../skills/html-report/assets/explanation-quiz.html.template
+  - ../../skills/html-report/scripts/check-explanation-report.mjs
+  - ../../skills/html-report/scripts/check-report-diagrams.mjs
 ---
 
 # HTML 리포트 생성

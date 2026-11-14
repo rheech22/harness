@@ -19,8 +19,8 @@ related:
 
 ## 규칙
 
-- 스킬은 두 종류뿐입니다. **custom**은 원본이 이 저장소에 있는 것(`src/skills/*.json`이 선언하고 `src/docs/`·`src/assets/`가 내용을 대는 번들, 그리고 `src/tools/`의 코드 패키지), **external**은 upstream에서 `skills add`로 설치하고 lock을 커밋하는 것입니다. 같은 이름을 두 종류로 선언하지 않습니다.
-- **스킬 선언은 `src/skills/<name>.json` 하나가 소유합니다.** `name`, `description`(라우팅 조건), `reads`(읽기 순서대로의 문서 목록), `assets`, `scripts`, `profile`, `commands`를 적습니다. 문서 frontmatter에는 스킬 정보를 두지 않습니다. 한 문서가 여러 스킬에 들어갈 수 있고, 선언 없는 문서는 참고 문서로만 남습니다.
+- 스킬은 두 종류뿐입니다. **custom**은 원본이 이 저장소에 있는 것(`src/skills/*/skill.json`이 선언하고 `src/docs/`와 각 스킬의 `assets/`·`scripts/`가 내용을 대는 번들, 그리고 `src/tools/`의 코드 패키지), **external**은 upstream에서 `skills add`로 설치하고 lock을 커밋하는 것입니다. 같은 이름을 두 종류로 선언하지 않습니다.
+- **스킬 선언은 `src/skills/<name>/skill.json` 하나가 소유합니다.** `name`, `description`(라우팅 조건), `reads`(읽기 순서대로의 문서 목록), `assets`, `scripts`, `profile`, `commands`를 적습니다. 경로 필드는 `src/` 기준이며, 스킬 전용 파일은 같은 폴더의 `assets/`와 `scripts/`에 둡니다. 문서 frontmatter에는 스킬 정보를 두지 않습니다. 한 문서가 여러 스킬에 들어갈 수 있고, 선언 없는 문서는 참고 문서로만 남습니다.
 - 번들은 `SKILL.md` + `references/`(문서 복사본) + `assets/`(템플릿·라이선스 복사본) + `scripts/`로 구성되며 **닫혀 있어야** 합니다. 번들 안 문서의 링크는 `build`가 번들 기준으로 다시 씁니다. 같은 번들 안이면 상대 경로로, 번들 밖의 하네스 파일이면 저장소 URL로 바꾸고 경고하며, 존재하지 않는 대상은 오류입니다.
 - 번들의 `references/`는 원본 문서의 **복사본**입니다. symlink를 쓰지 않습니다. 저장소 밖으로 나가도 동작해야 하기 때문입니다.
 - 프로젝트마다 달라지는 값은 문서에 쓰지 않고 **프로필**로 뺍니다. 선언의 `profile`이 기본값 문서(`docs/<domain>/profiles/<name>.default.md`)와 프로젝트 쪽 경로(`docs/profiles/<name>.md`)를 가리키고, 생성된 `SKILL.md`가 "프로젝트 파일을 먼저 읽고 없으면 기본값"을 첫 단계로 지시합니다. 절 제목이 프로필의 계약입니다.

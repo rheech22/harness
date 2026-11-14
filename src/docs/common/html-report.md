@@ -10,11 +10,11 @@ related:
   - profiles/html-report.default.md
   - code-review.md
   - ../writing/explain.md
-  - ../../assets/report/report-shell.html
-  - ../../assets/report/code-review-report.html.template
-  - ../../assets/report/explanation-quiz.html.template
-  - ../../assets/report/scripts/check-explanation-report.mjs
-  - ../../assets/report/scripts/check-report-diagrams.mjs
+  - ../../skills/html-report/assets/report-shell.html
+  - ../../skills/html-report/assets/code-review-report.html.template
+  - ../../skills/html-report/assets/explanation-quiz.html.template
+  - ../../skills/html-report/scripts/check-explanation-report.mjs
+  - ../../skills/html-report/scripts/check-report-diagrams.mjs
 ---
 
 # HTML 리포트 생성
@@ -27,8 +27,8 @@ related:
 
 | 종류 | 입력 | 본문 조각 |
 |---|---|---|
-| `review` | 확정 지적, 결정 필요 사항, 검증 한계, 검증 기록과 조사 기록 | [코드 리뷰 리포트 본문](../../assets/report/code-review-report.html.template) |
-| `explanation` | 설명 유형과 대상, 중심 논지, 설명 토대, 근거와 조사 기록 | [퀴즈 템플릿](../../assets/report/explanation-quiz.html.template)과 이 문서의 절 구조 |
+| `review` | 확정 지적, 결정 필요 사항, 검증 한계, 검증 기록과 조사 기록 | [코드 리뷰 리포트 본문](../../skills/html-report/assets/code-review-report.html.template) |
+| `explanation` | 설명 유형과 대상, 중심 논지, 설명 토대, 근거와 조사 기록 | [퀴즈 템플릿](../../skills/html-report/assets/explanation-quiz.html.template)과 이 문서의 절 구조 |
 
 저장 경로, 표제 문구, 리포트 이후 처리는 [프로젝트 프로필](profiles/html-report.default.md)이 정합니다. 프로젝트 저장소에 `docs/profiles/html-report.md`가 있으면 그 문서가 기본값을 대체합니다.
 
@@ -40,7 +40,7 @@ related:
 
 ## 공통 조립
 
-리포트는 [공유 쉘](../../assets/report/report-shell.html)을 복사한 뒤 `BODY_STYLE`, `BODY`, `BODY_SCRIPT` 세 구간의 내용만 바꿔 만듭니다. 쉘 구간의 CSS와 스크립트는 고치지 않고, 새 색이나 크기를 만들지 않습니다. 구간 표시 주석, 조판 단위, 간격 값, 코드 블록과 문법 하이라이팅 규칙은 [리포트 HTML 디자인](report-design.md)이 소유합니다.
+리포트는 [공유 쉘](../../skills/html-report/assets/report-shell.html)을 복사한 뒤 `BODY_STYLE`, `BODY`, `BODY_SCRIPT` 세 구간의 내용만 바꿔 만듭니다. 쉘 구간의 CSS와 스크립트는 고치지 않고, 새 색이나 크기를 만들지 않습니다. 구간 표시 주석, 조판 단위, 간격 값, 코드 블록과 문법 하이라이팅 규칙은 [리포트 HTML 디자인](report-design.md)이 소유합니다.
 
 - `{{TITLE}}`은 브라우저 탭 제목, `{{KICKER}}`는 프로필이 정한 표제 문구, `{{HEADING}}`은 리포트 제목입니다. 두 종류 모두 표제 아래 메타 행 `<dl>`은 통째로 지웁니다. 범위와 대상은 본문이 설명합니다.
 - 본문 문체와 용어는 [산문 문체 기준](prose-style.md)을 따르고, 리포트 전용 차이는 [리포트 HTML 디자인의 문체](report-design.md#문체)를 따릅니다. 본문 언어는 채팅에 전달한 결과물의 언어를 따릅니다.
@@ -123,7 +123,7 @@ commit hash, Git range, 저장소 경로와 줄 번호는 산출물 어디에도
 - 첫 문항은 코드 심볼이나 상수 값을 외워야 풀 수 있는 문제가 아니라 핵심 원리를 확인합니다. 마지막 문항은 새로운 제약, 상태 전이 또는 실행 환경을 제시해 같은 원리를 적용하게 하며, 피드백에 적용한 원리와 달라진 전제를 함께 설명합니다. 본문 문장을 빈칸처럼 바꾸거나 같은 참여자, 값과 실행 순서를 다시 묻는 문항은 적용 문제로 세지 않습니다.
 - 문항은 본문에서 판단할 준비가 된 전개 절의 직계 자식으로 배치합니다. 도입·결말·접힌 설명에는 넣지 않고 별도 퀴즈 절도 만들지 않습니다. 퀴즈를 건너뛰어도 본문을 계속 읽을 수 있어야 합니다.
 
-렌더 구조는 [퀴즈 템플릿](../../assets/report/explanation-quiz.html.template)이 정합니다. `BODY_STYLE`과 `BODY_SCRIPT` 조각을 공유 쉘의 같은 이름 구간에 한 번씩 복사하고, `BODY_STYLE`은 원본 그대로 유지하며 산출물별 CSS를 덧붙이지 않습니다. checker가 두 값을 문자로 대조합니다. `BODY` 조각은 각 문항 자리에 복사하고 `{{QUESTION_ID}}`를 `quizData`의 `id`로 바꿉니다. 렌더러는 다시 작성하지 않고 `quizData`만 바꿉니다.
+렌더 구조는 [퀴즈 템플릿](../../skills/html-report/assets/explanation-quiz.html.template)이 정합니다. `BODY_STYLE`과 `BODY_SCRIPT` 조각을 공유 쉘의 같은 이름 구간에 한 번씩 복사하고, `BODY_STYLE`은 원본 그대로 유지하며 산출물별 CSS를 덧붙이지 않습니다. checker가 두 값을 문자로 대조합니다. `BODY` 조각은 각 문항 자리에 복사하고 `{{QUESTION_ID}}`를 `quizData`의 `id`로 바꿉니다. 렌더러는 다시 작성하지 않고 `quizData`만 바꿉니다.
 
 - 각 `quizData` 항목은 `id`, `prompt`, `options` 순서입니다. `id`는 내용에 맞는 고유한 ASCII kebab-case이며 문항과 mount는 일대일입니다.
 - 정답 여부와 `feedback` 평문은 HTML 마크업에 두지 않습니다. 선택지별 `{ correct, feedback }` payload를 UTF-8을 거쳐 base64로 인코딩해 배열에 넣고, 렌더러가 실행 중에 해석합니다. `btoa("맞습니다")`는 Latin-1 밖이라 실패하므로 UTF-8 바이트를 인코딩하고 `atob` 결과를 `TextDecoder`로 되돌립니다.
@@ -160,7 +160,7 @@ Reviewer 상태는 `reviewed` 또는 `not-run`입니다. `reviewed`는 reviewer�
 
 ### 자동 검사
 
-Reviewer finding을 반영한 뒤 정적 checker를 실행합니다. Checker는 이 스킬 디렉터리의 [`scripts/check-explanation-report.mjs`](../../assets/report/scripts/check-explanation-report.mjs)이며 공유 쉘과 퀴즈 템플릿을 같은 번들의 assets에서 읽습니다. 절의 개수·역할 순서·ID·목차·제목, 결말의 마지막 문단, 쉘 marker, 자동 외부 resource, 본문 스타일 색 리터럴, 독자 표면의 조사용 식별자, 문항 ID와 mount 대응·payload·선택지 균형을 한 번에 확인합니다.
+Reviewer finding을 반영한 뒤 정적 checker를 실행합니다. Checker는 이 스킬 디렉터리의 [`scripts/check-explanation-report.mjs`](../../skills/html-report/scripts/check-explanation-report.mjs)이며 공유 쉘과 퀴즈 템플릿을 같은 번들의 assets에서 읽습니다. 절의 개수·역할 순서·ID·목차·제목, 결말의 마지막 문단, 쉘 marker, 자동 외부 resource, 본문 스타일 색 리터럴, 독자 표면의 조사용 식별자, 문항 ID와 mount 대응·payload·선택지 균형을 한 번에 확인합니다.
 
 ```bash
 node <skill-dir>/scripts/check-explanation-report.mjs --mode <change|implementation|knowledge> --kicker "<프로필의 설명 표제 문구>" <파일>

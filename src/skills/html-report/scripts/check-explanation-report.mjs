@@ -8,10 +8,7 @@ import { runInNewContext } from "node:vm";
 import { checkReportDiagrams } from "./check-report-diagrams.mjs";
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
-// 템플릿은 이 스크립트가 든 scripts/의 한 단계 위(assets 디렉터리)에 있습니다.
-// 소스에서는 ../ (assets/report), 번들에서는 ../assets 에 템플릿이 있다. 먼저 존재하는 쪽을 쓴다.
-const ASSETS_DIR = [path.dirname(SCRIPT_DIR), path.join(path.dirname(SCRIPT_DIR), "assets")]
-  .find((d) => fs.existsSync(path.join(d, "report-shell.html"))) ?? path.dirname(SCRIPT_DIR);
+const ASSETS_DIR = path.join(path.dirname(SCRIPT_DIR), "assets");
 const SHELL_TEMPLATE = fs.readFileSync(path.join(ASSETS_DIR, "report-shell.html"), "utf8");
 // Only the repository-owned bundle is evaluated, never JavaScript from the input report.
 const prism = runInNewContext(

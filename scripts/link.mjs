@@ -9,6 +9,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { loadManifests } from "./build.mjs";
 
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const m = JSON.parse(fs.readFileSync(path.join(root, "harness.json"), "utf8"));
@@ -32,10 +33,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const selected = new Set(profiles.flatMap((p) => { if (!m.profiles[p]) throw new Error(`unknown profile ${p}`); return m.profiles[p]; }));
   const distributed = [...selected].filter((n) => fs.existsSync(path.join(root, "dist/skills", n)));
   // 생성된 명령·규칙은 스킬 선언이 소유한다. 선택한 프로필의 스킬이 선언한 것만 링크한다.
-  const skillsDir = path.join(root, "src/skills");
   const ownedEntries = new Set();
-  for (const f of fs.existsSync(skillsDir) ? fs.readdirSync(skillsDir).filter((n) => n.endsWith(".json")) : []) {
-    const sm = JSON.parse(fs.readFileSync(path.join(skillsDir, f), "utf8"));
+  for (const sm of loadManifests()) {
     if (!selected.has(sm.name)) continue;
     for (const [rt, c] of Object.entries(sm.commands ?? {})) ownedEntries.add(`dist/adapters/${rt}/commands/${c.name}.md`);
     for (const [rt, r] of Object.entries(sm.rules ?? {})) ownedEntries.add(`dist/adapters/${rt}/rules/${r.name}.md`);

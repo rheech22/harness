@@ -1,18 +1,22 @@
 # harness
 
-개인 에이전트 하네스. 정책은 `src/docs/`에 한 번만 쓰고, 각 런타임에는 그 런타임의 로딩 수단으로 전달한다. 런타임별 사정은 각 어댑터의 `src/adapters/<runtime>/README.md`가 소유한다. 이 레포 자체의 원칙·결정·절차는 [`src/docs/harness/`](src/docs/harness/conventions/principles.md)가 소유한다.
+개인 에이전트 하네스.
+
+원칙·결정·절차는 [`principles`](src/docs/harness/conventions/principles.md)가 소유한다.
 
 ## 폴더
 
 ```
 harness/
-  AGENTS.md            전역 지침. 루트에 두는 유일한 원본
-  harness.json         런타임 중립 선언: 공용 배포 경로, 프로필, external, publish, tools
-  src/                 원본. 사람이 편집하는 곳 전부
-    docs/<domain>/     기준·절차 문서 (frontmatter: title, domain, kind, status, related). profiles/ 에 프로젝트 프로필 기본값
-      harness/         이 레포 자신: conventions(원칙·구조·스킬) guides(릴리스·검증·런타임 추가) decisions(ADR) history
-    skills/<name>.json 스킬 선언
-    assets/<group>/    번들에 실어 보낼 파일
+  AGENTS.md            전역 지침
+  harness.json         하네스 manifest
+  src/                 원본 모음
+    docs/<domain>/     관심사별 원본 문서 모음
+      harness/         단, 이곳은 이 레포에 대한 문서 모음
+    skills/<name>/     스킬별 원본
+      skill.json       스킬 manifest
+      assets/          번들에 실어 보낼 에셋
+      scripts/         스킬 실행, 검증 코드
     tools/<name>/      코드 패키지. 자기 SKILL.md 와 references 를 가짐
     hooks/             런타임이 공유하는 훅 스크립트 본체
     templates/project/ 프로젝트 뼈대 중 런타임 중립 부분
@@ -33,7 +37,7 @@ harness/
 ## 흐름
 
 ```
-src/skills/<name>.json ──build──▶ dist/skills/<name>/    닫힌 번들: SKILL.md + references/ + assets/ + scripts/ (링크 재작성)
+src/skills/<name>/skill.json ──build──▶ dist/skills/<name>/    닫힌 번들: SKILL.md + references/ + assets/ + scripts/ (링크 재작성)
                        ──build──▶ dist/adapters/<rt>/commands/   선언의 commands 에서 생성 (slash command)
                        ──build──▶ dist/adapters/<rt>/rules/      선언의 rules 에서 생성 (paths + 문서 본문 인라인)
 src/tools/<name>/      ──build──▶ dist/skills/<name>/    패키지가 가진 SKILL.md 의 사본
@@ -72,7 +76,7 @@ related: []
 ```
 
 ```json
-// src/skills/<name>.json — 스킬 선언. 어떤 문서를 어떤 순서로 묶고, 무엇을 싣고, 어디에 명령·규칙을 낼지
+// src/skills/<name>/skill.json — 스킬 선언. 어떤 문서를 어떤 순서로 묶고, 무엇을 싣고, 어디에 명령·규칙을 낼지
 { "name": "code-review", "description": "Use when …",
   "reads": ["docs/common/code-review.md", "docs/common/prose-style.md"],
   "assets": [],
@@ -83,7 +87,7 @@ related: []
 
 ## custom 과 external
 
-- **custom**: 원본이 이 레포에 있는 것. `src/skills/*.json`이 선언하는 번들 스킬과 `src/tools/`의 코드 패키지.
+- **custom**: 원본이 이 레포에 있는 것. `src/skills/*/skill.json`이 선언하는 번들 스킬과 `src/tools/`의 코드 패키지.
 - **external**: upstream에서 Skills CLI로 `dist/skills/`에 설치하고 `harness.json`의 `external`에 출처, `skills-lock.json`을 커밋. 레포 루트의 `.agents/skills → dist/skills` 링크가 설치 자리를 정하며, 설치는 `-a codex`로 한 번만 한다(다른 agent 대상은 레포 안에 런타임 디렉터리를 만든다). `node scripts/add-external.mjs <name>`이 이 절차를 감싸고, `check`가 lock과 선언의 정합을 본다.
 - `tools`로 선언한 CLI(스킬이 전제하는 실행 파일)는 요구사항만 적고 설치는 dotfiles가 한다.
 

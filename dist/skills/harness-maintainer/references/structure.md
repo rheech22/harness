@@ -18,7 +18,7 @@ related:
 
 ## 규칙
 
-- `src/`는 원본입니다. 사람이 편집하는 파일은 전부 여기 있습니다. `docs/`(문서), `skills/`(스킬 선언), `assets/`(템플릿·라이선스), `tools/`(코드 패키지), `hooks/`, `templates/`, `adapters/`로 나뉩니다. `dist/`는 산출물이며 도구(`build`, `export`, external을 설치하는 Skills CLI)만 씁니다. 커밋은 하되 편집하지 않습니다.
+- `src/`는 원본입니다. 사람이 편집하는 파일은 전부 여기 있습니다. `docs/`(문서), `skills/`(스킬별 선언·assets·scripts), `tools/`(코드 패키지), `hooks/`, `templates/`, `adapters/`로 나뉩니다. `dist/`는 산출물이며 도구(`build`, `export`, external을 설치하는 Skills CLI)만 씁니다. 커밋은 하되 편집하지 않습니다.
 - 런타임 이름이 붙는 파일은 `src/adapters/<runtime>/` 밖에 두지 않습니다. 단 스킬 선언의 `commands` 같은 런타임별 생성 지시는 선언 안에 런타임 키로 둘 수 있고, 생성물은 `dist/adapters/<runtime>/`에 놓입니다. `adapter.json`이 그 런타임의 경로와 링크 규칙을, `README.md`가 근거와 검증을 소유합니다.
 - 루트에 두는 원본은 `AGENTS.md`와 `harness.json`뿐입니다. `harness.json`은 런타임 중립 선언(공용 배포 경로, 프로필, external, publish, tools)만 담습니다.
 - 문서 루트는 `src/docs/` 하나입니다. 도메인 폴더 아래에 `conventions/`, `guides/`, `decisions/`, `history/`를 둡니다. 도메인 축과 문서 타입 축을 한 층에 섞지 않습니다.

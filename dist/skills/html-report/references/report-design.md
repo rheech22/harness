@@ -8,7 +8,7 @@ related:
   - prose-style.md
   - html-report.md
   - report-diagrams.md
-  - ../../assets/report/report-shell.html
+  - ../../skills/html-report/assets/report-shell.html
 ---
 
 # 리포트 HTML 디자인
