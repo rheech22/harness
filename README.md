@@ -1,6 +1,8 @@
 # harness
 
-개인 에이전트 하네스
+범용 코딩 에이전트 하네스
+
+[한국어](README.md) · [English](README.en.md)
 
 코딩 에이전트에게 도입을 맡기려면 [에이전트를 통한 하네스 도입](src/docs/harness/guides/agent-onboarding.md)을 따라 현재 머신에 설치·적용해 달라고 요청한다.
 
