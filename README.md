@@ -156,13 +156,30 @@ node scripts/link.mjs --profile writing --apply
 
 `profile`, `commands`, `rules`를 포함한 전체 선언 필드는 [스킬 규칙](src/docs/harness/conventions/skills.md)을 따른다.
 
-## custom 과 external
+## custom과 external
 
-- **custom**: 원본이 이 레포에 있는 것. `src/skills/*/skill.json`이 선언하는 번들 스킬과 `src/packages/`의 코드 패키지.
-- **external**: upstream에서 Skills CLI로 `dist/skills/`에 설치하고 `harness.json`의 `external`에 출처, `skills-lock.json`을 커밋. 레포 루트의 `.agents/skills → dist/skills` 링크가 설치 자리를 정하며, 설치는 `-a codex`로 한 번만 한다(다른 agent 대상은 레포 안에 런타임 디렉터리를 만든다). `node scripts/add-external.mjs <name>`이 이 절차를 감싸고, `check`가 lock과 선언의 정합을 본다.
-- `tools`로 선언한 CLI(스킬이 전제하는 실행 파일)는 요구사항만 적고 설치는 dotfiles가 한다.
+스킬은 원본을 관리하는 위치에 따라 구분한다. 두 종류 모두 `dist/skills/<name>/`에 배치하고, `link`로 코딩 에이전트에 연결한다.
 
-같은 이름을 두 종류로 선언하면 `check`가 막는다.
+- **custom**: 이 레포에서 원본을 관리하는 스킬이다. `src/skills/<name>/skill.json`으로 선언한 문서 기반 스킬과 `src/packages/`의 코드 패키지가 제공하는 스킬을 build로 생성한다.
+- **external**: 외부 저장소에서 원본을 관리하는 스킬이다. `harness.json`의 `external`에 스킬 이름과 출처를 선언하고, Skills CLI로 가져온다.
+
+같은 스킬 이름을 custom과 external 양쪽에 선언하면 `check`가 오류로 처리한다.
+
+### external 설치
+
+다음 스크립트로 선언된 external 스킬을 설치한다.
+
+```bash
+node scripts/add-external.mjs <name>
+```
+
+설치 결과는 `dist/skills/<name>/`에 저장된다. `skills-lock.json`도 함께 커밋해 설치한 내용의 출처와 해시를 기록한다. `check`는 external 선언과 lock 기록의 스킬 이름·출처가 일치하는지 검사한다.
+
+스크립트는 Skills CLI의 설치 옵션을 `-a codex`로 통일한다. 레포 루트의 `.agents/skills`가 `dist/skills`를 가리키므로, 설치된 스킬은 공용 배포 위치에 모인다. 이 옵션은 Codex에서만 사용한다는 뜻이 아니다. 설치 후 각 코딩 에이전트에 연결하는 일은 하네스의 `link`가 담당한다.
+
+## 스킬이 사용하는 CLI
+
+스킬 설치와 CLI 실행 파일 설치는 별개다. `harness.json`의 `tools`에는 스킬이 전제하는 CLI의 요구사항과 설치·확인 명령을 기록한다. CLI 설치는 dotfiles가 담당한다.
 
 ## 명령
 
